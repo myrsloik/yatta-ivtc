@@ -1,0 +1,16 @@
+Supported Delphi Versions
+
+Compiling yatta should work in delphi 7 and later (2005, 2006, turboexplorer and 2007) 
+with all the different patching levels. Delphi 6 may also be possible to
+use but it hasn't been tried recently. Earlier versions are guaranteed
+to fail due to missing compiler directives.
+
+
+
+Dependencies
+
+Graphics32 - http://www.graphics32.org/wiki/
+
+FastMM4 (Optional) - http://sourceforge.net/projects/fastmm
+Just remove it from the uses clause if you don't want to use it. It's
+mostly useful for debugging.

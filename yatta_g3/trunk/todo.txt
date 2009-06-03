@@ -1,0 +1,61 @@
+Fix memory leak when closing ymc programmatically
+move ymc progress bars to main window
+fix edge case frame trim(0,0) kept when cutting
+zoom out in ymc dialogs, general implementation?
+cutter allows insertion of overlapping ranges?
+desuckify the cutting window
+trimin for tfm?
+check old plugin like dust loading
+
+ADD FFMS2 SUPPORT
+
+[22:57] <Myrsloik> like adding them to all new projects?
+[22:57] <Mentar> there are certain things I need to do all the time
+[22:57] <Mentar> and adding Reblend as Custom list and importing the default presets are among the most annoying
+[23:00] <Myrsloik> this requires the invention of a badly crafted system using weird delimiters and a hereto unknown file format...
+[23:01] <Mentar> how about the ability to define a "default yap"
+[23:01] <Mentar> and when ymc creates a new project, the settings from this default yap are loaded
+[23:01] <Mentar> would that be possible?
+[23:02] <Myrsloik> yes, I guess so
+[23:02] <Myrsloik> what settings should it be possible to copy? custom lists? sections? presets?
+[23:03] <Mentar> custom lists, presets, cropping/resizing defaults
+
+[21:34] <Mentar> could you do this:
+[21:34] <Mentar> When you change a match this way, could you shift the section boundary accordingly?
+[21:34] <Mentar> as in, if you change a match to next frame, could you push the section boundary one to the next too?
+[21:35] <Mentar> no wait it's the other way around
+[21:35] <Mentar> if you change it to next frame, it needs to be moved -1
+[21:36] <Mentar> or is my brain rotten
+[21:36] <Mentar> wait
+[21:36] <Mentar> I've drunken too much
+[21:36] <Mentar> once I'm sober again, I'll write it down properly ^_^;
+[21:37] <Mentar> currently, one effect is that if you use it, you sometimes have one frame "overlap", which makes the section boundary seem off by 1 frame
+
+Add aegisub keyframe file import support, example in mirc dl dir
+
+[01:06] <ViruX> since the topic was YATTA questions, i have two questions as well: what does the "Extend Distance to 5" hotkey do? Is there any hotkey to switch active custom list(like there is for current preset used on the section)?
+
+
+[12:38] <TheFluff> Myrsloik: yatta "bug": save small avs doesn't apply the ymc cutter trimmings
+[12:40] <TheFluff> quotation marks because I'm not sure if it's a bug or intended behavior
+
+save "error log" to project and load on open
+
+[00:21] <Mentar> did you already fix that the "select smalles vmetric at scenechanges" function has an uninitialized default?
+
+[21:57] <Mentar> the YMC requests:
+[21:57] <Mentar> please add an option which:
+[21:58] <Mentar> 1) creates a copy of the .avs you use for analyzing - for a "cut quick-and-dirty raw with telecide and decimate"
+[21:58] <Mentar> so that for a TLraw I don't need to wait for YMC to finish
+[21:58] <Mentar> see what I mean?
+[21:58] <Myrsloik> ok
+[21:58] <Myrsloik> should be doable I guess
+[21:59] <Mentar> 2) creates an audio.avs which takes the audio.aac file, extracts the displacement, and does a "Save Audio AVS"
+[21:59] <Mentar> the dgindex output is normed, it should be easy to scan
+[22:00] <Myrsloik> like with the audio file writer plugin or something?
+[22:00] <Mentar> would that be okay? It would really help alot
+[22:00] <Myrsloik> I guess
+[22:00] <Myrsloik> so
+[22:00] <Mentar> you know what "Save Audio AVS" does in Yatta - basically, the same thing
+[22:00] <Myrsloik> now excuse me for I must work on my heart attack
+[22:00] <Mentar> so that the quick-and-dirty TLraw can have audio too

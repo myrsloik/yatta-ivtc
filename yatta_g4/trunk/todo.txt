@@ -1,0 +1,8 @@
+import, export nodecimte/freezeframelists
+fix play once and for all
+human readable only info, save time in projects
+presets in projects only with import/export to file, select which ones
+key consistency, ctrl=sectionmodifier, delete and not d for deletion
+clear decimated in section hotkey
+export/import with offset of ranged pp,section,nodecimate,ff,matches
+sections to chapters?

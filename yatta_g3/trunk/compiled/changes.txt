@@ -1,0 +1,800 @@
+7-130
+Added DGAVCSource support.
+Now specifies the reason a NoDecimate range couldn't be added in the log window.
+Now tries to intelligently merge certain cases of overlapping nodecimate ranges instead of returning an error.
+Added a shortcut key to backpropagate the current preset.
+Now remembers the crop setting.
+Now updates the displayed names of specially assigned presets after renaming.
+Added NNEDI to the list of postprocessors.
+Once again fixes the error when avisynth.dll can't be found.
+No more access violations when trying to configure filters in a cancelled ymc project.
+Added input cutting to ymc/yatta. Enable it by using the cutter plugin in ymc. The cutting can also be applied to audio in the project settings.
+Removed type 3/4 projects (true vfr/sections after decimation) which greatly simplifies the remaining part of the code.
+Removed trimming at the beginning and end in yatta.
+¤ is no longer used as a separator character in projects, this should make yatta work properly under chinese locales.
+Added a function that looks at both sides of section borders and switches the match to the lowest vmetric if it is above a certain threshold.
+Extended zoom to allow zooming out.
+Remove colorful bar in section tab.
+Removed the bitrate calc because it was broken and everyone uses xvid and x264 anyway.
+
+6-129
+Open in yatta now defaults to only showing project files.
+Changes to asif.dll, not compatible with previous versions.
+Yatta now defaults to using FFmpegSource instead of DirectShowSource for exotic file formats.
+Fixed display of where custom lists will be inserted. Broken long ago.
+Fixed display size calculation for anamorphic video. Broken in 6-128.
+Now properly clears the output cutting values when opening a project with no cutting specified.
+YMC once again doesn't flag frames for postprocessing if it's disabled in tfm or telecide config instead of randomly flagging them.
+YMC now defaults to lowest priority instead of idle.
+Fixed toggle preset by frequency of use.
+Fixed some less common memory leaks.
+Added more filters to the list.
+Readded the possibility to use tfm mode=2 in ymc since it only produces valid matches.
+Fixed opening of mkv files.
+Yatta now restores the window position when toggling the toolbar.
+Double clicking now checks unchecked filters in ymc. The no configuration possible dialog should be gone too.
+
+6-128
+YMC no longer shows the leak dialog when close when done is selected.
+Added support for SCXvid to ymc.
+Yatta now shows the main form while opening projects from the command line.
+Fixed freeing the background image multiple times when opening more than one project. Broken in 6-127.
+Fixed a bug that cause ugly scaling when the video width was smaller than 720. Broken in 6-127.
+Fixed the swapped colors in the section visualization thingy. Most likely broken in 6-126.
+The color names in the preset editor no longer have the cl prefix.
+Greatly improved the parsing of avisynth scripts when figuring out which plugins to use. It can now tell the difference between warpsharp and awarpsharp. Comments are still not supported.
+Fixed the popup menu that was blocking right and left click shortcuts in the preview window. Broken in 6-127.
+Fixed the configuration windows with video in ymc which were broken when video with a different resolution than 720x480 was used. Broken in 6-127 with the graphics32 changes.
+Redesigned filterlist.txt to make yatta aware of more kinds of avisynth plugins which allows c plugins to be autoloaded and it also ensures that loadpluginex is loaded as late as possible.. The format is <type> <filename> <function> where the type can be 25, 20, 20Compat (only inteded as a special value for loadpluginex), 25STDCALL (newer c plugins) and Import.
+Removed the only hint from the bitrate calc since it lead to inexplicable focus issues.
+Added more filters to the list.
+
+6-127
+The buttons and border of the main window can now be hidden for a kind of pseudo full screen mode. Default key alt+t.
+Fixed an access violation in ymc when closing the program from the progress dialog.
+Yatta and ymc now use the graphics32 library. This greatly improves the speed of all image operations and especially the zoom mode.
+Moved all loadpluginex requiring functions to the end of filterlist.txt to prevent it from blocking mpeg2dec* usage.
+
+6-126
+Removed mpeg2dec1/2 from the possible selections in YMC since no one ever uses them.
+YMC now keeps showing the progress bar when processing the collected metrics.
+Added version information to ymc.tasks to prevent future version conflicts.
+Fixed spelling for certain key association names. Some may have been reset.
+FastMM4 is now used as the memory manager. If it reports any leaks try to find the exact steps that causes it and post the full message on the forum.
+Fixed several major memory leaks in ymc.
+Fixed many memory leaks in yatta.
+Fixed metrics collection with IT. Was broken in 6-125.
+Fixed an access violation that happened when an error was encountered while importing sections from an external list.
+Fixed a bug that occured when shifting the freezeframe pattern in pattern try mode.
+Added a revert button to the preset editor.
+If there are errors when previewing yatta now tries to identify which preset caused it.
+Reduced the number of empty lines in generated scripts.
+Yatta now can now automatically import scripts the same way as plugins, the method is the same as adding plugins to filterlist.txt but now avs and avsi files will be treated as scripts. All recognized filters are also automatically loaded for the first include level.
+Fixed the range error that happened with certain scales in the section visualization thing. Several other minor things were also fixed.
+Adjusted the number of zeroes used to pad numbers in yatta to 3.
+Disabled the possibility to run multiple parallell jobs in ymc since it wasn't stable on multicore cpus. It can still be enabled in the ini.
+Added more filter functions to filterlist.txt.
+Tab order fixes in yatta.
+Fixed incomplete initialization of ymc when the source file for a task is unavailable. This prevented all drag and drop, all other projects and most settings from being restored.
+Fixed a race condition in ymc that prevented queued jobs from starting properly when running on multiple cpus.
+Remaining time in ymc was actually showing total estimated time.
+It was possible to run several instances of tfm+telecide metrics in parallell in ymc despite it not being safe.
+Setting a d2v for tfm only worked properly for 100% video material (pointless).
+
+6-125
+Fixed decimation by pattern which selected the wrong frames. The new method is however greatly simplified and only looks for nc transitions and not a ccnnn/cccnn pattern which could make it much less suitable for use on sections without pattern guidance or similar. Broken in 6-122.
+YMC didn't delete all temporary files for projects that were cancelled. They're now deleted when YMC is closed.
+It is now possible to select which patterns pattern guidance tries and to set the penalty for using c only matches.
+YMC now shows the type of the currently running project.
+YMC now defaults to order=1 (tff) in all filters since it's much more common. Change it back and set new defaults to get the old behavior.
+Now properly unloads the previous project when opening a new one by dragging it. Ranges from the old project were kept and the new one's were only added when possible.
+Pattern guidance sometimes adjusted the start and end match of a section even when matching failed. Broken in 6-122.
+When using pattern guidance on frame 0 it was always set to c match. Broken in 6-122.
+
+6-124
+Added the possibility to have a shortcut key to find vfr 2.
+Fixed tools dialog size issues after being minimized. Was introduced with the large font fixing.
+Fixed vfr override file generation. All frames were offset if no nodecimate range started at frame 0. Broken somewhere around 6-122.
+Moved the vmetric display to give more room to dmetrics now generated by tdecimate.
+Added a confirmation for cancelling individual jobs in ymc,
+Now correctly loads the filter order in saved ymc tasks.
+Added support for multiple jobs running in parallell in ymc. Telecide, decimate and tfm+telecide aren't supported yet.
+Added an option to clear all errors in ymc.
+Fixed marking frames for decimation in some cases.
+Fixed saving of the pattern used for matching in yatta. Broken in 6-122.
+
+6-123
+Added support for the d2v argument for tfm but due to its interesting implementation it will most likely only work with dgdecode as it is. Flags=4 is always used.
+Ymc now warns when a task is added and the default output name already exists.
+PP is now always set to 1 instead of 0 when collecting metrics with TFM.
+Old ymc settings are now properly cleared between incompatible versions.
+TFM mode is now always set to 0 in ymc since the other ones never really worked properly (1 and 2 were very close though).
+Order can now be changed in yatta again for testing purposes. Was broken long ago.
+Ymc now loads settings for more than 1 saved project properly. Didn't work in 6-122.
+Setting the output by double clicking works again in ymc. Guess which version it broke in.
+Ymc allowed 2 projects to run at once which currently isn't fully implemented.
+Fixed an overflow error when pressing h to toggle presets.
+Ymc now actually shows order hints in the tfm configuration.
+Fixed drag and drop in ymc and yatta, was probably broken a bit before 6-122.
+Ymc now properly updates the shown status for failed projects.
+Ymc no longer crashes if a filter returns an error when configuring it.
+Ymc remembers crop settings again, was temporarily unavailable in 6-122.
+No longer crashes if the metric processing fails in ymc.
+Asif.dll can now handle avisynth functions with more than 20 arguments like tfm.
+TFM metrics are now parsed from the file generated by the output argument and no by hooking outputdebugstring.
+Fixed IT in ymc which was broken in 6-122 like everything else.
+Made a few more forgotten forms look good with large fonts in both ymc and yatta.
+Spine32Resize should be Spline36Resize in yatta.
+Fixed freezeframing caused by a typo in a Format string, broken in 6-122 too.
+Fixed project opening in yatta, also broken in 6-122, when there are sections present.
+Project files saved by ymc in 6-122 had a reported framecount of 0 which prevented opening in yatta.
+Fixed sclavc support in ymc, was broken in 6-122.
+
+6-122
+Yatta and ymc now always add SetPlanarLegacyAlignment after mpeg2dec* when used as the video source in scripts.
+Readded the long forgotten possibilty to open ogm, mkv and mp4 files directly in yatta by using directshowsource. This is not really recommended.
+Uses fluffy xp style controls in ymc when available.
+Fixed large fonts in yatta and ymc, should almost look good now.
+Fixed an access violation in YMC if no usable avisynth version is found.
+Rewrote most of ymc, now it uses better function hooking code provided by Haali.
+Fixed decimation pattern default in yatta, was off by one.
+Fixed uninitialized freezeframing in the try pattern mode, it's now always initialized to ooooo.
+Huge yatta code cleanup. There probably are a few typos in there somewhere.
+(Re)Added a 2x scaling mode. It is however only possible to activate it when the entire window will fit on the screen.
+No longer adds section too short errors to the log when they're turned off.
+Added a confirmation for deleting presets.
+Added Spline32/16 and Gauss to the selectable resizers.
+Removed auto/b-switch since there is no reason to use them anymore. Use try pattern with freezeframing instead.
+
+6-121
+Includes ymc from 6-118 since later version were broken for almost all users.
+
+6-120
+Slightly better error messages when saving projects.
+Reset keyboard shortcut fixed when used in rare cases.
+Fixed a bug in ymc that prevent metrics from being collected with everything except IT.
+
+6-119
+Section discard window removed.
+Pattern try now allows replacing the current frame with the n(ext) and p(revious). No existing freezeframes will be removed.
+Added shortcut keys for deleting the current range(s) and jumping to the next/previous.
+Now defaults to kkkdk instead of ooodo in the pattern used for new projects.
+Added the possibility to create rangelists from vmetrics. Found in right click menu,
+Some fixes to separately saving custom lists.
+Lists if the current frame is part of a custom list. Can be turned off with settings.
+Saves projects to a temporary file, deletes the old one and renames the temporary file. Should prevent some weird save issues seen by few and reproduced by none.
+Yatta now autosaves the open project every 5 min to the same dir as the project file. If a project filename has been specified.
+YMC now only lists the possible ways to gather metrics that it was able to load when starting,
+YMC now uses function hooking to catch the debug output which mean that it actually works on win9x now.
+Increased the max resolution possible to set in the cropping window. 
+Fixed a memory leak in asif.dll.
+Retrying lots of times when getting an error in YMC will no longer make it skip the failed filter.
+Removed misleading RGB error message in YMC and instead shows the real avisynth error.
+
+6-118
+Fixed a key customization bug that made the field look empty when delete really was assigned.
+Added unmapped +-5 frames key combination.
+Removed MaxShiftLength.
+Removed some more hardcoded key shortcuts.
+Turns off all fpu exceptions to fix fft3dfilter weirdness when previewing.
+
+6-117
+Fixes the video size in tfm in ymc for large resolutions.
+Added a MaxShiftLength setting to the ini that defaults to 5000 frames. If the section is longer than that it won't be shifted (prevents accidents). Set MaxShiftLength to another number in the ini to override it.
+Shifting the pattern on the section now works like try pattern.
+Added an option to automatically swap custom list entries so start<=end.
+Fixed ymc handling of tfm b/u matches (decomb actually calls them p/n sometimes).
+Fixed recalculate postprocessed.
+YMC now requires tivtc 0.9.11.0 and decomb 5.2.2 (or possibly later) due to changed argument counts and types.
+Fixed tfm slow setting bug in tfm (probably never noticed by anyone).
+Fixes v2 timecode output which was broken in 116.
+Can now mark frames in the last incomplete cycle for decimation, assumed that decimate kept the last cycle intact before.
+Single clicking no longer jumps to a frame if ctrl or shift is pressed.
+
+6-116
+Adds a warning to the log if c matches to vfr can't set nodecimate for a range.
+It's now possible to drop files in ymc and only the extensions avi, avs and d2v are accepted.
+Cropping numbers can be entered directly in ymc and yatta.
+YMC now also saves the last video path and version used to save to projects.
+Updates the main window when resetting a match or applying a pattern.
+YMC now collects the mic metrics from tfm as "vmetrics" USE TFM 0.9.9.10.3 OR NEWER FOR CORRECT RESULTS.
+Added "cutting" of the final output.
+It was possible to open files that don't exist with the command line.
+Removed zoom because it was a bad idea from the start.
+No longer limits avisynth to 32MB memory in ymc.
+Updated ymc to support tivtc 0.9.9.5.
+
+6-115
+Added the possibility to map nearly all shortcut keys and pressing esc clears the mapping.
+Fixed the tab order in the yatta and ymc.
+Now defaults to the old name when renaming presets.
+Presets are now properly freed when a file is closed so they don't carry over to new projects.
+Minor fix for selected filename in the open dialog when doing save as.
+Removed the buggy 2x zoom for the main window.
+Removed the ignore high vmetric when playing key.
+It is now possible to add a section to the last frame.
+Fixed a duplicate shortcut.
+F5 is a shortcut for preview.
+Can copy the preview frames to clipboard (right click the trackbar).
+
+6-114
+Removed the not working support for positioning things on different monitors.
+Fixes the missing preset error message in avs generation.
+Added nnn patterns to decimation by pattern.
+Pattern guidance no longer resets the matches on too short sections and clears all decimation and postprocessing on matched frames.
+Added an option to do decimation by pattern in all sections with pattern guidance.
+Added the new mode in TFM 0.9.9.2 to YMC.
+No more unsupported d2v format warnings. Bad transistions in supported d2vs can however still break ymc/yatta but you really should fix those anyway.
+Projects no longer contain insane amounts of empty lines (those are however still perfectly valid).
+Removed edeen from filter list (the primitive detection made deen load at the same time).
+If the video isn't present in the same directory/with the same name as the project it now tries to open the last used video source if it exists.
+No longer adds loadplugin lines in scripts for autoloaded plugins.
+Fixed some more key shortcuts and slightly changed the ctrl+right behavior.
+
+6-113
+Drag and drop support for opening files by nmap
+A zoom window of a particular area can be show by pressing f7 or f8 if you want it to always be on top (no weirdness). 
+Possible to get a 2x zoom by pressing keypad +/- (buggy due to resizing weirdness, only acts correctly in at least 1600x1200 for ntsc material).
+Added a setting to to prevent updating the releavant overrides when previewing.
+Another locale setting fix. Should make it load the bicubic constants properly.
+Fix for sections beyond the video end in opened projects.
+Saves version+last video path in projects.
+Should fix really obscure preset linebreak thing in yap files and slightly improve the ^ mess.
+Greatly improved alignment of things at borderline too low resolutions. NTSC dvd resolution material should now have a properly looking gui at 800x600. Yatta is however still completely unusable if your resolution is less than the source.
+------------------------------------------------------
+(not tested because I don't have 2 monitors) Multimonitor support added and the default monitor for a form
+to appear on can be set by adding tool,settings,discard,preview,script,patternmonitor=monitor number to appear on
+in the MAIN section. The main form should also always appear on the primary monitor now.
+------------------------------------------------------
+Custom ranges added which can be used for something I guess. Maybe as a multiple section layers substitute.
+Even when they're placed after decimate you won't get any non-deterministc decimation warning.
+------------------------------------------------------
+C is no longer a shortcut for play and instead adds new custom ranges.
+The old custom override stuff was removed and a custom list generator for ranges was added.
+Presets can now have any characters in their names.
+Fixed some key shortcuts.
+Now saves all overrides to the save directory as the project file and not the video file/random.
+Changed file extension from .tel.txt to .fh.txt for no apparent reason.
+Produces an error when adding more than 256 presets.
+
+6-112
+Postprocess setting is used when collecting metrics with telecide as it can affect filters after it.
+Always added a " to the end of every preset in 111 when saving.
+
+6-111
+Works without filterlist.txt present.
+A TFM with telecide metrics option added to ymc. Shouldn't be that much slower than just telecide or tfm.
+------------------------------------------------------
+Added support for older avisynth 2.5 versions.
+Add "OldAvisynth=1" to the [MAIN] and [YMC6] sections of the ini files to use.
+If you don't let avisynth autoload mpeg2dec* you have to add
+mpeg2source
+mpeg2dec3.dll
+(or whatever your favorite is) to the end of filterlist.txt
+------------------------------------------------------
+More error checking and better messages.
+YMC doesn't create sclavc/it logs when previewing anymore (near pointless change).
+Fixed error when having no settings and default settings for IT in ymc.
+Pattern guidance should no longer set failed parts to c.
+Ctrl+g changed to ctrl+alt+g.
+Instant switching between type 1 and 4 project is now possible.
+Presets can be renamed.
+Presets are now only stored in the project files and can be imported from other projects.
+No longer requires unique preset names (good way to confuse yourself).
+Option to save postprocessing overrides in telecide format.
+Missed an assumefps when tdecimate was used.
+
+6-110
+No longer possible to unselect n/c/p switching setting completely.
+Log window should no longer have any duplicate entries.
+Log window order reversed, newest at the top.
+Pressing a in the preset or section list selects all sections with the same preset.
+Fixed opening of projects with more frames than the video.
+Didn't add \ to the end of the filter dir path if it was changed.
+Fixed the detection of which filters need to be loaded. No longer includes IT and other ones with short names to often.
+Added aac to the file extension in the bitrate calculator.
+Ctrl+m jumps to p/n matches.
+Ctrl/shift+u freezeframes from the current frame to the end/start of the section.
+The k key now cycles through presets like h but in order of how often they're used.
+The final locale issues should be fixed after changing how time is displayed.
+YMC an yatta look for bad transitions in d2v files now and displays which the bad lines are but they don't correct anything. Should work with all 1.76/1.77.3/DGIndex V8 projects.
+Made projects with many sections a bit faster in every way. Now 1000+ sections are possible.
+A project file has to be saved before previewing is possible to prevent the overrides from being saved in random places.
+Avisynth script and override file extensions can no longer be changed (fixed as .avs, .dec.txt, .tel.txt) because it stopped making sense long ago.
+No longer verifies freezeframes in projects when opening. Makes opening projects faster (especially insane ones with 5000+ ffs).
+
+6-109
+Added support for IT to YMC.
+Small fixes for the TFM preview.
+SClavc fixed in ymc.
+Consistent focus for the trackbar in the main form. Auto switch no longer stops abruptly though.
+DGDecode typo in the filter list fixed.
+
+6-108
+XP fluffiness removed because it messes up the alignment and it's impossible to check with win2k.
+Fix to decimate to prevent hanging when using tdecimate and decimate at the same time (insane but now possible).
+Changes to the time formatting.
+TDecimate with metric support. No configuration possible in ymc because the settings have little effect on the actual frame difference metric.
+A switch P/C only mode added. Ctrl+w now sets the inaccessible match and does nothing when all matches are selected.
+LeakKernelDeint and TDeint support added. TDeint like all other T* filters have lots of arguments but only type and sharp can be set in yatta.
+The last frame can no longer be set to N with b/auto switch.
+TDecimate can be used instead of decomb decimate which means that decomb is no longer always required in the scripts.
+Telecide is no longer used to apply overrides and fieldhint is used instead because it should be slightly faster and support really weird matching in the future.
+( dropped from the end in the filterlist and some new filters added.
+No more fixed filter filenames except to identify the different mpeg2decs.
+Closing a project while playing no longer produces access violations.
+New plugin loading system. Plugins are ONLY searched for in the specified plugin dir but it no longer loads anything already already (auto)loaded by avisynth.
+Added TFM support to YMC. Not all modes are supported because their matches can't be represented in the overly decomb centric projects.
+Items no longer move themselves around when checking them in ymc. Should prevent most of the confusion for new users.
+Added the mbcmp setting to sclavc in ymc.
+Proper plugin path selection dialogs and questions.
+
+6-107
+Now has an xp manifest for added fluffiness.
+Save avs right click option wasn't enabled for type 0 projects.
+Should now properly mask fpu exceptions in avisynth+plugins.
+Auto switch sometimes didn't stop when the matches were bad.
+
+6-106
+More filters added to the list.
+Alignment when run in low resolutions fixed.
+Proper error message instead of an access violation when a too old avisynth version is installed.
+Rewritten asif.dll (shouldn't make any real diffrence at all).
+Displayed time rounding fixed.
+
+6-105
+The tools window can now be resized.
+The color is now instantly changed when editing presets.
+The usual tab order fixes and moving things around.
+More filters added to the list.
+-----------
+Support for assigning text to sections, lines in the form of key=value can be automatically converted to override files for dedup, lmflicker, decomb and similar (kinda pointless for decomb but possible).
+To make the process more efficient you can assign text to be added to F5..F12 in the attribute box (only the first 4 lines make a difference).
+Only works when the main window is selected and will only be added to one section even when multiple ones are selected. Duplicate lines won't be added either.
+
+Values:
+%p=path, %f=filename, %s=section startframe, %e=section endframe, %v=key value
+%v usage: $key$some constant text %v$
+
+If everything between || evaluates to '' no line will be output.
+Everything before the first $ is the filename to output to.
+
+Example for Dedup override file generation:
+%p%f.dedup.txt$%s-%e|$threshold$ threshold=%v$$threshold2$ threshold2=%v$$trigger2$ trigger2=%v$$range2$ range2=%v$$maxdrops$ maxdrops=%v$$maxcopies$ maxcopies=%v$|
+-----------
+Divx log modification removed (exactly how do those things work?).
+Shows switched again for matches changed by auto switch.
+Immediately updates the information when a preset is deleted now.
+Fixed a bug when using functions requiring plugins that don't exist, the error message doesn't change the second time preview is pressed.
+Tab order fixes and key shortcuts added to ymc.
+Preset edit box now has wordwrap off and scrollbars in both directions.
+Another rare type3/4 sectioning issue fixed that only appeared if you decimated every frame in a section and switched presets.
+
+6-104
+Presets can now be edited in projects created with yatta (required the saved project to be reopened before working properly before).
+Experimental divx log quant multiplier modification (changes not saved yet, right click to process).
+Warning when no plugin path is set.
+NoDecimate to Sections adds a section at the range start frame and the range end frame+1 (not the same frames as the nodecimate start and end).
+Updates the automatically selected preset when adding a new one.
+New sections added now always have the same preset as the closest one before it.
+Fixed the formatting of displayed time again.
+Minor avisynth manipulation fixes. Should be more likely to load and locate plugins.
+
+6-103
+Crop On option added to the avs tab. It isn't saved though (just set the crop to 0,0,0,0 for permanent off).
+Avisynth 2.5.5 now required to make sure lanczos4 and dllname_function always can be used.
+Corrected which things are accessible from type 0 projects.
+Improved handling of S from file errors.
+Fixed mod distance=1 true vfr framecount calculation.
+Default pattern changed to ccnnc and ooodo for the decimation.
+YMC typo fix.
+When configuring a plugin in ymc you no longer get list index out of bound if none is selected.
+
+6-102
+Crop filter added to ymc to simplify removing border junk before collecting metrics. Remember that the list order is the actual order the chain is generated in (pointless to have crop last and near completely pointless to have sclavc after decimate).
+Placing a section at frame 0 and 1 no longer produces trim(0,0) which throws off the whole clip.
+Prefixes mpeg2source with the dll name in the generated avs if avisynth 2.5.5 is installed.
+Ctrl+w toggles "switch c/n only" and w sets the current frame to p.
+Major type 3/4 project fixes. Could work now.
+Resets the caption to the version number when a project is closed.
+Decimated frame number calculationis improved some more after looking at the decomb source.
+
+6-101
+YMC doesn't have sclavc selected by default now.
+Doesn't store messages when the text is hidden.
+No longer tries to load sclavc when the config window is opened.
+Fixed off by one problem in sclavc log processing in ymc.
+Aborts instead of closes yatta when trying to open v1/invalid projects.
+Pressing cancel when asked to select the matching video for project no longer leaves the project half open.
+Now updates the information instantly when presets are changed.
+Changed the names of some things.
+Updated filterlist.txt with some more filters.
+
+6-100
+Always saves the timecode file even if it's empty to prevent outdated copies from being used.
+Zeroes now always properly added to the start of section numbers.
+More fixes to the type3 projects and decimation checks.
+Jump to frame in preview window fixed.
+Now ignores lines starting with # in section stats files.
+YMC now works in a slightly different way and has SClavc support. Watch out so you don't put decimate before telecide or soem other weird (but allowed) combination.
+Fixed tab order again.
+Double click in the plugin dir field to see the open dialog.
+Show too short to match pattern guidance warning option.
+Stats from file calculation changed for lavc logs.
+SClavc support in ymc.
+Some additional checks for bad values in projects created by earlier versions.
+Fogot to finish the pattern stuff. Applying patterns like kdkkk to places where one frame is already decimated should also work now.
+
+6-99
+Removing a nodecimate range now also removes the decimation.
+Pattern guidance now never sets the last frame in the project to n.
+Try pattern changed again: d=decimate,k=keep frame,c/n/p=matches,+=postprocess,-=don't postprocess, anything else=no change.
+Pressing shift while playing does the same as numpad0.
+Only type1 projects can be without decimation now (anything else would be pointless).
+Last frames in type3 projects can now be dropped and are handled properly in all projects.
+Type3 projects no longer have an extra frame added to the end.
+Type3 projects now place deleteframes correctly.
+
+6-98
+Pattern guidance changed again. Now reports more bad matches.
+More small alignment problems fixed.
+Project option to not use decimate at all added.
+Prevents " from being used in preset names.
+Old and bad version detection replaced with one that actually works.
+Removed lots of unnecessary rounding of time.
+Fixed time formatting for all of you not using an elite locale like swedish.
+
+6-97
+More optimized trim+splice in vfr scripts and a small fix.
+YMC and yatta now prefixes mpeg2source with the dll name assuming you have a recent enough avisynth version (2.5.5 cvs version from 20/3 or later?). 2.5.3 is still the lowest required version though.
+Now clears old items from the log window when doing pattern guidance/saving avs.
+Changed pattern guidance behavior. Including sane amounts of bad match reports.
+Decimated frames now marked in the displayed pattern.
+Shows the error when opening a file fails again.
+TelecideHints no longer included but can still be gotten from the related oddities dir. Would be nice if decomb had a built in function doing the same thing.
+
+6-96
+Fix for ancient nodecimate range bug. If one range started where another ended an extra frame was inserted (see avisynth trim(n,n-1) behavior).
+Ctrl+o behavior improved so it can be used on adjacent sections.
+Now the name and color is also copied from the project when importing presets so the naming won't be completely off.
+Now checks for presets with the same id (might have appeared in the settings because of old bugs).
+Fixed the right/left click jumping in the cropping window. Forgot that frames don't move around unlike in the preview window.
+Properly relabels nodecimate sections when converting to type 3 projects. The listed famerate was never really used anyway.
+Color selection for presets now only has "real" colors and custom colors can be used.
+No longer accepts decimate intervals above 25 (as if anyone ever wanted to use it anyway).
+Pattern guidance with nnn in the menu now actually uses it. Ctrl+g did however already use it.
+Removed the obsolete pattern guidance.
+"Unfixed" the v2 timecodes. Dunno what to make of it. Avoid?
+Pressing h or ctrl+right arrow made the current section be listed in the old way.
+
+6-95
+Fix for timecode v2 files generated. (times were off by one frame)
+MPlayer PAR checkbox added which will use the same PARs as specified in mplayer instead of xvid. Very confusing and you should all go and discuss it on doom9 now.
+Bicubic values now always hidden when bicubic resizing isn't selected and only displayed with 3 decimals for better readability.
+The "try pattern" now has better decimation support and you prefix a match that you also want to drop with - and one you want to not drop with +. Decimation limits still apply and are checked though so -c won't drop every frame in normal projects.
+Order selection now greyed out for type 0 projects.
+Revised aspect ratio calculation and general cleanup. Shows suggested display size for anamorphic contents.
+Now suggests a filename when saving projects created with yatta.
+Goto button removed in cropping window.
+Cropping window has mouse button shortcuts for going to/setting the frame in the main window. (like the preview window)
+Slightly more accurate time estimation in ymc.
+Slightly clearer labeling of ymc options.
+
+6-94
+Telecide configuration now displays a hint for the order radiogroup with the order reported by avisynth. This is probably only somewhat accurate for d2v files and nothing else.
+YMC now uses the plugin dir set in yatta and looks for filters there first and if they don't exist there in its own dir.
+Ctrl+t opens the pattern to try dialog.
+Section time can be offset by prefixing + or - to the amount of seconds instead of entering an absolute new time.
+J jumps to the range start.
+Option to save all presets to the projects to get around the bad things.
+Option to clear all existing presets when opening a project with stored presets. WARNING: this means that only presets currently in use in your project will be used.
+Shows which mpeg2dec is used in the project in the settings window, if any.
+First frame in every cycle also marked now. J to show nodecimate start and end removed since it's now always clearly shown.
+Post=0 instead of post=1 used in avisynth scripts generated.
+Patterns with characters that aren't n/c/p are now displayed correctly, the possibility to k(eep) or d(rop) frames with the pattern added.
+Option to toggle if decimation is required to be deterministic or not (for section alignment, if it's off a section/timecode might be off by 1 frame).
+Type 4 projects which just take the sectioning after decimate part from type3 projects for those who want faster filtering.
+Relatively untested type 3 projects with true vfr support and sections applied after decimate.
+Another freezeframe at scene change mode that picks the frame with the lowest mmetric as source and freezes up to that point. Old one removed.
+Removed sections from decimate metrics button.
+Smaller metricless projects.
+Additional experimental pattern guidance option where ccnnn pattern variants are also considered which the section matching now also uses.
+Log window that lists where pattern guidance can't find good matches added.
+Match by vmetric, does the same as ctrl+b but on the entire project.
+Divide by zero error in bitrate calc fixed. Can now be accessed even when no project is open.
+Small additional checks when opening projects.
+Closing and opening another project finally works.
+Yatta displays time with hours now.
+YMC telecide preview now properly resized for video that isn't 720*480.
+Time elapsed/remaining for the current project added to ymc.
+YMC now defaults to telecide+decimate option when first opening it and it's remembered when ymc is closed.
+Mkv and ogm files now opened with directshow source. There seems to be some random issues and the seeking isn't accurate so it isn't really usable.
+Dialog to select the plugin directory added.
+Now looks for mpeg2dec* in the plugin dir first and if it isn't there in the yatta directory. This means you can keep the yatta directory completely clean from other files.
+Arrow shortcuts moved to global settings.
+Hides some more settings that do nothing for type=0 projects.
+Settings window can always be opened which makes it possible to select which mpeg2dec to use and which kind of project you want when opening a video file. Type 1 projects won't have any metrics and only c matches.
+Error message when avisynth 2.5 isn't found or creating a scriptenvironment fails (old versions?). There is however still an avisynth 2.5.3 check in yatta and ymc.
+It should now be completely impossible to add nodecimate ranges and do other impossible/pointless things for type=0 projects.
+Small change to the defaults.
+Now allows you to delete the first preset in the list but not the one with id 0 (Default).
+
+5-93
+Improved S discard, undo also possible.
+Anamorphic and Resize on checkboxes are now linked since they do the same thing.
+All settings should now redraw the image to show the difference immediately.
+Yellow resizing boxes when not resizing to mod 16 widths.
+Ymc now also writes the framecount to new projects to reduce the chance of the wrong mpeg2dec* being used.
+Job number displayed in ymc.
+No more decimate only projects generated by ymc6. The S from stats feature in yatta is much more accurate.
+Improved handling of type=0 projects.
+Fixed the avs generation that was broken in 91.
+
+5-92
+Ini file name now follows the exe name.
+Many windows now show up in the taskbar and alt-tab.
+Bitrate calculator no longer blocks everything else.
+Corrected the tab order for most buttons.
+
+5-91
+Now comes with ymc6.
+Settings for the different postprocessors can be changed.
+The exact number of frames is once again stored in the project to determine if the video matches.
+Proper handling of projects created with different mpeg2dec* versions. Mpeg2dec3.dll is assumed for projects without this information written to them.
+Once again an all new asif.dll which allows for faster previewing and much more informative error messages.
+Fixed the all new access violation in the cropping window when opening projects.
+All dust functions properly added to the filterlist.
+Fixed loading of presets from projects and missing special preset assignments caused by it.
+
+5-90
+Save small avs button to generate a script suitable for collecting scene change stats.
+More informative section list with times.
+Jump to current frame when previewing option added, enabled by default.
+Goto dialog now also allows jumping to decimated frame numbers by putting d at the end of the frame number.
+Correct frame and time calculation after a nodecimate section has been deleted.
+B-switch now continues to work even when playing the video.
+Ctrl-s no longer resets the shifting when going to another frame.
+Ctrl-right arrow does the same thing as pressing h.
+The trims generated for the sections no longer drop the last frame.
+
+5-89
+H toggles through the already used presets for the current section.
+Sections can be loaded from an external list with the S from stats button. The first line has to be "simple section list" and then one section start point on every line.
+Once again jumps to the same frame as when a project was saved and fixed other small things after moving everything around.
+Hints true/false is now properly set depending on the postprocessor again.
+Fixed automatic preset selection.
+
+5-88
+Yatta only needs mpeg2dec3.dll to be preset for opening d2vs. (no additional files required to start yatta.exe)
+Small fixes everywhere. Like where vfr files really are saved and updating the shown image after changes are made.
+Projects without dmetrics made smaller.
+Ctrl+b sets the section to the lowest vmetric matches. P matches get a +10 value.
+No longer converts/opens v1 projects or fixes ones with different framecount or type=2 which is usually a result of different framecount.
+Automatic vfr marking. Will be improved if it gives decent results.
+All c matching also evaluated in pattern guidance for vfr sections and other small improvements for special cases.
+Sections from ffvfw. Should be slightly more reliable than xvid stats.
+Fixed presets.
+
+5-87
+Ctrl+e extends the current pattern to whole section. Assumes distance=5 and that the current frame is the center of the pattern.
+Open dialog for selecting xvid stats file. Error if the log file is too long.
+Settings window split into project and global settings.
+Avisynth script preview.
+No longer saves unused presets to the yap.
+Converted the pre/post stuff into presets.
+Improved preset and section handling, no more undefined cases. Presets now also need to have unique names.
+Ctrl+g uses pattern guidance on the current section only.
+Improved pattern guidance.
+Moved find to the tools window.
+Moved range tab to the new tools window.
+Decomb no longer has to be present to start yatta.exe.
+Project naming scheme changed from filename.yap to filename.ext.yap. This also applies to all overrides and avs files.
+
+5-86
+Bitrate calc rearranged, now automatically enters the time when opened.
+Cropping window now allows mod 4 resize.
+Presets now checked against the copies in the project file to avoid missing/different versions being used.
+Additional parts of the avs where custom things may be inserted.
+Moved everything around.
+Moved presets and sections into tabs.
+Moved range lists and v search into tabs.
+Experimental pattern guidance added. Requires xvid stats based sectioning.
+Xvid stats based sectioning. Always loaded from c:\video.pass.
+Save old avs removed.
+Doesn't save a vfr file unless vfr is actually used.
+No longer puts additional info in the vfr file.
+Sections can now be generated from xvid 1st pass log files. 
+
+5-85
+J now displays the start or end frame and its relative position to the current frame when pressed.
+Only the fames in the specified range and not the expanded nodecimate range set to c when the nodecimate->c match option is used.
+Added guavacomb to the filter list.
+Global Preset removed and instead replaced with 5 custom parts of the avs where you can insert custom text. This text is still taken into consideration when determining which filters to load.
+Delete buttons readded to range list, d still used as quick key for deletion.
+Resizer selection in avs now actually works.
+Last reference to decomb 5.1.1 in filterlist.txt removed.
+
+5-84
+Decomb 5.2.1 now used
+Fixed vfr in "new" avs files. Broken when the range lists were split.
+
+5-83
+Recalculate sections behavior changed to overly simplistic, the old method is available as an option in the settings.
+Cropping/Resizing window now displays frame number, has goto frame and can be open while doing other things.
+Range list split into 2 lists, d key deletes and undo removed.
+S Discard starts from the currently selected section
+
+5-82
+More type=0 project fixes. Many settings weren't loaded.
+D works for deleting ranges.
+Now works even without a valid ini file from a previous version.
+Minor preset saving fix.
+
+5-81
+More warnings when converting ancient projects.
+YMC now defaults to idle priority and not a random value.
+Hints=false set when internal postprocessing is used.
+Range list window can now be resized properly.
+The Preview button now works and when it doesn't work it returns the full avisynth error message.
+Global preset bug fixed that prevented som projects from loading.
+Distance is always set to 1 if less to prevent some issues with type=0 projects.
+Confirmation before clearing all frames marked for decimation and when resetting the project.
+Range list deletion should no longer randomly delete too many/few ranges.
+Things displayed in the upper left corner no longer jump around as much.
+Option to also show the frame number in the upper left corner again.
+
+5-80
+Shift+f behavior corrected.
+Leftover decomb 5.10 reference removed from ymc.
+A few more detailed error messages.
+Right clicking on ymc to set the priority.
+
+5-79
+Fixed opening of projects.
+
+5-78
+Uses decomb 5.11 now.
+"Global preset" is now done and everything is saved to the project.
+Fixes to the preview button and more filters added to the list.
+Double clicking on a preset in the section window now opens it in the editor.
+Full support for all resizing methods including lanczos4.
+Find VFR2 button added that only checks if more than x number of frames in a row have the same match. Uses the same threshold as the Find VFR button.
+Bitrate calc gets the total time in a safer way. The script no longer has to be previewable.
+Shows preset names used for sections instead of cryptic id.
+Deleted presets now won't reappear the next time yatta is restarted.
+Ctrl+o marks the entire current section as nodecimate.
+Ctrl+up/down behavior changed.
+Global preset now works correctly but isn't saved.
+Abort buttons now generally abort. There are probably still a few forgotten cases where that's a really bad idea though.
+Much faster with 1000+ freezeframes.
+
+5-77
+First attempt at a "global preset" thing. Will either disappear or be modified.
+All presets are saved to the project file (but not loaded).
+Other ancient rare cropping issues fixed.
+The three lowest lines are now shown. Introduced with the new art in 5-74.
+Accurate decimated frame number.
+Accurate jumping in the preview window when nodecimate sections used.
+Renamed the postprocessing types.
+Option for settings nodecimate sections to all c matches.
+The settings added in 5-75 are actually saved now.
+
+5-76
+Telecidehints no longer needs any msvc runtimes.
+Colorspace checks+errors for ymc.
+Fixed some preview oddities with non mod 32 widths by reordering things. When you press preview it now won't invoke exactly the same avs as you get when you save but instead something very close and more compatible.
+Fixed automatic section selection.
+Fixed the anamorphic setting.
+
+5-75
+The filter telecidehints is bundled to allow the usage of sangnom for postprocessing. See telecidehints.txt for additional information.
+Sangnom, kerneldeint and internal interpolation postprocessing now supported (assuming they are in your plugin dir).
+Set pattern for section+shift (ctrl+s).
+Removed non working check for avisynth.
+Sections and presets shown as lists.
+Additional yatta settings.
+Possible avi opening bug fixed.
+ctrl/shift+f behavior changed.
+Cropping/Resizing saved+fully supported.
+Decimation by Pattern.
+
+5-74
+M jumps to the next postprocessed frame.
+Save Old Style Avs, saves a version 4 style avisynth script to be used with import().
+Fixed all space and "" issues with presets. Only the character ^ isn't handled properly.
+Once again shows the time (just as unreliable as decimated frame number when using vfr).
+Switched v and d metric.
+Fixed Q key.
+Better looking.
+Slight change in "find vfr" button. A distance threshold added.
+L is a shortcut for "find vfr".
+
+5-73
+Warning when projects try to use an avisynth script as video source.
+Additional section threshold.
+Quick section assignment/discard mode.
+Q deletes the current freezeframe.
+Ctrl+Q deletes the current section.
+Threshold for the vfr button.
+Stupidity checks.
+When opening projects it now looks for video in the order d2v, avi, avs (warning when used).
+Fixed automatic filter loading, now only loads every filter once.
+Added more filters to the list.
+No more unnecessary scrollbars in the section window.
+New window for quick discarding/preset assigning to sections.
+Additional thresholds for finding scene changes/no decimate sections.
+
+5-72
+Can now convert all old projects, even v1+dg to v2+plain.
+Sections can't start before 0 in converted files.
+Files can once again be opened from the commandline.
+
+5-71
+Fixed ymc telecide settings
+Can convert dg projects to plain ones by using user specified offset (not tested)
+
+5-70
+Swiched back to mpeg2dec3 because of a bug in dg
+
+5-69
+Should work
+
+5-68
+Might work
+
+5-67
+Almost works
+
+5-66
+Bugs
+
+5-65
+Can open old projects, imports everything except applyranges
+
+5-64
+Everything
+
+5-63
+Asif.dll replaced
+Now marks frames not postprocessed in yatta in override file
+
+4-62
+Fixed some bugs in asif.dll (bthresh setting probably didn't really work before)
+Fixed the total frame number calculation in .vfr.txt files
+Fixed some range oddities
+Moved all textstuff around for greater confusion
+
+4-61
+Additional info as comments in the .vfr.txt files to simplify bitrate calculation
+
+4-60
+H Switch combined with B Switch
+ranges.avs decimate override now without absolute path
+
+4-59
+Multiple ranges can be deleted at once
+When using vfr the ranges.avs decimate line ovr filename now is the same as the "save all overrides" one
+Slightly faster loading?
+
+4-58
+H Switch, works like B Switch but also copies freezeframes
+Up/Down arrow shorcut for v search can be disabled
+Added the missing guide modes
+
+4-57
+Decimating ranges now marks every 'decimate interval' frame for decimation beginning with the first one in the range
+Decimation of sections no longer possible and you can no longer mark sections with decimation to not be decimated
+Some more settings saved in the project file
+Improved error messages if not all required dlls present
+
+4-56
+VFR file version added
+Ranges added with shift/ctrl+f are also sorted now
+
+4-55
+Proper sorting of ranges
+No more Decimate() line in the range avs if you don't use the vfr features
+
+4-54
+Noone knows what happened before it
+
