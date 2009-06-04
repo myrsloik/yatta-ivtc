@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <windows.h>
-#include "xvid.h"
+#include <xvid.h>
 #include "avisynth.h"
 
 #define SCXVID_BUFFER_SIZE (1024*1024*4)
+
+static bool xvid_inited = false;
 
 class SCXvid : public GenericVideoFilter {
 private:
@@ -12,28 +14,36 @@ private:
 	void *output_buffer;
 	int next_frame;
 	xvid_enc_create_t xvid_enc_create;
-	xvid_gbl_init_t xvid_init;
 public:
 	SCXvid(PClip _child, const char *log, IScriptEnvironment* env) : GenericVideoFilter(_child) {
 		output_buffer = NULL;;
 		next_frame = 0;
 		int error = 0;
 
+		if (!xvid_inited) {
+			xvid_gbl_init_t xvid_init;
+			memset(&xvid_init, 0, sizeof(xvid_init));
+			xvid_init.version = XVID_VERSION;
+			xvid_init.debug = ~0;
+			error = xvid_global(NULL, XVID_GBL_INIT, &xvid_init, NULL);
+			if (error)
+				env->ThrowError("SCXvid: Failed initialize Xvid");
+			xvid_inited = true;
+		}
 
-		memset(&xvid_init, 0, sizeof(xvid_init));
-		xvid_init.version = XVID_VERSION;
-		xvid_init.debug = ~0;
-		error = xvid_global(NULL, XVID_GBL_INIT, &xvid_init, NULL);
+		xvid_gbl_info_t xvid_info;
+		memset(&xvid_info, 0, sizeof(xvid_info));
+		xvid_info.version = XVID_VERSION;
+		error = xvid_global(NULL, XVID_GBL_INFO, &xvid_info, NULL);
 		if (error)
 			env->ThrowError("SCXvid: Failed initialize Xvid");
-
 
 		memset(&xvid_enc_create, 0, sizeof(xvid_enc_create));
 		xvid_enc_create.version = XVID_VERSION;
 		xvid_enc_create.profile = 0;
 		xvid_enc_create.width = vi.width;
 		xvid_enc_create.height = vi.height;
-		xvid_enc_create.num_threads = 0; //user configurable?
+		xvid_enc_create.num_threads = xvid_info.num_threads;
 		xvid_enc_create.fincr = vi.fps_numerator;
 		xvid_enc_create.fbase = vi.fps_denominator;
 		xvid_enc_create.max_key_interval = 10000000; //huge number
@@ -119,7 +129,7 @@ PVideoFrame __stdcall SCXvid::GetFrame(int n, IScriptEnvironment* env) {
 	return src;
 }
 
-AVSValue __cdecl Create_SCXvid(AVSValue args, void* user_data, IScriptEnvironment* env) {
+static AVSValue __cdecl Create_SCXvid(AVSValue args, void* user_data, IScriptEnvironment* env) {
 	if (!args[1].Defined())
 		env->ThrowError("SCXvid: Log filename must be specified");
 	return new SCXvid(args[0].AsClip(), args[1].AsString(), env);
