@@ -1,4 +1,5 @@
 7-130
+Fixed the option to have SCXvid save the generated logfile in YMC.
 Added DGAVCSource support.
 Now specifies the reason a NoDecimate range couldn't be added in the log window.
 Now tries to intelligently merge certain cases of overlapping nodecimate ranges instead of returning an error.

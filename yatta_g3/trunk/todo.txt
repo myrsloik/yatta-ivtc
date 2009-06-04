@@ -7,7 +7,9 @@ desuckify the cutting window
 trimin for tfm?
 check old plugin like dust loading
 
+REMOVE STUPID FILE ENDING CHECKS
 ADD FFMS2 SUPPORT
+ADD DGVC1DEC SUPPORT
 
 [22:57] <Myrsloik> like adding them to all new projects?
 [22:57] <Mentar> there are certain things I need to do all the time
@@ -39,6 +41,8 @@ Add aegisub keyframe file import support, example in mirc dl dir
 [12:38] <TheFluff> Myrsloik: yatta "bug": save small avs doesn't apply the ymc cutter trimmings
 [12:40] <TheFluff> quotation marks because I'm not sure if it's a bug or intended behavior
 
+[22:01] <TheFluff> while you're at it change the save audio avs to use wavsource if the file ends in .wav
+
 save "error log" to project and load on open
 
 [00:21] <Mentar> did you already fix that the "select smalles vmetric at scenechanges" function has an uninitialized default?
@@ -59,3 +63,17 @@ save "error log" to project and load on open
 [22:00] <Mentar> you know what "Save Audio AVS" does in Yatta - basically, the same thing
 [22:00] <Myrsloik> now excuse me for I must work on my heart attack
 [22:00] <Mentar> so that the quick-and-dirty TLraw can have audio too
+
+[13:19] <__roflmao__> oh, also another possible bug: when cutter is used then "tfm"telecidematrics" is selected in YMC, if you chose "set d2v"
+[13:19] <__roflmao__> one gets: Failed to invoke "TFM" TFM:  d2v frame count does not match filter frame count (45261 vs 45256)! <-- (original framecount vs framecount after cutting)
+[13:19] <__roflmao__> if you turn off cutter and press set d2v, it does work, but once cutter is turned on, you can't change any more settings(you receive that error upon pressing configure)
+
+[22:52] <Mentar> 1) in ymc, could we have an option that when YMC starts working off a job with cutter and stuff, we get a copy of an .avs file for a quick workraw (and preferably also audio avs file)?
+[22:52] <Mentar> this is the background
+[22:53] <Mentar> I'd like to be able to encode a quick crapraw immediately, at the same time I do the ymc metrics collection
+[22:53] <Mentar> so that the translator can start work immediately
+[22:53] <Mentar> something like this should only be a variation of the .avs you need to create anyway
+[22:53] <Mentar> right?
+[22:54] <Mentar> so, optimal usage would be a "quickraw" entry like SCXvid and the likes, and it simply barfs out quickraw.avs and quickraw-audio.avs
+[22:55] <Mentar> 2) Ancient request, but still highly desired
+[22:55] <Mentar> let yatta auto-import presets from a predefined .yap

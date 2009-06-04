@@ -118,10 +118,7 @@ PVideoFrame __stdcall SCXvid::GetFrame(int n, IScriptEnvironment* env) {
 		xvid_enc_frame.length = SCXVID_BUFFER_SIZE;
 		xvid_enc_frame.bitstream = output_buffer;
 
-		xvid_enc_stats_t stats;
-		stats.version = XVID_VERSION;
-
-		int error = xvid_encore(xvid_handle, XVID_ENC_ENCODE, &xvid_enc_frame, &stats);
+		int error = xvid_encore(xvid_handle, XVID_ENC_ENCODE, &xvid_enc_frame, NULL);
 		if (error < 0)
 			env->ThrowError("SCXvid: xvid_encore returned an error code");
 		next_frame++;

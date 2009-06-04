@@ -1639,7 +1639,7 @@ begin
   end;
 
   if FSettings.LogOutput <> '' then
-    CopyFile('', PChar(FSettings.LogOutput), False);
+    CopyFile(PChar(FLogPath), PChar(FSettings.LogOutput), False);
 
   DeleteFile(FLogPath);
 end;
