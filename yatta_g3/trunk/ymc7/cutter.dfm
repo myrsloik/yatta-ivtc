@@ -1,6 +1,6 @@
 object CutterForm: TCutterForm
-  Left = 393
-  Top = 303
+  Left = 312
+  Top = 310
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cutter'

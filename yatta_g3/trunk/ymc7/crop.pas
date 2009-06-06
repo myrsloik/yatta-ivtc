@@ -22,6 +22,7 @@ type
     Panel1: TPanel;
     ZoomImage: TImage32;
     Image: TImage32;
+    OKButton: TButton;
     procedure TrackBarChange(Sender: TObject);
     procedure UpDown3Click(Sender: TObject; Button: TUDBtnType);
     procedure UpDown2Click(Sender: TObject; Button: TUDBtnType);

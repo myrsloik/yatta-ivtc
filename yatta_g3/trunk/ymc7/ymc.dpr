@@ -19,7 +19,8 @@ uses
   FunctionHooking in 'FunctionHooking.pas',
   yshared in '..\yshared.pas',
   scxvid in 'scxvid.pas' {SCXvidForm},
-  cutter in 'cutter.pas' {CutterForm};
+  cutter in 'cutter.pas' {CutterForm},
+  resize in 'resize.pas' {ResizeForm};
 
 {$R *.res}
 

@@ -1,6 +1,6 @@
 object CropForm: TCropForm
-  Left = 540
-  Top = 279
+  Left = 574
+  Top = 546
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
@@ -19,6 +19,9 @@ object CropForm: TCropForm
   Scaled = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  DesignSize = (
+    851
+    510)
   PixelsPerInch = 96
   TextHeight = 13
   object TrackBar: TTrackBar
@@ -163,5 +166,16 @@ object CropForm: TCropForm
     Scale = 1.000000000000000000
     ScaleMode = smNormal
     TabOrder = 12
+  end
+  object OKButton: TButton
+    Left = 20
+    Top = 340
+    Width = 70
+    Height = 26
+    Anchors = [akLeft, akBottom]
+    Caption = '&OK'
+    Default = True
+    ModalResult = 1
+    TabOrder = 13
   end
 end

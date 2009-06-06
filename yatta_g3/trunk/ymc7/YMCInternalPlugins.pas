@@ -84,6 +84,11 @@ type
     Cuts: array of TCutRange;
   end;
 
+  TResizeSettings = record
+    Width, Height: Integer;
+    Resizer: string;
+  end;
+
   TIT = class(TYMCPlugin)
   private
     FFramecount: Integer;
@@ -265,16 +270,35 @@ type
     class function MTSafe: Boolean; override;
   end;
 
+  TResize = class(TYMCPlugin)
+  private
+    FSettings: TResizeSettings;
+  protected
+    function GetSettings: string; override;
+  public
+    constructor Create(Settings: string; Selected: Boolean); override;
+    procedure Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string); override;
+    function Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip; override;
+
+    class function GetConfiguration: TYMCPluginConfig; override;
+    class function GetName: string; override;
+    class function GetPluginType: TYMCPluginType; override;
+    class function GetSupportedColorSpaces: TColorSpaces; override;
+    class function GetUsedFunctions: TStringDynArray; override;
+    class function MTSafe: Boolean; override;
+  end;
+
+
 procedure YMCPluginInit(AddPlugin: TAddPlugin);
 
 implementation
 
 uses
-  telecide, sc, crop, it, tfm, scxvid, cutter;
+  telecide, sc, crop, it, tfm, scxvid, cutter, resize;
 
 const
-  PluginClasses: array[0..9] of TYMCPluginClass =
-  (TCutter, TCrop, TIT, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TSClavc, TDecimate, TTDecimate);
+  PluginClasses: array[0..10] of TYMCPluginClass =
+  (TCutter, TCrop, TIT, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TSClavc, TDecimate, TTDecimate, TResize);
 
 function MemoryToHex(Ptr: Pointer; Size: Integer): string;
 var
@@ -1803,6 +1827,84 @@ begin
   if Header.FrameCount <= 0 then
     Header.FrameCount := FFramecount;
   Header.CutList := Settings;
+end;
+
+{ TResize }
+
+procedure TResize.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip;
+  out NewDefault: string);
+  var Index: Integer;
+begin
+  with TResizeForm.Create(nil), FSettings do
+  begin
+    WidthEdit.Text := IntToStr(Width);
+    HeightEdit.Text := IntToStr(Height);
+    Index := ResizerGroup.Items.IndexOf(Resizer);
+    ResizerGroup.ItemIndex := Max(Index, 0);
+
+    ShowModal;
+
+    Width := StrToIntDef(WidthEdit.Text, Width);
+    Height := StrToIntDef(HeightEdit.Text, Height);
+    Resizer := ResizerGroup.Items[ResizerGroup.Itemindex];
+
+    if MakeDefault.Checked then
+      NewDefault := GetSettings;
+
+    Free;
+  end;
+end;
+
+constructor TResize.Create(Settings: string; Selected: Boolean);
+begin
+  inherited;
+  FSettings.Width := StrToIntDef(GetToken(Settings, 0, [',']), 720);
+  FSettings.Height := StrToIntDef(GetToken(Settings, 1, [',']), 480);
+  FSettings.Resizer := GetToken(Settings, 2, [',']);
+end;
+
+class function TResize.GetConfiguration: TYMCPluginConfig;
+begin
+  Result := pcNormal;
+end;
+
+class function TResize.GetName: string;
+begin
+  Result := 'Resize';
+end;
+
+class function TResize.GetPluginType: TYMCPluginType;
+begin
+  Result := ypVideoFilter;
+end;
+
+function TResize.GetSettings: string;
+begin
+  Result := Format('%d,%d,%s', [FSettings.Width, FSettings.Height, FSettings.Resizer]);
+end;
+
+class function TResize.GetSupportedColorSpaces: TColorSpaces;
+begin
+  Result := [csYV12, csYUY2, csRGB24, csRGB32];
+end;
+
+class function TResize.GetUsedFunctions: TStringDynArray;
+begin
+  SetLength(Result, 0);
+end;
+
+function TResize.Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip;
+  Preview: Boolean): IAsifClip;
+begin
+  Env.ClipArg(Video);
+  Env.IntArg(FSettings.Width);
+  Env.IntArg(FSettings.Height);
+  Result := Env.InvokeWithClipResult(FSettings.Resizer);
+end;
+
+class function TResize.MTSafe: Boolean;
+begin
+  Result := True;
 end;
 
 end.

@@ -1,4 +1,5 @@
 7-130
+Added a resize filter to YMC.
 Will now use FFMS2/WavSource in an audio avs.
 Now adds the cuts when saving a "small avs".
 Will now try to use FFMS2 on all unknown file extensions.
