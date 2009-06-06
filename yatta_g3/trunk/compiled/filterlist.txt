@@ -36,7 +36,6 @@
 25 dgdecode.dll dgdecode_mpeg2source
 25 dgdecode.dll dgdecode_blindpp
 25 dgdecodenv.dll dgsource
-25 dgvc1decodenv.dll vc1source
 25 ffmpegsource.dll ffmpegsource
 25 ffms2.dll ffindex
 25 ffms2.dll ffvideosource
@@ -143,11 +142,6 @@
 25 mvtools.dll mvflowblur
 25 mvtools.dll mvdegrain1
 25 mvtools.dll mvdegrain2
-20Compat loadpluginex.dll -
-20 dustv5.dll pixiedust
-20 dustv5.dll spacedust
-20 dustv5.dll faerydust
-20 dustv5.dll golddust
 Import DeRainbow.avs DeRainbow
 Import AA.avs AA
 Import LimitedSharpenFaster.avs LimitedSharpenFaster

@@ -6,7 +6,7 @@ uses
   Asif, Windows, Graphics, Types, Classes, SysUtils, StrUtils, GR32, YShared;
 
 type
-  TFilterType = (ft25, ft20, ft20Compat, ft25STDCALL, ftImport, ftError);
+  TFilterType = (ft25, ft25STDCALL, ftImport, ftError);
 
   PAvisynthFilter = ^TAvisynthFilter;
   TAvisynthFilter = record
@@ -32,9 +32,7 @@ var
 function PluginListToScript(Plugins: TAvisynthFilterDynArray; PluginPath: string): string;
 var
   Counter: Integer;
-  Hasft20: Boolean;
 begin
-  Hasft20 := False;
   Result := '';
 
   //multiple passess to get the right order since the list is unsorted
@@ -43,21 +41,7 @@ begin
       case FilterType of
         ft25: Result := Format('%sLoadPlugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
         ft25STDCALL: Result := Format('%sload_stdcall_plugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
-        ft20: Hasft20 := True;
       end;
-
-  if Hasft20 then
-  begin
-    for Counter := 0 to Length(FilterList) - 1 do
-      with FilterList[Counter] do
-        if FilterType = ft20Compat then
-          Result := Format('%sLoadPlugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
-
-    for Counter := 0 to Length(Plugins) - 1 do
-      with Plugins[Counter] do
-        if FilterType = ft20 then
-          Result := Format('%sLoadPlugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
-  end;
 
   for Counter := 0 to Length(Plugins) - 1 do
     with Plugins[Counter] do
@@ -69,10 +53,6 @@ function StrToFilterType(const S: string): TFilterType;
 begin
   if SameText(S, '25') then
     Result := ft25
-  else if SameText(S, '20') then
-    Result := ft20
-  else if SameText(S, '20Compat') then
-    Result := ft20Compat
   else if SameText(S, '25STDCALL') then
     Result := ft25STDCALL
   else if SameText(S, 'Import') then
@@ -225,25 +205,6 @@ begin
             end;
           end
           else if FilterType = ft25 then
-          begin
-            try
-              Env.CharArg(PChar(PluginPath + FileName));
-              Env.Invoke('LoadPlugin');
-            except on EAsifException do
-                raise EAsifException.Create('Couldn''t load the plugin "' + FileName + '"');
-            end;
-          end;
-        end
-        else
-          raise EAsifException.Create('Couldn''t locate "' + FileName + '"');
-      end;
-
-    for Counter := 0 to Length(Plugins) - 1 do
-      with Plugins[Counter] do
-      begin
-        if FileExists(PluginPath + FileName) then
-        begin
-          if FilterType = ft20Compat then
           begin
             try
               Env.CharArg(PChar(PluginPath + FileName));

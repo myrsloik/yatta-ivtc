@@ -397,7 +397,11 @@ begin
     Result := FScriptEnvironment.InvokeWithClipResult('AviSource');
   end
   else
-    raise EYMCTaskException.Create('Unknown file extension.');
+  begin
+    LoadPlugins('FFVideoSource', FOwner.PluginPath, FScriptEnvironment);
+    FScriptEnvironment.CharArg(PChar(Filename));
+    Result := FScriptEnvironment.InvokeWithClipResult('FFVideoSource');
+  end;
 end;
 
 procedure TYMCTask.ProcessMetrics;

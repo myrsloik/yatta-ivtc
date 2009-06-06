@@ -115,7 +115,7 @@ begin
       IniFile.Free;
     end;
   end
-  else if (FileExt = '.d2v') or (FileExt = '.dga') or (FileExt = '.avi') or (FileExt = '.avs') or (FileExt = '.mkv') or (FileExt = '.ogm') or (FileExt = '.mp4') then
+  else
   begin
     MPEG2DecName := Form11.RadioGroup2.Items[Form11.RadioGroup2.ItemIndex];
     Form1.OriginalVideo := OpenVideo(filename, mpeg2decname);
@@ -123,9 +123,7 @@ begin
     Form1.SourceFile := Filename;
 
     NewProject(IfThen(Form11.RadioGroup3.ItemIndex >= 2, Form11.RadioGroup3.ItemIndex + 1, Form11.RadioGroup3.ItemIndex))
-  end
-  else
-    raise EInvokeFailed.Create('Unknown file extension.');
+  end;
 end;
 
 
@@ -257,23 +255,17 @@ end;
 function OpenVideo(Filename: string; Mpeg2Dec: string): IAsifClip;
 var
   FileExt: string;
-  ErrorLines: string;
   TempTrims: array of IAsifClip;
   I: Integer;
 begin
   if not FileExists(Filename) then
     raise EInitializationFailed.Create('Video file not found.');
 
-  FileExt := AnsiLowerCase(ExtractFileExt(FileName));
+  FileExt := AnsiLowerCase(ExtractFileExt(Filename));
 
   if FileExt = '.d2v' then
   begin
     LoadPlugins(Mpeg2Dec + '_mpeg2source', PluginPath, SE);
-
-    ErrorLines := VerifyD2V(Filename);
-    if ErrorLines <> '' then
-      MessageDlg(ErrorLines, mtWarning, [mbOK], 0);
-
     SE.CharArg(PChar(Filename));
     Result := SE.InvokeWithClipResult(PChar(Mpeg2Dec + '_Mpeg2Source'));
 
@@ -300,14 +292,12 @@ begin
     SE.CharArg(PChar(Filename));
     Result := SE.InvokeWithClipResult('AviSource');
   end
-  else if (FileExt = '.mkv') or (FileExt = '.ogm') or (FileExt = '.mp4') then
-  begin
-    LoadPlugins('FFmpegSource', PluginPath, SE);
-    SE.CharArg(PChar(Filename));
-    Result := SE.InvokeWithClipResult('FFmpegSource');
-  end
   else
-    raise EInitializationFailed.Create('Unknown file extension.');
+  begin
+    LoadPlugins('FFVideoSource', PluginPath, SE);
+    SE.CharArg(PChar(Filename));
+    Result := SE.InvokeWithClipResult('FFVideoSource');
+  end;
 
   Form1.FActualFramecount := Result.GetVideoInfo.NumFrames;
 

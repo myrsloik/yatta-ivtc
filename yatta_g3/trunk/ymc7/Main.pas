@@ -228,25 +228,9 @@ end;
 procedure TMainForm.AddFile(Filename: string);
 var
   FileExt: string;
-  D2VErrors: string;
 begin
   FileExt := AnsiLowerCase(ExtractFileExt(Filename));
-  // FIXME, SANITY HERE
-
-  if (FileExt <> '.d2v') and (FileExt <> '.avs') and (FileExt <> '.avi') and (FileExt <> '.dga') then
-  begin
-    MessageDlg('"' + Filename + '" has an unknown file extension.', mtError, [mbOK], 0);
-    Exit;
-  end;
-
-  if FileExt = '.d2v' then
-  begin
-    D2VErrors := VerifyD2V(Filename);
-    if D2VErrors <> '' then
-      if MessageDlg(D2VErrors + #13#10 + 'Proceed anyway?', mtWarning, [mbYes, mbNo], 0) = mrNo then
-        Exit;
-  end;
-
+  
   if FileExists(Filename + '.yap') then
     if MessageDlg('The default output file "' + Filename + '.yap' + '" already exists.'#13#10'Add the file anyway?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
       Exit;

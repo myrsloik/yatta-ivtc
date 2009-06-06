@@ -13,7 +13,6 @@ function StrToTimeInMilliseconds(Time: string): Integer;
 function StrToTimeInMillisecondsDef(Time: string; Default: Integer): Integer;
 
 function ConfirmDialog(WarningText: string = 'This operation can''t be undone.'#13#10'Continue?'): Boolean;
-function VerifyD2V(Filename: string): string;
 
 function AnsiDequotedStrY(const S: string; const AQuote: Char): string;
 
@@ -114,68 +113,6 @@ begin
     Result := S
   else
     Result := AnsiReplaceStr(AnsiMidStr(S, 2, l - 2), AQuote + AQuote, AQuote);
-end;
-
-function VerifyD2V(Filename: string): string;
-var
-  SL: TStringList;
-  C2, EL, Counter: Integer;
-  Offset: Integer;
-  LastNum: AnsiChar;
-  Line: string;
-  Token: string;
-begin
-  SL := TStringList.Create;
-
-  try
-    SL.LoadFromFile(Filename);
-
-    EL := 0;
-    LastNum := 'o';
-
-    if (SL.Count > 0) and (SL[0] = 'DVD2AVIProjectFile') then
-    begin
-      for C2 := 0 to SL.Count - 1 do
-      begin
-        Line := SL[C2];
-
-        if Line = '' then
-          Inc(EL)
-        else if EL = 2 then
-        begin
-          Offset := 1;
-
-          for Counter := 0 to 2 do
-            GetNextToken(Line, Offset);
-
-          while True do
-          begin
-            Token := GetNextToken(Line, Offset);
-
-            if Token = '' then
-              Break;
-
-            case Token[1] of
-              '0'..'1': if LastNum in ['1', '2'] then Result := Result + ' ' + IntToStr(c2 + 1);
-              '2'..'3': if LastNum in ['0', '3'] then Result := Result + ' ' + IntToStr(c2 + 1);
-              '9': ;
-            else
-              raise Exception.Create('Bad d2v format');
-            end;
-
-            LastNum := Token[1];
-          end;
-        end;
-      end;
-      if Result <> '' then
-        Result := 'Bad transitions in d2v at line(s)' + Result;
-    end
-    else
-      Result := '';
-
-  finally
-    SL.Free;
-  end;
 end;
 
 function ConfirmDialog(WarningText: string): Boolean;
