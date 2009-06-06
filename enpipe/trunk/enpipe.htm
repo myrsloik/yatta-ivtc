@@ -1,0 +1,20 @@
+<html>
+<body>
+<h1>ENPipe 1.0</h1>
+<p>ENPipe stupidly pipes the video/audio output to the command specified. It remembers the last frame/sample returned an makes a minimal effort to keep it linear.</p>
+
+<h2>Usage</h2>
+<p>Mpeg2source("some_progressive.d2v")<br/>
+ENPipe(videocl="x264 --crf 18 -o test.mkv - 720x480")<br/>
+</p>
+
+<h2>Arguments</h2>
+<p>ENPipe(clip, string videocl, string audiocl, bool y4m, int waitms)<br />
+Only the input clip is required but the filter will be a noop() unless videocl or audiocl is specified too since they contain the command to pipe video/audio data to. The remaining determine whether or not to prefix the video data with y4m headers when in yuv and waitms determines how long to wait before checking that both launched commands launched properly.<br />
+In most cases you will want to prefix the command with ConvertToYV12() as that is what most command line encoders expect.
+</p>
+
+<h2>The Rest</h2>
+<p>SCXvid was created by Fredrik Mellbin. You can find my avisynth related things at <a href="http://ivtc.org/">ivtc.org</a>.
+</body>
+</html>
