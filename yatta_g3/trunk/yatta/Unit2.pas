@@ -1517,7 +1517,6 @@ begin
     SL := TStringList.Create;
 
     try
-
       if TempExt = '.d2v' then
       begin
         SL.Append(MPEG2DecName + '_Mpeg2Source("' + Form1.SourceFile + '")');
@@ -1531,6 +1530,7 @@ begin
       else
         SL.Append('AviSource("' + Form1.SourceFile + '")');
 
+      SL.Append(Form1.MakeCutLine);
       SL.Append('');
 
       if Form1.OpenMode in MatchingProjects then

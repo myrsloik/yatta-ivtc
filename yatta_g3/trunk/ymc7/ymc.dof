@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=7
 MinorVer=7
 Release=0
-Build=268
+Build=270
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=Yatta Metrics Collector
-FileVersion=7.7.0.268
+FileVersion=7.7.0.270
 InternalName=YMC
 LegalCopyright=Fredrik Mellbin
 LegalTrademarks=

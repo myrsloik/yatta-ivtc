@@ -1,5 +1,5 @@
 Fix memory leak when closing ymc programmatically
-move ymc progress bars to main window
+move ymc progress bars to the main window
 fix edge case frame trim(0,0) kept when cutting
 zoom out in ymc dialogs, general implementation?
 cutter allows insertion of overlapping ranges?
@@ -29,11 +29,6 @@ desuckify the cutting window
 
 [01:06] <ViruX> since the topic was YATTA questions, i have two questions as well: what does the "Extend Distance to 5" hotkey do?
 Is there any hotkey to switch active custom list(like there is for current preset used on the section)?
-
-[12:38] <TheFluff> Myrsloik: yatta "bug": save small avs doesn't apply the ymc cutter trimmings
-[12:40] <TheFluff> quotation marks because I'm not sure if it's a bug or intended behavior
-
-[22:01] <TheFluff> while you're at it change the save audio avs to use wavsource if the file ends in .wav
 
 save "error log" to project and load on open
 

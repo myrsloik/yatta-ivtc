@@ -13,6 +13,8 @@ type
     CutStart, CutEnd: Integer
   end;
 
+  TCutRanges = array of TCutRange;
+
   TPatternInfo = record
     Pattern: TIntegerDynArray;
     Offset: Integer;
@@ -220,6 +222,7 @@ type
     FPanelHeight: Integer;
     FOriginalPos: TPoint;
     FTextLayer: TBitmapLayer;
+
     procedure GetNext(Frame: Integer);
     procedure GetCurrent(Frame: Integer);
     procedure GetPrevious(Frame: Integer);
@@ -233,7 +236,7 @@ type
     procedure UsePatternButton;
     procedure ShiftPattern;
   public
-    FCuts: array of TCutRange;
+    FCuts: TCutRanges;
     FAudioFile: string;
     FAudioDelay: Integer;
     Distance: Integer;
@@ -263,6 +266,7 @@ type
     property PGEdgeCutoff: Integer read FPGEdgeCutoff write FPGEdgeCutoff;
     property PGFrameLimit: Integer read FPGFrameLimit write FPGFrameLimit;
 
+    function MakeCutLine: string;
     procedure DrawFrame();
     procedure RedrawFrame();
     procedure DecimateByPattern(S, E: Integer);
@@ -3094,24 +3098,19 @@ var
 begin
   FExt := AnsiUpperCase(ExtractFileExt(FileName));
 
-  if (FExt = '.YAP') or (FExt = '.AVS') or (FExt = '.AVI') or (FExt = '.D2V') or (FExt = '.DGA') or (FExt = '.MP4') or (FExt = '.MKV') or (FExt = '.OGM') then
-  begin
-    CloseSource;
+  CloseSource;
 
-    OpenDialog1.FileName := FileName;
-    OpenCloseButton.Caption := 'Close';
+  OpenDialog1.FileName := FileName;
+  OpenCloseButton.Caption := 'Close';
 
-    try
-      v2projectopen.OpenSource(OpenDialog1.FileName);
-    except
-      FreeProject;
-      raise;
-    end;
+  try
+    v2projectopen.OpenSource(OpenDialog1.FileName);
+  except
+    FreeProject;
+    raise;
+  end;
 
-    FreeAndNil(Image2);
-  end
-  else
-    MessageDlg('Unknown file extension.'#13#10'Valid extensions: yap, avs, avi, d2v, mp4, mkv, ogm', mtError, [mbOK], 0);
+  FreeAndNil(Image2);
 end;
 
 procedure TForm1.Setcpenalty1Click(Sender: TObject);
@@ -3209,25 +3208,42 @@ end;
 procedure TForm1.SaveAudioAvs(FileName: string);
 var
   SL: TStringList;
-  TempTrims: TStringDynArray;
-  I: Integer;
-  TrimLine: string;
 begin
   SL := TStringList.Create;
   with SL do
   begin
-    Append(PluginListToScript(GetRequiredPlugins(True, 'FFmpegSource()', PluginPath, SE), PluginPath));
-    
-    Append('FFmpegSource("' + FAudioFile + '", vtrack=-2, atrack=-1)');
+    if AnsiSameText(ExtractFileExt(FileName), '.wav') then
+    begin
+      Append('WavSource("' + FAudioFile + '")');
+    end
+    else
+      Append(PluginListToScript(GetRequiredPlugins(True, 'FFAudioSource()', PluginPath, SE), PluginPath));
+      Append('FFAudioSource("' + FAudioFile + '")');
+    end
+
     with OriginalVideo.GetVideoInfo do
      Append(Format('AudioDub(BlankClip(width=16, height=16, length=%d, fps=%d, fps_denominator=%d), last)', [FActualFramecount, FPSNumerator, FPSDenominator]));
     if FAudioDelay <> 0 then
       Append('DelayAudio(' + FloatToStr(FAudioDelay / 1000) + ')');
     Append('');
+    Append(MakeCutLine);
 
-    if Length(FCuts) = 0 then
-      // do nothing
-    else
+  end;
+  try
+    SL.SaveToFile(FileName);
+  finally
+    SL.Free;
+  end;
+end;
+
+function TForm1.MakeCutLine: string;
+var
+  TempTrims: TStringDynArray;
+  I: Integer;
+  TrimLine: string;
+begin
+  Result := '';
+    if Length(FCuts) > 0 then
     begin
       SetLength(TempTrims, 0);
 
@@ -3258,14 +3274,8 @@ begin
       TrimLine := TempTrims[0];
       for I := 1 to Length(TempTrims) - 1 do
         TrimLine := TrimLine + '++' + TempTrims[I];
-      Append(TrimLine);
-      end;
+      Result := TrimLine;
     end;
-  try
-    SL.SaveToFile(FileName);
-  finally
-    SL.Free;
-  end;
 end;
 
 end.

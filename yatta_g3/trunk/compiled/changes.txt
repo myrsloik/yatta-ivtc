@@ -1,4 +1,9 @@
 7-130
+Will now use FFMS2/WavSource in an audio avs.
+Now adds the cuts when saving a "small avs".
+Will now try to use FFMS2 on all unknown file extensions.
+Added a few more filters to the predefined list.
+Removed autoloading of avisynth 2.0 plugins.
 Fixed the option to have SCXvid save the generated logfile in YMC.
 Added DGAVCSource support.
 Now specifies the reason a NoDecimate range couldn't be added in the log window.
