@@ -859,6 +859,7 @@ begin
       3..4: SL.Append(Format('%sKernelDeint(order=%d,sharp=%s,twoway=%s,threshold=%d)', [IfThen(PostProcessor.ItemIndex = 4, 'Leak'), Form11.RadioGroup1.ItemIndex, IfThen(not SharpKernel.Checked, 'false', 'true'), IfThen(not TwoWayKernel.Checked, 'false', 'true'), Form1.PostThreshold]));
       5: SL.Append(Format('TDeint(clip2=YattaPreMatchClip,hints=true,order=%d,type=%d,sharp=%s)', [Form11.RadioGroup1.ItemIndex, Form1.PostThreshold, IfThen(not SharpKernel.Checked, 'false', 'true')]));
       6: SL.Append(Format('TelecideHints(NNEDI())', []));
+      7: SL.Append(Format('TelecideHints(NNEDI2())', []));
     end;
     SL.Append('');
   end;

@@ -72,6 +72,7 @@
 25 degrainmedian.dll degrainmedian
 25 gradfun2db.dll gradfun2db
 25 nnedi.dll nnedi
+25 nnedi2.dll nnedi2
 25 masktools.dll binarize
 25 masktools.dll combmask
 25 masktools.dll dedgemask

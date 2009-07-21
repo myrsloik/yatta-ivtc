@@ -3210,24 +3210,23 @@ var
   SL: TStringList;
 begin
   SL := TStringList.Create;
-  with SL do
+  with SL, OriginalVideo.GetVideoInfo do
   begin
     if AnsiSameText(ExtractFileExt(FileName), '.wav') then
     begin
-      Append('WavSource("' + FAudioFile + '")');
+      Append('WavSource("' + FAudioFile + '")')
     end
     else
+    begin
       Append(PluginListToScript(GetRequiredPlugins(True, 'FFAudioSource()', PluginPath, SE), PluginPath));
       Append('FFAudioSource("' + FAudioFile + '")');
-    end
+    end;
 
-    with OriginalVideo.GetVideoInfo do
-     Append(Format('AudioDub(BlankClip(width=16, height=16, length=%d, fps=%d, fps_denominator=%d), last)', [FActualFramecount, FPSNumerator, FPSDenominator]));
+    Append(Format('AudioDub(BlankClip(width=16, height=16, length=%d, fps=%d, fps_denominator=%d), last)', [FActualFramecount, FPSNumerator, FPSDenominator]));
     if FAudioDelay <> 0 then
       Append('DelayAudio(' + FloatToStr(FAudioDelay / 1000) + ')');
     Append('');
     Append(MakeCutLine);
-
   end;
   try
     SL.SaveToFile(FileName);

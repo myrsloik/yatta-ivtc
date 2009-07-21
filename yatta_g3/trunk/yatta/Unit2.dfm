@@ -216,7 +216,7 @@ object Form2: TForm2
         Left = 417
         Top = 0
         Width = 93
-        Height = 131
+        Height = 135
         Caption = 'PostProcessor'
         ItemIndex = 0
         Items.Strings = (
@@ -226,13 +226,14 @@ object Form2: TForm2
           'KernelDeint'
           'LeakKDeint'
           'TDeint'
-          'NNEDI')
+          'NNEDI'
+          'NNEDI2')
         TabOrder = 7
         OnClick = PostProcessorClick
       end
       object SaveAvs: TButton
         Left = 421
-        Top = 207
+        Top = 214
         Width = 86
         Height = 22
         Caption = '&Save Avs'
@@ -405,7 +406,7 @@ object Form2: TForm2
       end
       object PreviewAvs: TButton
         Left = 421
-        Top = 229
+        Top = 236
         Width = 86
         Height = 22
         Caption = '&Preview Avs'
@@ -414,7 +415,7 @@ object Form2: TForm2
       end
       object SaveLiteAvs: TButton
         Left = 421
-        Top = 251
+        Top = 258
         Width = 86
         Height = 22
         Caption = 'Save Small AVS'
@@ -423,7 +424,7 @@ object Form2: TForm2
       end
       object PostThreshold: TLabeledEdit
         Left = 416
-        Top = 148
+        Top = 153
         Width = 89
         Height = 21
         EditLabel.Width = 41
@@ -434,7 +435,7 @@ object Form2: TForm2
       end
       object SharpKernel: TCheckBox
         Left = 415
-        Top = 173
+        Top = 178
         Width = 57
         Height = 16
         Caption = 'Sharp'
@@ -445,7 +446,7 @@ object Form2: TForm2
       end
       object TwoWayKernel: TCheckBox
         Left = 415
-        Top = 190
+        Top = 195
         Width = 66
         Height = 16
         Caption = 'TwoWay'
