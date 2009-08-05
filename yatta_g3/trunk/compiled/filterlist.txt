@@ -50,6 +50,7 @@
 25 dgdecode.dll dgdecode_mpeg2source
 25 dgdecode.dll dgdecode_blindpp
 25 dgdecodenv.dll dgsource
+25 dgavcdecode.dll avcsource
 25 ffmpegsource.dll ffmpegsource
 25 ffms2.dll ffindex
 25 ffms2.dll ffvideosource
@@ -204,7 +205,7 @@ Import SeeSaw.avs SeeSaw
 Import TemporalDegrain.avs TemporalDegrain
 Import MC_Spuds.avs MC_Spuds
 Import RemoveDirt.avs RemoveDirt
-Import Derainbow.avs Derainbow
+Import DeRainbow.avs DeRainbow
 Import LUTDeRainbow.avs LUTDeRainbow
 Import HQDering.avs HQDering
 Import MCTemporalDenoise.avs MCTemporalDenoise
