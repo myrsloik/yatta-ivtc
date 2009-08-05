@@ -187,11 +187,6 @@
 25 mvtools.dll mvrecalculate
 25 yadifmod.dll yadifmod
 25 vsfilter.dll textsub
-20Compat loadpluginex.dll -
-20 dustv5.dll pixiedust
-20 dustv5.dll spacedust
-20 dustv5.dll faerydust
-20 dustv5.dll golddust
 Import Deblock_QED.avs Deblock_QED
 Import DeHalo_alpha.avs DeHalo_alpha
 Import FastLineDarken.avs FastLineDarken
