@@ -20,7 +20,8 @@ uses
   yshared in '..\yshared.pas',
   scxvid in 'scxvid.pas' {SCXvidForm},
   cutter in 'cutter.pas' {CutterForm},
-  resize in 'resize.pas' {ResizeForm};
+  resize in 'resize.pas' {ResizeForm},
+  enpipe in 'enpipe.pas' {ENPipeForm};
 
 {$R *.res}
 

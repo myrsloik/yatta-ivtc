@@ -89,6 +89,12 @@ type
     Resizer: string;
   end;
 
+  TENPipeSettings = record
+    VideoCL, AudioCL: string;
+    WaitMS: Integer;
+    Y4M: Boolean;
+  end;
+
   TIT = class(TYMCPlugin)
   private
     FFramecount: Integer;
@@ -273,6 +279,24 @@ type
   TResize = class(TYMCPlugin)
   private
     FSettings: TResizeSettings;
+  protected
+    function GetSettings: string; override;
+  public
+    constructor Create(Settings: string; Selected: Boolean); override;
+    procedure Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string); override;
+    function Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip; override;
+
+    class function GetConfiguration: TYMCPluginConfig; override;
+    class function GetName: string; override;
+    class function GetPluginType: TYMCPluginType; override;
+    class function GetSupportedColorSpaces: TColorSpaces; override;
+    class function GetUsedFunctions: TStringDynArray; override;
+    class function MTSafe: Boolean; override;
+  end;
+
+  TENPipe = class(TYMCPlugin)
+  private
+    FSettings: TENPipeSettings;
   protected
     function GetSettings: string; override;
   public
@@ -1903,6 +1927,86 @@ begin
 end;
 
 class function TResize.MTSafe: Boolean;
+begin
+  Result := True;
+end;
+
+{ TENPipe }
+
+procedure TENPipe.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip;
+  out NewDefault: string);
+begin
+
+end;
+
+constructor TENPipe.Create(Settings: string; Selected: Boolean);
+begin
+  inherited;
+
+  FSettings.WaitMS := StrToIntDef(GetToken(Settings, 0, [',']), 2000);
+  FSettings.Y4M := StrToBoolDef(GetToken(Settings, 1, [',']), false);
+  FSettings.Resizer := GetToken(Settings, 2, [',']);
+end;
+
+class function TENPipe.GetConfiguration: TYMCPluginConfig;
+begin
+  Result := pcNormal;
+end;
+
+class function TENPipe.GetName: string;
+begin
+  Result := 'ENPipe';
+end;
+
+class function TENPipe.GetPluginType: TYMCPluginType;
+begin
+  Result := ypMetricsCollector;
+end;
+
+function TENPipe.GetSettings: string;
+begin
+
+end;
+
+class function TENPipe.GetSupportedColorSpaces: TColorSpaces;
+begin
+  Result := [csYV12, csYUY2, csRGB24, csRGB32];
+end;
+
+class function TENPipe.GetUsedFunctions: TStringDynArray;
+begin
+  SetLength(Result, 1);
+  Result[0] := 'ENPipe';
+end;
+
+function TENPipe.Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip;
+  Preview: Boolean): IAsifClip;
+var
+  VTemp, ATemp: string;
+  VI: VideoInfo;
+begin
+  if Preview then
+    Result := Video
+  else
+    with Env, FSettings do
+    begin
+      VI := Video.GetVideoInfo;
+      VTemp := VideoCL;
+      VTemp := StringReplace(VTemp, '$width', IntToStr(VI.Width))
+      VTemp := StringReplace(VTemp, '$height', IntToStr(VI.Height))
+      ATemp := AudioCL;
+
+      ClipArg(Video);
+      CharArg(VTemp, 'videocl');
+      CharArg(ATemp, 'audiocl');
+      IntArg(WaitMS, 'waitms');
+      BoolArg(Y4M, 'y4m');
+
+      Result := InvokeWithClipResult('ENPipe');
+    end;
+end;
+
+class function TENPipe.MTSafe: Boolean;
 begin
   Result := True;
 end;
