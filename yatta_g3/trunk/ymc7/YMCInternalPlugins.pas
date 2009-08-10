@@ -1945,7 +1945,8 @@ begin
 
   FSettings.WaitMS := StrToIntDef(GetToken(Settings, 0, [',']), 2000);
   FSettings.Y4M := StrToBoolDef(GetToken(Settings, 1, [',']), false);
-  FSettings.Resizer := GetToken(Settings, 2, [',']);
+  FSettings.VideoCL := GetToken(Settings, 3, [',']);
+  FSettings.AudioCL := GetToken(Settings, 4, [',']);
 end;
 
 class function TENPipe.GetConfiguration: TYMCPluginConfig;
@@ -1992,13 +1993,13 @@ begin
     begin
       VI := Video.GetVideoInfo;
       VTemp := VideoCL;
-      VTemp := StringReplace(VTemp, '$width', IntToStr(VI.Width))
-      VTemp := StringReplace(VTemp, '$height', IntToStr(VI.Height))
+      VTemp := AnsiReplaceStr(VTemp, '$width$', IntToStr(VI.Width));
+      VTemp := AnsiReplaceStr(VTemp, '$height$', IntToStr(VI.Height));
       ATemp := AudioCL;
 
       ClipArg(Video);
-      CharArg(VTemp, 'videocl');
-      CharArg(ATemp, 'audiocl');
+      CharArg(PChar(VTemp), 'videocl');
+      CharArg(PChar(ATemp), 'audiocl');
       IntArg(WaitMS, 'waitms');
       BoolArg(Y4M, 'y4m');
 

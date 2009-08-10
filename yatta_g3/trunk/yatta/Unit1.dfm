@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 435
-  Top = 436
+  Left = 431
+  Top = 263
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'YATTA - Version 7-130'
