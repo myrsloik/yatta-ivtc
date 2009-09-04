@@ -1,4 +1,5 @@
 7-130
+Made it possible to import the custom list declarations and general settings from other yaps too.
 Added a resize filter to YMC.
 Will now use FFMS2/WavSource in an audio avs.
 Now adds the cuts when saving a "small avs".

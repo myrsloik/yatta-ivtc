@@ -5,17 +5,6 @@ zoom out in ymc dialogs, general implementation?
 cutter allows insertion of overlapping ranges?
 desuckify the cutting window
 
-[22:57] <Myrsloik> like adding them to all new projects?
-[22:57] <Mentar> there are certain things I need to do all the time
-[22:57] <Mentar> and adding Reblend as Custom list and importing the default presets are among the most annoying
-[23:00] <Myrsloik> this requires the invention of a badly crafted system using weird delimiters and a hereto unknown file format...
-[23:01] <Mentar> how about the ability to define a "default yap"
-[23:01] <Mentar> and when ymc creates a new project, the settings from this default yap are loaded
-[23:01] <Mentar> would that be possible?
-[23:02] <Myrsloik> yes, I guess so
-[23:02] <Myrsloik> what settings should it be possible to copy? custom lists? sections? presets?
-[23:03] <Mentar> custom lists, presets, cropping/resizing defaults
-
 [21:34] <Mentar> could you do this:
 [21:34] <Mentar> When you change a match this way, could you shift the section boundary accordingly?
 [21:34] <Mentar> as in, if you change a match to next frame, could you push the section boundary one to the next too?

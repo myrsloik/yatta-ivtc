@@ -16,6 +16,8 @@ type
     ImportAllButton: TButton;
     CancelButton: TButton;
     ImportSelectedButton: TButton;
+    CustomLists: TCheckBox;
+    AVSSettings: TCheckBox;
     procedure PresetsClick(Sender: TObject);
   private
     { Private declarations }

@@ -1680,6 +1680,12 @@ begin
               with Objects[Counter] as TPreset do
                 AddPreset(Strings[Counter], -1, Chain);
         end;
+
+        if PresetImportForm.CustomLists.Checked then
+          GetTypeCustomLists(pf, True);
+
+        if PresetImportForm.AVSSettings.Checked then
+          GetType0SharedValues(pf);
       end;
 
     finally

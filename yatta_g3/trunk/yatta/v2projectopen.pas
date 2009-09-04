@@ -12,6 +12,8 @@ procedure projectinit;
 function OpenVideo(Filename: string; Mpeg2Dec: string): IAsifClip; // not cleaned
 procedure EnableByProjectType(PT: Integer);
 procedure GetType0Values(IniFile: TMemIniFile);
+procedure GetType0SharedValues(IniFile: TMemIniFile);
+procedure GetTypeCustomLists(IniFile: TMemIniFile; NamesOnly: Boolean = False);
 procedure GetType1Values(IniFile: TMemIniFile);
 procedure GetSections(IniFile: TMemIniFile);
 procedure GetNoDecimateType1(IniFile: TMemIniFile);
@@ -413,25 +415,48 @@ begin
   form2.PostThreshold.Visible := PT in MatchingProjects;
 end;
 
-procedure GetType0Values(IniFile: TMemIniFile);
+procedure GetTypeCustomLists(IniFile: TMemIniFile; NamesOnly: Boolean);
 var
-  SL, SubDiv: tstringlist;
-  HH: string;
+  SL: tstringlist;
   Counter, C2: Integer;
   N: TCustomList;
   Line: string;
-  StarCount: Integer;
-  I: Integer;
 begin
   SL := TStringList.Create;
-  SubDiv := TStringList.Create;
 
   try
     with IniFile do
     begin
-      Form1.FAudioFile := ReadString('YATTA V2', 'AUDIOFILE', '');
-      Form11.AudioFileEdit.Text := Form1.FAudioFile;
+      Counter := 0;
 
+      while SectionExists('Custom List ' + IntToStr(Counter)) do
+      begin
+        ReadSectionValues('Custom List ' + IntToStr(Counter), SL);
+
+        N := TCustomList.Create(AnsiDequotedStrY(SL[0], '"'), AnsiDequotedStrY(SL[1], '"'), AnsiDequotedStrY(SL[2], '"'), TOutputMethod(StrToInt(SL[3])));
+        Form2.CustomRangeLists.AddItem(AnsiDequotedStrY(SL[0], '"'), N);
+
+        if not NamesOnly then
+          for C2 := 4 to SL.Count - 1 do
+          begin
+            Line := SL[c2];
+            N.Add(TCustomRange.Create(StrToInt(GetToken(Line, 0, [','])), StrToInt(GetToken(Line, 1, [',']))));
+          end;
+
+        Inc(counter);
+      end;
+
+    end;
+
+  finally
+    SL.Free;
+  end;
+end;
+
+procedure GetType0SharedValues(IniFile: TMemIniFile);
+begin
+    with IniFile do
+    begin
       Form1.FAudioDelay := ReadInteger('YATTA V2', 'AUDIODELAY', 0);
       Form11.AudioDelayLabeledEdit.Text := IntToStr(Form1.FAudioDelay);
 
@@ -448,8 +473,6 @@ begin
 
       Form2.CropOn.Checked := ReadBool('YATTA V2', 'CROP', True);
 
-      Form1.TrackBar1.Position := ReadInteger('YATTA V2', 'FRAME', 0);
-
       with CropForm do
       begin
         TrackBarChange(nil);
@@ -463,6 +486,33 @@ begin
       end;
 
       Form2.ResizeOn.Checked := not Readbool('YATTA V2', 'Anamorphic', False);
+    end;
+end;
+
+procedure GetType0Values(IniFile: TMemIniFile);
+var
+  SL, SubDiv: tstringlist;
+  HH: string;
+  Counter: Integer;
+  Line: string;
+  StarCount: Integer;
+  I: Integer;
+begin
+  GetType0SharedValues(IniFile);
+
+  SL := TStringList.Create;
+  SubDiv := TStringList.Create;
+
+  try
+    with IniFile do
+    begin
+      Form1.FAudioFile := ReadString('YATTA V2', 'AUDIOFILE', '');
+      Form11.AudioFileEdit.Text := Form1.FAudioFile;
+
+      Form1.FAudioDelay := ReadInteger('YATTA V2', 'AUDIODELAY', 0);
+      Form11.AudioDelayLabeledEdit.Text := IntToStr(Form1.FAudioDelay);
+
+      Form1.TrackBar1.Position := ReadInteger('YATTA V2', 'FRAME', 0);
 
       ReadSectionValues('DECIMATEMETRICS', SL);
 
@@ -527,31 +577,14 @@ begin
         LabeledEdit6.Text := GetPresetName(Form1.PostDecimate);
         LabeledEdit7.Text := GetPresetName(Form1.PostResize);
       end;
-
-      Counter := 0;
-
-      while SectionExists('Custom List ' + IntToStr(Counter)) do
-      begin
-        ReadSectionValues('Custom List ' + IntToStr(Counter), SL);
-
-        N := TCustomList.Create(AnsiDequotedStrY(SL[0], '"'), AnsiDequotedStrY(SL[1], '"'), AnsiDequotedStrY(SL[2], '"'), TOutputMethod(StrToInt(SL[3])));
-        Form2.CustomRangeLists.AddItem(AnsiDequotedStrY(SL[0], '"'), N);
-
-        for C2 := 4 to SL.Count - 1 do
-        begin
-          Line := SL[c2];
-          n.Add(TCustomRange.Create(StrToInt(GetToken(Line, 0, [','])), StrToInt(GetToken(Line, 1, [',']))));
-        end;
-
-        Inc(counter);
-      end;
-
     end;
 
   finally
     SubDiv.Free;
     SL.Free;
   end;
+
+  GetTypeCustomLists(IniFile);
 end;
 
 procedure GetType1Values(IniFile: TMemIniFile);
