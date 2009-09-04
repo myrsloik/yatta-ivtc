@@ -176,6 +176,13 @@ begin
 
   Form1.FileOpen := True;
 
+  if not IniFile.ReadBool('YATTA V2', 'HasImportedDefaultSettings', False) then
+    if MessageDlg('No default settings have been imported for this project. Import settings now?', mtInformation, [mbYes, mbNo], 0) = mrYes then
+      try
+        Form2.ImportFromProject(Form11.DefaultSettingsProject.Text);
+      except
+      end;
+
   Form1.RedrawFrame;
 end;
 

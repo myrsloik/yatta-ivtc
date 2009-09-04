@@ -1529,6 +1529,7 @@ begin
     Append('PREDECIMATE2=' + IntToStr(PreDecimate));
     Append('POSTDECIMATE2=' + IntToStr(PostDecimate));
     Append('POSTRESIZE2=' + IntToStr(PostResize));
+    Append('HASIMPORTEDDEFAULTSETTINGS=1');
     Append('');
     Append('[PRESETS]');
 

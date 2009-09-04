@@ -41,6 +41,7 @@ type
     AudioDelayLabeledEdit: TLabeledEdit;
     AudioSelectOpenDialog: TOpenDialog;
     CheckBox7: TCheckBox;
+    DefaultSettingsProject: TLabeledEdit;
     procedure LabeledEdit2Change(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure RadioGroup1Click(Sender: TObject);
@@ -54,6 +55,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure AudioFileEditClick(Sender: TObject);
     procedure AudioDelayLabeledEditChange(Sender: TObject);
+    procedure DefaultSettingsProjectClick(Sender: TObject);
   private
 
   public
@@ -67,7 +69,8 @@ implementation
 
 {$R *.dfm}
 
-uses unit1, math, Unit2, v2projectopen, asif, asifadditions, keymap, keydefaults;
+uses unit1, math, Unit2, v2projectopen, asif, asifadditions, keymap, keydefaults,
+  IniFiles;
 
 procedure LoadKeyMapping(const EventId: TKeyEvent; var KeyRec: TKeyRecord);
 var IniKey: Integer;
@@ -137,6 +140,8 @@ begin
 
   LabeledEdit1.Text := pluginpath;
 
+  DefaultSettingsProject.Text := Settings.ReadString('MAIN', 'DefaultSettingsProject', '');
+
   CheckBox1.Checked := Settings.Readbool('MAIN', 'FullSave', false);
   CheckBox2.Checked := Settings.Readbool('MAIN', 'ShowMetric', true);
   CheckBox3.Checked := Settings.Readbool('MAIN', 'ShowSection', true);
@@ -177,6 +182,7 @@ begin
     WriteInteger('MAIN', 'DEFAULTPROJECTTYPE', form11.RadioGroup3.ItemIndex);
     WriteBool('MAIN', 'PreviewCurrentFrame', form11.CheckBox10.Checked);
     WriteString('MAIN', 'PluginDir', form11.LabeledEdit1.Text);
+    WriteString('MAIN', 'DefaultSettingsProject', DefaultSettingsProject.Text);
 
     WriteBool('MAIN', 'FullSave', form11.CheckBox1.Checked);
     WriteBool('MAIN', 'ShowMetric', form11.CheckBox2.Checked);
@@ -285,6 +291,12 @@ begin
     AudioDelayLabeledEdit.Color := clYellow;
     Form1.FAudioDelay := 0;
   end;
+end;
+
+procedure TForm11.DefaultSettingsProjectClick(Sender: TObject);
+begin
+  if Form1.OpenDialog1.Execute then
+    DefaultSettingsProject.Text := Form1.OpenDialog1.FileName;
 end;
 
 end.

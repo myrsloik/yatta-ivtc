@@ -286,7 +286,8 @@ type
     function GetNoDecimateRange(InRange: Integer): TDecimateInfo;
     function AddNoDecimate(StartFrame, EndFrame: Integer): TNoDecAddRejections;
     function MakeOverrideList(FunctionList: TStringList; PreviewScript: Boolean): TStringList;
-
+    
+    procedure ImportFromProject(Filename: string);
     procedure DeleteSection(Index: Integer);
     procedure UpdateSectionList;
 
@@ -1619,7 +1620,7 @@ begin
   end;
 end;
 
-procedure TForm2.Button3Click(Sender: TObject);
+procedure TForm2.ImportFromProject(Filename: string);
 var
   pf: TMemIniFile;
   sl, subdiv: tstringlist;
@@ -1630,8 +1631,6 @@ var
   StarCount: Integer;
   CurrentLine: string;
 begin
-  if OpenDialog3.Execute then
-  begin
     pf := nil;
 
     PresetImportForm.Presets.Clear;
@@ -1641,7 +1640,7 @@ begin
     subdiv := TStringList.Create;
 
     try
-      pf := TMemIniFile.Create(OpenDialog3.FileName);
+      pf := TMemIniFile.Create(Filename);
 
       pf.ReadSectionValues('PRESETS', sl);
 
@@ -1696,7 +1695,12 @@ begin
       for Counter := 0 to PresetImportForm.Presets.Count - 1 do
         PresetImportForm.Presets.Items.Objects[Counter].Free;
     end;
-  end;
+end;
+
+procedure TForm2.Button3Click(Sender: TObject);
+begin
+  if OpenDialog3.Execute then
+    ImportFromProject(OpenDialog3.FileName);
 end;
 
 procedure TForm2.Button20Click(Sender: TObject);

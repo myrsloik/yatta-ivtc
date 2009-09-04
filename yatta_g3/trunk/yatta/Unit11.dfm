@@ -1,11 +1,10 @@
 object Form11: TForm11
-  Left = 194
-  Top = 107
-  AutoSize = True
+  Left = 464
+  Top = 508
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Settings'
-  ClientHeight = 221
+  ClientHeight = 236
   ClientWidth = 386
   Color = clBtnFace
   DefaultMonitor = dmMainForm
@@ -25,8 +24,8 @@ object Form11: TForm11
     Left = 0
     Top = 0
     Width = 386
-    Height = 221
-    ActivePage = TabSheet3
+    Height = 236
+    ActivePage = TabSheet1
     Align = alClient
     TabOrder = 0
     object TabSheet3: TTabSheet
@@ -34,7 +33,7 @@ object Form11: TForm11
       ImageIndex = 2
       DesignSize = (
         378
-        193)
+        208)
       object RadioGroup1: TRadioGroup
         Left = 256
         Top = 0
@@ -53,7 +52,7 @@ object Form11: TForm11
         Left = 256
         Top = 55
         Width = 121
-        Height = 58
+        Height = 73
         Anchors = [akLeft, akTop, akBottom]
         Caption = 'Mpeg2Dec'
         ItemIndex = 1
@@ -66,13 +65,13 @@ object Form11: TForm11
         Left = 0
         Top = 54
         Width = 251
-        Height = 59
+        Height = 74
         Anchors = [akLeft, akTop, akBottom]
         Caption = 'New Project Type'
         ItemIndex = 0
         Items.Strings = (
           '0 (freezeframing and sectioning only)'
-          '1 (with decomb overrides and vfr)')
+          '1 (with field matching overrides and vfr)')
         TabOrder = 2
       end
       object GroupBox1: TGroupBox
@@ -142,7 +141,7 @@ object Form11: TForm11
       Caption = 'Global Settings'
       object CheckBox1: TCheckBox
         Left = 3
-        Top = 56
+        Top = 104
         Width = 206
         Height = 16
         Caption = 'Save all override files too (save button)'
@@ -150,7 +149,7 @@ object Form11: TForm11
       end
       object CheckBox2: TCheckBox
         Left = 216
-        Top = 104
+        Top = 152
         Width = 209
         Height = 16
         Caption = 'Show Metrics'
@@ -161,7 +160,7 @@ object Form11: TForm11
       end
       object CheckBox3: TCheckBox
         Left = 216
-        Top = 120
+        Top = 168
         Width = 145
         Height = 16
         Caption = 'Show Section Info'
@@ -172,7 +171,7 @@ object Form11: TForm11
       end
       object CheckBox4: TCheckBox
         Left = 216
-        Top = 88
+        Top = 136
         Width = 97
         Height = 16
         Caption = 'Show Pattern'
@@ -183,7 +182,7 @@ object Form11: TForm11
       end
       object CheckBox5: TCheckBox
         Left = 216
-        Top = 72
+        Top = 120
         Width = 137
         Height = 16
         Caption = 'Show Freezeframes'
@@ -194,7 +193,7 @@ object Form11: TForm11
       end
       object CheckBox6: TCheckBox
         Left = 3
-        Top = 72
+        Top = 120
         Width = 193
         Height = 16
         Caption = 'Set nodecimate to c match'
@@ -202,7 +201,7 @@ object Form11: TForm11
       end
       object CheckBox8: TCheckBox
         Left = 3
-        Top = 88
+        Top = 136
         Width = 153
         Height = 16
         Caption = 'Show Frame Number'
@@ -223,7 +222,7 @@ object Form11: TForm11
       end
       object CheckBox10: TCheckBox
         Left = 3
-        Top = 104
+        Top = 152
         Width = 206
         Height = 16
         Caption = 'Jump to current frame when previewing'
@@ -233,7 +232,7 @@ object Form11: TForm11
       end
       object CheckBox15: TCheckBox
         Left = 216
-        Top = 56
+        Top = 104
         Width = 145
         Height = 17
         Caption = 'Show too short warning'
@@ -243,7 +242,7 @@ object Form11: TForm11
       end
       object CheckBox13: TCheckBox
         Left = 3
-        Top = 40
+        Top = 88
         Width = 190
         Height = 17
         Caption = 'Save relevant overrides on preview'
@@ -253,7 +252,7 @@ object Form11: TForm11
       end
       object PGDecimation: TCheckBox
         Left = 216
-        Top = 41
+        Top = 89
         Width = 153
         Height = 17
         Caption = 'Pattern guidance with dec.'
@@ -263,7 +262,7 @@ object Form11: TForm11
       end
       object SwapCustomList: TCheckBox
         Left = 3
-        Top = 119
+        Top = 167
         Width = 190
         Height = 17
         Caption = 'Swap Custom List Entries'
@@ -271,7 +270,7 @@ object Form11: TForm11
       end
       object ShowCLInfo: TCheckBox
         Left = 216
-        Top = 136
+        Top = 184
         Width = 97
         Height = 17
         Caption = 'Show CL Info'
@@ -281,11 +280,23 @@ object Form11: TForm11
       end
       object CheckBox7: TCheckBox
         Left = 3
-        Top = 136
+        Top = 184
         Width = 177
         Height = 16
         Caption = 'Single click jumps to section'
         TabOrder = 14
+      end
+      object DefaultSettingsProject: TLabeledEdit
+        Left = 1
+        Top = 56
+        Width = 377
+        Height = 21
+        EditLabel.Width = 111
+        EditLabel.Height = 13
+        EditLabel.Caption = 'Default Settings Project'
+        ReadOnly = True
+        TabOrder = 15
+        OnClick = DefaultSettingsProjectClick
       end
     end
     object TabSheet2: TTabSheet
@@ -293,7 +304,7 @@ object Form11: TForm11
       ImageIndex = 2
       object Splitter1: TSplitter
         Left = 0
-        Top = 162
+        Top = 177
         Width = 378
         Height = 3
         Cursor = crVSplit
@@ -303,7 +314,7 @@ object Form11: TForm11
         Left = 0
         Top = 0
         Width = 378
-        Height = 162
+        Height = 177
         Align = alClient
         KeyOptions = [keyUnique]
         ScrollBars = ssVertical
@@ -321,7 +332,7 @@ object Form11: TForm11
       end
       object Panel1: TPanel
         Left = 0
-        Top = 165
+        Top = 180
         Width = 378
         Height = 28
         Align = alBottom
