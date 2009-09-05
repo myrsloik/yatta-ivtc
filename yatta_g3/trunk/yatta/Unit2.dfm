@@ -25,7 +25,7 @@ object Form2: TForm2
     Top = 0
     Width = 519
     Height = 311
-    ActivePage = TabSheet1
+    ActivePage = TabSheet8
     Align = alClient
     TabOrder = 0
     object TabSheet8: TTabSheet
@@ -713,8 +713,8 @@ object Form2: TForm2
   end
   object OpenDialog1: TOpenDialog
     Filter = 
-      'First pass log files (*.pass;*.ffstats;*.txt)|*.pass;*.ffstats;*' +
-      '.txt'
+      'First pass log files (*.log;*.pass;*.ffstats;*.txt)|*.log;*.pass' +
+      ';*.ffstats;*.txt'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
     Left = 432
     Top = 8

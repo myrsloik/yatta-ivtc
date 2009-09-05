@@ -50,6 +50,4 @@ save "error log" to project and load on open
 [22:55] <Mentar> 2) Ancient request, but still highly desired
 [22:55] <Mentar> let yatta auto-import presets from a predefined .yap
 
-Scan all plugins automatically in the selected dir instead of keeping a complicated list up to date?
-
 [01:22] <Kovensky> Myrsloik: basically, resizable video window, with scrollbars to scroll the video
