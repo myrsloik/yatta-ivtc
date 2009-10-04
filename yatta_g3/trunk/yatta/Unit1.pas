@@ -202,6 +202,10 @@ type
     procedure Setminimallength1Click(Sender: TObject);
     procedure SelectLowestVmetricatSectionbounds1Click(Sender: TObject);
     procedure SaveAudioAvs1Click(Sender: TObject);
+    procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+    procedure Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer; Layer: TCustomLayer);
   private
     FMultiple: Integer;
     FFieldClip: IAsifClip;
@@ -223,6 +227,9 @@ type
     FPanelHeight: Integer;
     FOriginalPos: TPoint;
     FTextLayer: TBitmapLayer;
+    FMouseDrag: Boolean;
+    FLastX: Integer;
+    FLastY: Integer;
 
     procedure GetNext(Frame: Integer);
     procedure GetCurrent(Frame: Integer);
@@ -3298,6 +3305,27 @@ begin
         TrimLine := TrimLine + '++' + TempTrims[I];
       Result := TrimLine;
     end;
+end;
+
+procedure TForm1.Image1MouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer; Layer: TCustomLayer);
+begin
+  if Button = mbMiddle then
+    FMouseDrag := not FMouseDrag;
+end;
+
+procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer; Layer: TCustomLayer);
+begin
+  if FMouseDrag then
+  begin
+    ImageBox.HorzScrollBar.Position := ImageBox.HorzScrollBar.Position + (X - FLastX) div 2;
+    ImageBox.VertScrollBar.Position := ImageBox.VertScrollBar.Position + (Y - FLastY) div 2;
+    ImageBox.Update;
+  end;
+
+  FLastX := X;
+  FLastY := Y;
 end;
 
 end.

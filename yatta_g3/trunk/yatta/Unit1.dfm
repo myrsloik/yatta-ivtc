@@ -235,9 +235,9 @@ object Form1: TForm1
     Top = 0
     Width = 720
     Height = 523
-    HorzScrollBar.Increment = 100
+    HorzScrollBar.Smooth = True
     HorzScrollBar.Tracking = True
-    VertScrollBar.Increment = 100
+    VertScrollBar.Smooth = True
     VertScrollBar.Tracking = True
     Align = alClient
     BorderStyle = bsNone
@@ -253,6 +253,8 @@ object Form1: TForm1
       Scale = 1.000000000000000000
       ScaleMode = smScale
       TabOrder = 0
+      OnMouseDown = Image1MouseDown
+      OnMouseMove = Image1MouseMove
       object Image2: TImage
         Left = 0
         Top = 0
