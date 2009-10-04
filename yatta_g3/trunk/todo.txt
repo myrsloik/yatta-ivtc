@@ -49,5 +49,3 @@ save "error log" to project and load on open
 [22:54] <Mentar> so, optimal usage would be a "quickraw" entry like SCXvid and the likes, and it simply barfs out quickraw.avs and quickraw-audio.avs
 [22:55] <Mentar> 2) Ancient request, but still highly desired
 [22:55] <Mentar> let yatta auto-import presets from a predefined .yap
-
-[01:22] <Kovensky> Myrsloik: basically, resizable video window, with scrollbars to scroll the video

@@ -136,6 +136,7 @@ type
     SelectLowestVmetricatSectionbounds1: TMenuItem;
     SaveAudioAvs1: TMenuItem;
     SaveDialog4: TSaveDialog;
+    ImageBox: TScrollBox;
     procedure TrackBar1Change(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure SaveTelecide1Click(Sender: TObject);
@@ -3035,33 +3036,54 @@ begin
       with FFieldClip.GetVideoInfo do
       begin
         if M > 0 then
-          CH := StatusBar1.Height + Panel1.Height + TrackBar1.Height + Multiple * Height
+        begin
+          CH := StatusBar1.Height + Panel1.Height + TrackBar1.Height + Multiple * Height;
+          ImageBox.VertScrollBar.Range := Multiple * Height;
+          Image1.Height := Multiple * Height;
+        end
         else
+        begin
           CH := StatusBar1.Height + Panel1.Height + TrackBar1.Height + Height div -Multiple;
+          ImageBox.VertScrollBar.Range := Height div -Multiple;
+          Image1.Height := Height div -Multiple;
+        end;
+
         ClientHeight := CH;
 
         if M > 0 then
-          CW := Max(720, Multiple * Width)
+        begin
+          CW := Max(720, Multiple * Width);
+          Image1.Width := Multiple * Width;
+          ImageBox.HorzScrollBar.Range := Multiple * Width;
+        end
         else
+        begin
           CW := Max(720, Width div -Multiple);
+          Image1.Width := Width div -Multiple;
+          ImageBox.HorzScrollBar.Range := Width div -Multiple;
+        end;
+
         ClientWidth := CW;
-
-        if ((ClientHeight <> CH) or (ClientWidth <> CW)) and (Multiple > 1) then
-          Multiple := 1;
-
-        if Multiple = 1 then
-          Image1.ScaleMode := smNormal
-        else
-          Image1.ScaleMode := smScale;
-
-        if M > 0 then
-          Image1.Scale := Multiple
-        else
-          Image1.Scale := 1/-Multiple;
-
-        FTextLayer.Location := FloatRect(0, 0, Image1.Width, Image1.Height);
-        FTextLayer.Bitmap.SetSize(Image1.Width, Image1.Height);
       end;
+
+      if Height > Monitor.Height then
+        Height := Monitor.Height;
+
+      if Width > Monitor.Width then
+        Width := Monitor.Width;
+
+      if Multiple = 1 then
+        Image1.ScaleMode := smNormal
+      else
+        Image1.ScaleMode := smScale;
+
+      if M > 0 then
+        Image1.Scale := Multiple
+      else
+        Image1.Scale := 1/-Multiple;
+
+      FTextLayer.Location := FloatRect(0, 0, Image1.Width, Image1.Height);
+      FTextLayer.Bitmap.SetSize(Image1.Width, Image1.Height);
     end;
 end;
 
