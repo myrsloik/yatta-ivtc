@@ -3179,6 +3179,7 @@ var
   TempFrame: Integer;
 //  SectionsAreSelected: Boolean;
 begin
+  VThresh := 40;
 //  SectionsAreSelected := False;
   SetVariablePrompt(VThresh, 0);
 
