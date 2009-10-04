@@ -3246,10 +3246,10 @@ begin
     begin
       Append('WavSource("' + FAudioFile + '")')
     end
-    else
+    else                            
     begin
-      Append(PluginListToScript(GetRequiredPlugins(True, 'FFAudioSource()', PluginPath, SE), PluginPath));
-      Append('FFAudioSource("' + FAudioFile + '")');
+      Append(PluginListToScript(GetRequiredPlugins(True, 'FFmpegSource()', PluginPath, SE), PluginPath));
+      Append('FFmpegSource("' + FAudioFile + '", vtrack=-2, atrack=-1)');
     end;
 
     Append(Format('AudioDub(BlankClip(width=16, height=16, length=%d, fps=%d, fps_denominator=%d), last)', [FActualFramecount, FPSNumerator, FPSDenominator]));
