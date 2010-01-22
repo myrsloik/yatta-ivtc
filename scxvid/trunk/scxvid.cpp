@@ -44,8 +44,8 @@ public:
 		xvid_enc_create.width = vi.width;
 		xvid_enc_create.height = vi.height;
 		xvid_enc_create.num_threads = xvid_info.num_threads;
-		xvid_enc_create.fincr = vi.fps_numerator;
-		xvid_enc_create.fbase = vi.fps_denominator;
+		xvid_enc_create.fincr = 1;
+		xvid_enc_create.fbase = 1;
 		xvid_enc_create.max_key_interval = 10000000; //huge number
 		xvid_enc_plugin_t plugins[1];
 		xvid_plugin_2pass1_t xvid_rc_plugin;
