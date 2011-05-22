@@ -574,7 +574,7 @@ Hints true/false is now properly set depending on the postprocessor again.
 Fixed automatic preset selection.
 
 5-88
-Yatta only needs mpeg2dec3.dll to be preset for opening d2vs. (no additional files required to start yatta.exe)
+Yatta only needs mpeg2dec3.dll to be present for opening d2vs. (no additional files required to start yatta.exe)
 Small fixes everywhere. Like where vfr files really are saved and updating the shown image after changes are made.
 Projects without dmetrics made smaller.
 Ctrl+b sets the section to the lowest vmetric matches. P matches get a +10 value.
