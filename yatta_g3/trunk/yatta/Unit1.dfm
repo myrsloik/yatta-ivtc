@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 437
-  Top = 262
+  Left = 350
+  Top = 77
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'YATTA - Version 7-130'
+  Caption = 'YATTA - Version 7-131'
   ClientHeight = 613
   ClientWidth = 720
   Color = clBtnFace

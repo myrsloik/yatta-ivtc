@@ -12,7 +12,7 @@ type
 
   TKeyIterator = procedure(const EventId: TKeyEvent; var KeyRec: TKeyRecord);
 
-procedure InitKeyMap(const LastEventId: TKeyEvent);
+procedure InitKeyMap;
 procedure UpdateMapping(const EventId: TKeyEvent; const Key: Word; const ShiftState: TShiftState); overload;
 procedure UpdateMapping(const EventId: TKeyEvent; const Key: Word; const ShiftState: TShiftState; const DisplayName: string); overload;
 procedure ClearMappings;
@@ -41,9 +41,9 @@ begin
     Iterator(TKeyEvent(Counter), KeyMappings[Counter]);
 end;
 
-procedure InitKeyMap(const LastEventId: TKeyEvent); //Takes the last enum as argument
+procedure InitKeyMap;
 begin
-  SetLength(KeyMappings, Ord(LastEventId) + 1);
+  SetLength(KeyMappings, Ord(High(TKeyEvent)) + 1);
   ClearMappings;
 end;
 

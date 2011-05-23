@@ -162,7 +162,7 @@ begin
   RadioGroup2.ItemIndex := settings.readInteger('MAIN', 'Mpeg2Decoder', 2);
   RadioGroup3.ItemIndex := settings.readInteger('MAIN', 'DefaultProjectType', 0);
 
-  InitKeyMap(kBackPropagatePreset);
+  InitKeyMap;
   SetDefaultKeys;
   ForEachKeyMapping(LoadKeyMapping);
   ForEachKeyMapping(LoadDisplayMapping);

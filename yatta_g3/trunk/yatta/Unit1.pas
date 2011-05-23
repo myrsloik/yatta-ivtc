@@ -2984,6 +2984,24 @@ begin
             Break;
           end;
     end
+    else if IsKeyEvent(kCycleNextCustomList, msg.CharCode) then
+    begin
+      with Form2.CustomRangeLists do
+        if (ItemIndex < 0) or (ItemIndex >= Count - 1) then
+          ItemIndex := 0
+        else
+          ItemIndex := ItemIndex + 1;
+      DrawFrame;
+    end
+    else if IsKeyEvent(kCyclePrevCustomList, msg.CharCode) then
+    begin
+      with Form2.CustomRangeLists do
+        if ItemIndex <= 0 then
+          ItemIndex := Count - 1
+        else
+          ItemIndex := ItemIndex - 1;
+      DrawFrame;
+    end
     else
       Handled := False;
   end

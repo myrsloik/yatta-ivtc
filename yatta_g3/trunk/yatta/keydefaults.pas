@@ -11,7 +11,7 @@ type
     kNoDecimateS, kOpenTryPatternDialog, kPatternGuidanceOn, kPatternShiftInS,
     kPlay, kPlayFromSStart, kPostprocessSection, kPreviousSection, kPreviousVMatch,
     kReplaceCFrameWithNext, kReplaceCFrameWithPrevious, kResetSection, kSelectLowestVMetricMatches,
-    kSwitchCMatchToPN, kTogglePBasedOnFreqOfUse, kTogglePreset, kMarkCustomList,
+    kSwitchCMatchToPN, kTogglePBasedOnFreqOfUse, kTogglePreset, kMarkCustomList, kCycleNextCustomList, kCyclePrevCustomList,
     kPreview, kNextFrame, kPreviousFrame, kSave,
     kSelectSWithSameP, kGenericDelete, kDeleteCFreezeframe, kFreezeframe, kDeleteCSection, kExtendDistanceTo5, kFindVFR1, kFindVFR2,
     kPostprocess, kReset, kDecimate, kRangeStart, kSectionStart, kGotoFrame, kSwitch, kTryPattern, kUsePattern, kNoDecimate,
@@ -86,6 +86,8 @@ begin
   UpdateMapping(kTogglePBasedOnFreqOfUse, Ord('K'), [], 'Toggle Preset based on freq. of use');
   UpdateMapping(kTogglePreset, Ord('H'), [], 'Toggle Preset');
   UpdateMapping(kMarkCustomList, Ord('C'), [], 'Mark Start/End for a Custom List');
+  UpdateMapping(kCycleNextCustomList, Ord('Z'), [], 'Cycle to the next Custom List');
+  UpdateMapping(kCyclePrevCustomList, Ord('X'), [], 'Cycle to the previous Custom List');
   UpdateMapping(kPreview, VK_F5, [], 'Preview');
   UpdateMapping(kNextFrame, VK_RIGHT, [], 'Next Frame');
   UpdateMapping(kPreviousFrame, VK_LEFT, [], 'Previous Frame');

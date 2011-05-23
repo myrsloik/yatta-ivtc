@@ -1,4 +1,9 @@
+7-131
+Compiled with FastMM 4.97 and Graphics32 1.9.0
+Added keys to cycle through the custom lists. (X/Z default)
+
 7-130
+No final release for you, suckers.
 Generalized the main window zoom a bit more. Now it's perfect.
 Made it possible to import the custom list declarations and general settings from other yaps too.
 Added a resize filter to YMC.
