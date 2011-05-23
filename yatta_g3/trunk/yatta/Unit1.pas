@@ -3002,6 +3002,29 @@ begin
           ItemIndex := ItemIndex - 1;
       DrawFrame;
     end
+    else if IsKeyEvent(kExtendPresetToPrev, msg.CharCode) then
+    begin
+      SIF := Form2.SectionInfo(TrackBar1.Position);
+      PV := False;
+
+      for Counter := SIF.Index - 1 downto 0 do
+        if Form2.Sections[Counter].Preset = SIF.Preset then
+        begin
+          PV := True;
+          Break;
+        end;
+
+      if PV then
+      begin
+        for Counter := SIF.Index - 1 downto 0 do
+        begin
+          if Form2.Sections[Counter].Preset = SIF.Preset then
+            Break;
+          Form2.Sections[Counter].Preset := SIF.Preset;
+        end;
+      Form2.UpdateSectionList;
+      end;
+    end
     else
       Handled := False;
   end

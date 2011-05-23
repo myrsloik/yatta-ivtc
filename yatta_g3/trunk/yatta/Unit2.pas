@@ -599,7 +599,7 @@ end;
 
 procedure TForm2.Button5Click(Sender: TObject);
 begin
-  AddSection(form1.TrackBar1.Position, sectioninfo(form1.TrackBar1.Position).preset, form1.TrackBar1.Position / form1.fps);
+  AddSection(Form1.TrackBar1.Position, SectionInfo(Form1.TrackBar1.Position).Preset, Form1.TrackBar1.Position / Form1.FPS);
   Form1.DrawFrame;
 end;
 

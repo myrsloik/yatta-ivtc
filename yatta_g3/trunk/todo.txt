@@ -1,18 +1,9 @@
-<Mentar> make a hotkey for this functionality:
-<Mentar> "extend this preset backwards to its last instance"
-<Mentar> example is simpler to explain:
-<Mentar> you go through the sections sequentially
-<Mentar> and apply "preset B" where A is default
-<Mentar> then it would be nice if there were a key which checks "what's the preset of the current section" and then goes section-1, section-2, ...section-n
-ccc ccccc cccc   ccc
-
 skip import of default preset in new projects and importing from another project
 auto extract audio offfset
 
-Fix memory leak when closing ymc programmatically
 fix edge case frame trim(0,0) kept when cutting
-zoom out in ymc dialogs, general implementation?
 cutter allows insertion of overlapping ranges?
+zoom out in ymc dialogs, general implementation?
 
 [20:08] <Myrsloik> [21:34] <Mentar> could you do this:
 [20:08] <Myrsloik> [21:34] <Mentar> When you change a match this way, could you shift the section boundary accordingly?
