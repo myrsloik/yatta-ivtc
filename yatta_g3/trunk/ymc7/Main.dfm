@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 577
   Top = 202
   AutoScroll = False
-  Caption = 'Yatta Metrics Collector 7.7'
+  Caption = 'Yatta Metrics Collector 7.8'
   ClientHeight = 450
   ClientWidth = 622
   Color = clBtnFace

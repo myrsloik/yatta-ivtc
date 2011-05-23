@@ -29,6 +29,8 @@ type
     CutEndButton: TButton;
     CutStartEdit: TEdit;
     CutEndEdit: TEdit;
+    Plus50FramesButton: TButton;
+    Minus50FramesButton: TButton;
     procedure GotoButtonClick(Sender: TObject);
     procedure FrameTrackbarChange(Sender: TObject);
     procedure AddCutButtonClick(Sender: TObject);
@@ -38,6 +40,8 @@ type
     procedure DeleteCutButtonClick(Sender: TObject);
     procedure CutEndEditExit(Sender: TObject);
     procedure CutStartEditExit(Sender: TObject);
+    procedure Plus50FramesButtonClick(Sender: TObject);
+    procedure Minus50FramesButtonClick(Sender: TObject);
   private
     FVideo: IAsifClip;
   public
@@ -174,6 +178,16 @@ begin
     CutEndEdit.Text := IntToStr(FrameTrackbar.SelEnd);
   except
   end;
+end;
+
+procedure TCutterForm.Plus50FramesButtonClick(Sender: TObject);
+begin
+  FrameTrackbar.Position := FrameTrackbar.Position + 50;
+end;
+
+procedure TCutterForm.Minus50FramesButtonClick(Sender: TObject);
+begin
+  FrameTrackbar.Position := FrameTrackbar.Position - 50;
 end;
 
 end.

@@ -1,7 +1,3 @@
-<Mentar> question about YMC
-<Mentar> is it possible to have "frame+50" kind of shortcuts in the cut window?
-<Mentar> jumping with mouse cursor is a bit of a pain
-
 <Mentar> make a hotkey for this functionality:
 <Mentar> "extend this preset backwards to its last instance"
 <Mentar> example is simpler to explain:
@@ -14,11 +10,9 @@ skip import of default preset in new projects and importing from another project
 auto extract audio offfset
 
 Fix memory leak when closing ymc programmatically
-move ymc progress bars to the main window
 fix edge case frame trim(0,0) kept when cutting
 zoom out in ymc dialogs, general implementation?
 cutter allows insertion of overlapping ranges?
-desuckify the cutting window
 
 [20:08] <Myrsloik> [21:34] <Mentar> could you do this:
 [20:08] <Myrsloik> [21:34] <Mentar> When you change a match this way, could you shift the section boundary accordingly?

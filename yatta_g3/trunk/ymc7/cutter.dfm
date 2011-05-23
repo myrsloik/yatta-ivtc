@@ -1,11 +1,11 @@
 object CutterForm: TCutterForm
-  Left = 312
-  Top = 310
+  Left = 326
+  Top = 111
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cutter'
   ClientHeight = 542
-  ClientWidth = 848
+  ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,7 +15,7 @@ object CutterForm: TCutterForm
   OldCreateOrder = False
   Position = poDefaultPosOnly
   DesignSize = (
-    848
+    655
     542)
   PixelsPerInch = 96
   TextHeight = 13
@@ -43,7 +43,7 @@ object CutterForm: TCutterForm
   object FrameTrackbar: TTrackBar
     Left = 0
     Top = 483
-    Width = 849
+    Width = 656
     Height = 27
     Anchors = [akLeft, akRight, akBottom]
     PageSize = 50
@@ -54,7 +54,7 @@ object CutterForm: TCutterForm
   object Image: TImage32
     Left = 128
     Top = 0
-    Width = 720
+    Width = 527
     Height = 480
     Anchors = [akLeft, akTop, akRight, akBottom]
     Bitmap.ResamplerClassName = 'TNearestResampler'
@@ -131,5 +131,25 @@ object CutterForm: TCutterForm
     Anchors = [akLeft, akBottom]
     TabOrder = 10
     OnExit = CutEndEditExit
+  end
+  object Plus50FramesButton: TButton
+    Left = 488
+    Top = 512
+    Width = 75
+    Height = 25
+    Anchors = [akLeft, akBottom]
+    Caption = '&Jump +50'
+    TabOrder = 11
+    OnClick = Plus50FramesButtonClick
+  end
+  object Minus50FramesButton: TButton
+    Left = 568
+    Top = 512
+    Width = 75
+    Height = 25
+    Anchors = [akLeft, akBottom]
+    Caption = 'J&ump -50'
+    TabOrder = 12
+    OnClick = Minus50FramesButtonClick
   end
 end

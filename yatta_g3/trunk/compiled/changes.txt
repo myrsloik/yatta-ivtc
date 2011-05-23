@@ -1,4 +1,5 @@
 7-131
+Added buttons and hotkeys to jump +-50 frames in the YMC cutter.
 Compiled with FastMM 4.97 and Graphics32 1.9.0
 Added keys to cycle through the custom lists. (X/Z default)
 
