@@ -3218,17 +3218,13 @@ var
   I: Integer;
   VThresh: Integer;
   TempFrame: Integer;
-//  SectionsAreSelected: Boolean;
 begin
   VThresh := 40;
-//  SectionsAreSelected := False;
   SetVariablePrompt(VThresh, 0);
 
   for I := 0 to Form2.SectionCount - 1 do
-    //if Form2.SectionSelected[I] then
       with Form2.Sections[I] do
       begin
-//        SectionsAreSelected := True;
 
         if (I > 0) then
         begin
@@ -3261,9 +3257,6 @@ begin
       end;
 
   DrawFrame;
-
-//  if not SectionsAreSelected then
-//    MessageDlg('No sections are selected', mtError, [mbOK], 0);
 end;
 
 procedure TForm1.SaveAudioAvs1Click(Sender: TObject);
