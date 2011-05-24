@@ -1652,6 +1652,13 @@ begin
           Append(Format('%d,%d', [StartFrame, EndFrame]));
     end;
 
+
+    Append('');
+    Append('[ERROR LOG]');
+    with Logwindow.LogList.Items do
+      for C2 := 0 to Count - 1 do
+        SL.Append(Format('%d %s', [Integer(Objects[C2]), Strings[C2]]));
+
     try
       SaveToFile(Filename + '.tmp');
       if (not FileExists(Filename)) or DeleteFile(Filename) then

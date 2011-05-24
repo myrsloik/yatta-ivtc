@@ -2,7 +2,7 @@ unit v2projectopen;
 
 interface
 
-uses unit6, graphics, math, unit1, inifiles, asif, strutils, sysutils, unit11, classes, unit2, crop, dialogs, controls, yshared;
+uses unit6, graphics, math, unit1, inifiles, asif, strutils, sysutils, unit11, classes, unit2, crop, dialogs, controls, yshared, logbox;
 
 procedure OpenSource(Filename: string);
 procedure OpenProject(IniFile: TMemIniFile); // not cleaned
@@ -560,6 +560,15 @@ begin
 
           Form2.AddPreset(AnsiDequotedStrY(SubDiv[2], '"'), StrToInt(SubDiv[0]), HH);
         end;
+      end;
+
+      ReadSectionValues('ERROR LOG', SL);
+
+      for Counter := 0 to SL.Count - 1 do
+      begin
+        Line := SL[Counter];
+        if Line <> '' then
+          Logwindow.LogList.AddItem(RightStr(Line, Length(Line) - AnsiPos(' ', Line)), TObject(StrToInt(GetToken(Line, 0, [' ']))));
       end;
 
       if Form2.PresetCount = 0 then

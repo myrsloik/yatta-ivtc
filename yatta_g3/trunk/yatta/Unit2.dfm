@@ -1,5 +1,5 @@
 object Form2: TForm2
-  Left = 451
+  Left = 566
   Top = 178
   AutoScroll = False
   Caption = 'Tools'
@@ -134,7 +134,7 @@ object Form2: TForm2
         AutoCloseUp = True
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 0
+        ItemHeight = 13
         Sorted = True
         TabOrder = 0
         OnChange = ComboBox2Change

@@ -28,5 +28,3 @@ zoom out in ymc dialogs, general implementation?
 [20:13] <Mentar> see what I mean?
 [20:13] <Myrsloik> ok, so it's only when doing that kind of thing?
 [20:13] <Mentar> right
-
-save "error log" to project and load on open

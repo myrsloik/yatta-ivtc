@@ -1,5 +1,5 @@
 object Logwindow: TLogwindow
-  Left = 287
+  Left = 360
   Top = 205
   Width = 566
   Height = 406
@@ -20,8 +20,8 @@ object Logwindow: TLogwindow
   object LogList: TListBox
     Left = 0
     Top = 0
-    Width = 558
-    Height = 379
+    Width = 550
+    Height = 368
     Align = alClient
     ItemHeight = 13
     MultiSelect = True
