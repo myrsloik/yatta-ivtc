@@ -3,7 +3,7 @@ unit Matching;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, IniFiles, Graphics, Controls, Forms,
+  FastMM4, Windows, Messages, SysUtils, Classes, IniFiles, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, Math, ComCtrls, strutils, Menus, YattaProject,
   AppEvnts, YShared, ActnList, GR32_Image, AsifAdditions;
 
