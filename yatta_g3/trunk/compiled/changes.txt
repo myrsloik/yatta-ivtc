@@ -1,4 +1,5 @@
 7-131
+Dropped all sclavc support. SCXvid has better in every way for many years now.
 Now saves and loads the messages in the log window.
 Extend preset backward to previous occurrence key. (default b)
 Added buttons and hotkeys to jump +-50 frames in the YMC cutter.

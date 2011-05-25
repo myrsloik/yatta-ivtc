@@ -9,7 +9,6 @@ uses
   YMCPlugin in 'YMCPlugin.pas',
   YMCInternalPlugins in 'YMCInternalPlugins.pas',
   telecide in 'telecide.pas' {TelecideForm},
-  sc in 'sc.pas' {SClavcForm},
   crop in 'crop.pas' {CropForm},
   Asif in '..\Asif.pas',
   AsifAdditions in '..\AsifAdditions.pas',

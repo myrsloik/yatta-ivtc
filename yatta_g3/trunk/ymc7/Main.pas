@@ -9,7 +9,7 @@ uses
   XPMan;
 
 const
-  INIVersion = 19;
+  INIVersion = 20;
   MainIniKey = 'YMC7';
 
 type

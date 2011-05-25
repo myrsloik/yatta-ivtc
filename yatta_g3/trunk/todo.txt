@@ -1,30 +1,5 @@
-skip import of default preset in new projects and importing from another project
 auto extract audio offfset
+auto suggest the first matching audio file on the first project open
 
-fix edge case frame trim(0,0) kept when cutting
 cutter allows insertion of overlapping ranges?
 zoom out in ymc dialogs, general implementation?
-
-[20:08] <Myrsloik> [21:34] <Mentar> could you do this:
-[20:08] <Myrsloik> [21:34] <Mentar> When you change a match this way, could you shift the section boundary accordingly?
-[20:08] <Myrsloik> [21:34] <Mentar> as in, if you change a match to next frame, could you push the section boundary one to the next too?
-[20:08] <Myrsloik> [21:35] <Mentar> no wait it's the other way around
-[20:08] <Myrsloik> [21:35] <Mentar> if you change it to next frame, it needs to be moved -1
-[20:08] <Myrsloik> [21:36] <Mentar> or is my brain rotten
-[20:08] <Myrsloik> [21:36] <Mentar> wait
-[20:08] <Myrsloik> [21:36] <Mentar> I've drunken too much
-[20:08] <Myrsloik> [21:36] <Mentar> once I'm sober again, I'll write it down properly ^_^;
-[20:08] <Myrsloik> [21:37] <Mentar> currently, one effect is that if you use it, you sometimes have one frame "overlap", which makes the section boundary seem off by 1 frame
-[20:08] <Myrsloik> and you never sobered up
-[20:09] <Mentar> hmmm
-[20:11] <Mentar> I need to make a few more tests if what I think it does really does it
-[20:11] <Mentar> maybe you can help me think
-[20:11] <Mentar> if the "auto-boundary" function changes the match of a frame
-[20:11] <Myrsloik> I don't know what to think
-[20:11] <Mentar> okay, let me rephrase
-[20:11] <Mentar> the auto-small-vthresh-at-boundary changes a match of a frame
-[20:12] <Mentar> if it changes the match "backwards" (like, by changing to "p"), then make sure that the section ENDS on this frame
-[20:13] <Mentar> if it changes the match "forwards", make sure that the new section BEGINS on this frame
-[20:13] <Mentar> see what I mean?
-[20:13] <Myrsloik> ok, so it's only when doing that kind of thing?
-[20:13] <Mentar> right

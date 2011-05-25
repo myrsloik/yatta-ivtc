@@ -135,27 +135,6 @@ type
     class function GetUsedFunctions: TStringDynArray; override;
   end;
 
-  TSClavc = class(TYMCPlugin)
-  private
-    FBlockCount: Integer;
-    FSettings: TSClavcSettings;
-  protected
-    FLogPath: string;
-    function GetSettings: string; override;
-  public
-    constructor Create(Settings: string; Selected: Boolean); override;
-    procedure Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string); override;
-    function Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip; override;
-    procedure ProcessLog(Log: TStrings; Outfile: TStrings; var Header: TYMCProjectHeader); override;
-
-    class function GetConfiguration: TYMCPluginConfig; override;
-    class function GetName: string; override;
-    class function GetPluginType: TYMCPluginType; override;
-    class function GetSupportedColorSpaces: TColorSpaces; override;
-    class function GetUsedFunctions: TStringDynArray; override;
-    class function MTSafe: Boolean; override;
-  end;
-
   TSCXvid = class(TYMCPlugin)
   private
     FSettings: TSCXvidSettings;
@@ -318,11 +297,11 @@ procedure YMCPluginInit(AddPlugin: TAddPlugin);
 implementation
 
 uses
-  telecide, sc, crop, it, tfm, scxvid, cutter, resize;
+  telecide, crop, it, tfm, scxvid, cutter, resize;
 
 const
-  PluginClasses: array[0..10] of TYMCPluginClass =
-  (TCutter, TCrop, TIT, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TSClavc, TDecimate, TTDecimate, TResize);
+  PluginClasses: array[0..9] of TYMCPluginClass =
+  (TCutter, TCrop, TIT, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TDecimate, TTDecimate, TResize);
 
 function MemoryToHex(Ptr: Pointer; Size: Integer): string;
 var
@@ -1419,162 +1398,6 @@ begin
   Outfile.Append('');
 
   DeleteFile(FLogPath);
-end;
-
-{ TSClavc }
-
-constructor TSClavc.Create(Settings: string; Selected: Boolean);
-begin
-  inherited;
-
-  with FSettings do
-  begin
-    PreMe := 1;
-    Cmp := 0;
-    SubCmp := 0;
-    MBCmp := 0;
-    Dia := 1;
-    PreDia := 1;
-    V4MV := False;
-    LogOutput := '';
-  end;
-
-  if Settings <> '' then
-    HexToMemory(Settings, @FSettings);
-end;
-
-class function TSClavc.GetConfiguration: TYMCPluginConfig;
-begin
-  Result := pcNormal;
-end;
-
-class function TSClavc.GetPluginType: TYMCPluginType;
-begin
-  Result := ypMetricsCollector;
-end;
-
-function TSClavc.GetSettings: string;
-begin
-  Result := MemoryToHex(@FSettings, SizeOf(FSettings));
-end;
-
-class function TSClavc.GetSupportedColorSpaces: TColorSpaces;
-begin
-  Result := [csYV12];
-end;
-
-class function TSClavc.GetUsedFunctions: TStringDynArray;
-begin
-  SetLength(Result, 1);
-  Result[0] := 'SClavc';
-end;
-
-procedure TSClavc.ProcessLog(Log: TStrings; Outfile: TStrings; var Header: TYMCProjectHeader);
-var
-  Counter: Integer;
-  SCLavcLog: TStringList;
-  TS: string;
-  Line: string;
-begin
-  SCLavcLog := TStringList.Create;
-
-  try
-    SCLavcLog.LoadFromFile(FLogPath);
-
-    Outfile.Append('[SECTIONS]');
-
-    for Counter := 0 to SCLavcLog.Count - 1 do
-    begin
-      Line := SCLavcLog[Counter];
-
-      if not AnsiStartsStr('#', Line) then
-      begin
-        TS := GetToken(Line, 12);
-        TS := RightStr(TS, Length(TS) - AnsiPos(':', TS));
-        TS := LeftStr(TS, Length(TS) - 1);
-
-        if StrToInt(TS) > 0.85 * FBlockCount then
-        begin
-          TS := GetToken(Line, 0);
-          Outfile.Append(RightStr(TS, Length(TS) - AnsiPos(':', TS)) + ',0');
-        end;
-      end;
-    end;
-  finally
-    SCLavcLog.Free;
-  end;
-
-  if FSettings.LogOutput <> '' then
-    CopyFile('', FSettings.LogOutput, False);
-
-  DeleteFile(FLogPath);
-end;
-
-procedure TSClavc.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string);
-begin
-  with TSClavcForm.Create(nil), FSettings do
-  try
-    CmpGroup.ItemIndex := Cmp;
-    PreMeGroup.ItemIndex := PreMe;
-    SubCmpGroup.ItemIndex := SubCmp;
-    MbCmpGroup.ItemIndex := MBCmp;
-    V4MVCheckbox.Checked := V4MV;
-    LogEdit.Text := LogOutput;
-    DiaEdit.Text := IntToStr(Dia);
-    PreDiaEdit.Text := IntToStr(PreDia);
-    ShowModal;
-
-    Cmp := CmpGroup.ItemIndex;
-    PreMe := PreMeGroup.ItemIndex;
-    SubCmp := SubCmpGroup.ItemIndex;
-    MBCmp := MbCmpGroup.ItemIndex;
-    V4MV := V4MVCheckbox.Checked;
-    StrCopy(LogOutput, PChar(LogEdit.Text));
-    Dia := strtointdef(DiaEdit.Text, 1);
-    PreDia := strtointdef(PreDiaEdit.Text, 1);
-
-    if MakeDefault.Checked then
-      NewDefault := GetSettings;
-
-  finally
-    Free;
-  end;
-end;
-
-class function TSClavc.GetName: string;
-begin
-  Result := 'SClavc';
-end;
-
-function TSClavc.Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip;
-begin
-  with Video.GetVideoInfo do
-    FBlockCount := ((Width + 15) div 16) * ((Height + 15) div 16);
-
-  if Preview then
-    Result := Video
-  else
-    with Env, FSettings do
-    begin
-      ClipArg(Video);
-      IntArg(MBCmp, 'mbcmp');
-      IntArg(Cmp, 'cmp');
-      IntArg(SubCmp, 'subcmp');
-      IntArg(PreMe, 'preme');
-      IntArg(Dia, 'dia');
-      IntArg(PreDia, 'predia');
-      BoolArg(V4MV, 'v4mv');
-
-      FLogPath := GetTempFile;
-      CharArg(PChar(FLogPath), 'log');
-
-      Result := InvokeWithClipResult('SClavc');
-    end;
-end;
-
-class function TSClavc.MTSafe: Boolean;
-begin
-  Result := True;
 end;
 
 { TSCXvid }
