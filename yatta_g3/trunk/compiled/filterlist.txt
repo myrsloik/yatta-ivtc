@@ -2,6 +2,7 @@
 25 decomb.dll decimate
 25 decomb.dll iscombed
 25 decomb.dll fielddeinterlace
+25 addgrainc.dll addgrainc
 25 dnr2_for_25.dll dnr2
 25 fft3dfilter.dll fft3dfilter
 25 fft3dgpu.dll fft3dgpu
@@ -12,6 +13,7 @@
 25 leakkerneldeint.dll leakkerneldeint
 25 tdeint.dll tdeint
 25 tmm.dll tmm
+25 MT.dll MT
 25 tivtc.dll tfm
 25 tivtc.dll tdecimate
 25 scenechange.dll sclavc
@@ -96,6 +98,7 @@
 25 eedi2.dll eedi2
 25 nnedi.dll nnedi
 25 nnedi2.dll nnedi2
+25 nnedi3.dll nnedi3
 25 masktools.dll binarize
 25 masktools.dll combmask
 25 masktools.dll dedgemask
@@ -187,6 +190,8 @@
 25 mvtools.dll mvrecalculate
 25 yadifmod.dll yadifmod
 25 vsfilter.dll textsub
+25 ccc.dll ccc
+25 ThreadRequest.dll ThreadRequest
 Import Deblock_QED.avs Deblock_QED
 Import DeHalo_alpha.avs DeHalo_alpha
 Import FastLineDarken.avs FastLineDarken

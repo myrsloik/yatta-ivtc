@@ -1,4 +1,5 @@
 7-131
+Added some more filters to filterlist.txt.
 Yatta will now try to suggest the appropriate audio file and delay, pressing no in the dialog makes it suggest the next matching file.
 Dropped all sclavc support. SCXvid has better in every way for many years now.
 Now saves and loads the messages in the log window.

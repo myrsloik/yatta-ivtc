@@ -1,4 +1,2 @@
-check ffms2 usage in yatta and ymc
-
 cutter allows insertion of overlapping ranges?
 zoom out in ymc dialogs, general implementation?
