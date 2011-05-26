@@ -129,10 +129,14 @@ begin
 end;
 
 
-procedure openproject(inifile: TMemIniFile);
+procedure OpenProject(IniFile: TMemIniFile);
 var
   SV: AVSValueStruct;
   TempName: string;
+  SearchPath, SearchString: string;
+  FR: TSearchRec;
+  AudioDelay: Integer;
+  const AudioExts: array[0..4] of string = ('.ac3', '.aac', '.wav', '.w64', '.mp2');
 begin
   Form1.SetDefaults;
 
@@ -141,20 +145,20 @@ begin
 
   SE.SetVar('yattavideosource', SV);
 
-  projectcheck(inifile);
+  projectcheck(IniFile);
 
   projectinit;
 
-  Form1.OpenMode := inifile.ReadInteger('YATTA V2', 'TYPE', -1);
+  Form1.OpenMode := IniFile.ReadInteger('YATTA V2', 'TYPE', -1);
 
-  gettype0values(inifile);
+  gettype0values(IniFile);
 
-  getsections(inifile);
+  getsections(IniFile);
 
   if Form1.OpenMode in MatchingProjects then
   begin
-    GetNoDecimateType1(inifile);
-    gettype1values(inifile);
+    GetNoDecimateType1(IniFile);
+    gettype1values(IniFile);
   end;
 
   enablebyprojecttype(Form1.OpenMode);
@@ -163,7 +167,7 @@ begin
 
   Form2.SectionListBox.ItemIndex := 0;
 
-  form1.Caption := 'YATTA - ' + Form1.SaveDialog5.FileName;
+  Form1.Caption := 'YATTA - ' + Form1.SaveDialog5.FileName;
 
   CropForm.FormShow(nil);
 
@@ -183,6 +187,43 @@ begin
       except
       end;
 
+  if not IniFile.ReadBool('YATTA V2', 'HasLookedForAudio', False) then
+  begin
+    SearchPath := LeftStr(Form1.SourceFile, Length(Form1.SourceFile) - Length(ExtractFileExt(Form1.SourceFile)));
+    SearchPath := SearchPath + '*.*';
+    if FindFirst(SearchPath, faReadOnly, FR) = 0 then
+      repeat
+        if AnsiMatchText(ExtractFileExt(FR.Name), AudioExts) then
+        begin
+          AudioDelay := 0;
+          SearchString := AnsiLowerCaseFileName(ExtractFileName(FR.Name));
+          if AnsiPos(' delay ', SearchString) <> 0 then
+          begin
+            SearchString := RightStr(SearchString, Length(SearchString) - AnsiPos(' delay ', SearchString) - 6);
+            SearchString := LeftStr(SearchString, AnsiPos('ms', SearchString) - 1);
+            AudioDelay := StrToIntDef(SearchString, 0);
+          end;
+
+          case MessageDlg('Do you want to set "' + FR.Name + '" with '
+          + IntToStr(AudioDelay) + ' ms delay as the project audio file?',
+          mtConfirmation, mbYesNoCancel, 0) of
+          mrYes:
+          begin
+            Form1.FAudioFile := FR.Name;
+            Form11.AudioFileEdit.Text := Form1.FAudioFile;
+            Form1.FAudioDelay := AudioDelay;
+            Form11.AudioDelayLabeledEdit.Text := IntToStr(Form1.FAudioDelay);
+            Break;
+          end;
+          mrNo:
+            Continue;
+          mrCancel:
+            Break;
+          end;
+        end;
+      until FindNext(FR) <> 0;
+    FindClose(FR);
+  end;
   Form1.RedrawFrame;
 end;
 

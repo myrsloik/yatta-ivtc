@@ -1,5 +1,5 @@
 unit Unit1;
-
+                                
 interface
 
 uses
@@ -1508,6 +1508,7 @@ begin
     Append('CUTLIST=' + CutList);
     Append('AUDIOFILE=' + FAudioFile);
     Append('AUDIODELAY=' + IntToStr(FAudioDelay));
+    Append('HASLOOKEDFORAUDIO=1');
     Append('WITHDECIMATION=' + BoolToStr(Form11.Decimation.Checked));
     Append('DISTANCE=' + IntToStr(Distance));
     Append('DECIMATETYPE=' + IntToStr(Form2.DecimateType.ItemIndex));

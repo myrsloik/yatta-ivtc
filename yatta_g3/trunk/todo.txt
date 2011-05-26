@@ -1,5 +1,4 @@
-auto extract audio offfset
-auto suggest the first matching audio file on the first project open
+check ffms2 usage in yatta and ymc
 
 cutter allows insertion of overlapping ranges?
 zoom out in ymc dialogs, general implementation?
