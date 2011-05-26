@@ -1,11 +1,10 @@
 object CutterForm: TCutterForm
   Left = 326
   Top = 111
+  Width = 671
+  Height = 580
   BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
   Caption = 'Cutter'
-  ClientHeight = 542
-  ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -60,7 +59,7 @@ object CutterForm: TCutterForm
     Bitmap.ResamplerClassName = 'TNearestResampler'
     BitmapAlign = baTopLeft
     Scale = 1.000000000000000000
-    ScaleMode = smNormal
+    ScaleMode = smResize
     TabOrder = 3
   end
   object CutListBox: TListBox
