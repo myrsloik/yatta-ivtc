@@ -1,4 +1,5 @@
 7-131
+UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
 Made the cutter window resizable in ymc.
 Added some more filters to filterlist.txt.
 Yatta will now try to suggest the appropriate audio file and delay, pressing no in the dialog makes it suggest the next matching file.
