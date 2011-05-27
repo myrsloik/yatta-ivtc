@@ -1746,7 +1746,7 @@ begin
   Env.ClipArg(Video);
   Env.IntArg(FSettings.Width);
   Env.IntArg(FSettings.Height);
-  Result := Env.InvokeWithClipResult(FSettings.Resizer);
+  Result := Env.InvokeWithClipResult(FSettings.Resizer + 'Resize');
 end;
 
 class function TResize.MTSafe: Boolean;

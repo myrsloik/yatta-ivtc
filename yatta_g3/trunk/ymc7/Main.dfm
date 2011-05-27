@@ -1,6 +1,6 @@
 object MainForm: TMainForm
-  Left = 577
-  Top = 202
+  Left = 352
+  Top = 182
   AutoScroll = False
   Caption = 'Yatta Metrics Collector 7.8'
   ClientHeight = 450
