@@ -1579,7 +1579,7 @@ end;
 
 class function TCutter.GetPluginType: TYMCPluginType;
 begin
-  Result := ypMetricsCollector;
+  Result := ypVideoFilter;
 end;
 
 function TCutter.GetSettings: string;

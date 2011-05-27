@@ -4,7 +4,7 @@ interface
 
 uses
   SysUtils, Forms, Types, Windows, Classes, Contnrs, YMCPlugin, YMCInternalPlugins,
-  Asif, AsifAdditions, FrameGet, Progress, IniFiles, StrUtils, FunctionHooking, FastMM4;
+  Asif, AsifAdditions, FrameGet, Progress, IniFiles, StrUtils, FunctionHooking;
 
 type
   EYMCTaskException = class(EYMCException);
@@ -314,7 +314,6 @@ begin
       DebugStrings.Clear;
     FOwner.ProgressForm.CreateProgress(TaskId, ProjectType, FInputFile, FOutputFile, Video.GetVideoInfo.NumFrames);
     FWorkerThread := TFrameGetThread.Create(Video, Self, FOwner.DefaultPriority, WorkerThreadDone);
-    RegisterExpectedMemoryLeak(FWorkerThread)
   except
     FStatus := tsFailed;
     raise;
