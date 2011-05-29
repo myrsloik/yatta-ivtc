@@ -1,6 +1,6 @@
 object CropForm: TCropForm
-  Left = 574
-  Top = 546
+  Left = 306
+  Top = 119
   AutoSize = True
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
@@ -8,6 +8,7 @@ object CropForm: TCropForm
   ClientHeight = 510
   ClientWidth = 851
   Color = clBtnFace
+  Constraints.MinHeight = 400
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,9 +20,6 @@ object CropForm: TCropForm
   Scaled = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  DesignSize = (
-    851
-    510)
   PixelsPerInch = 96
   TextHeight = 13
   object TrackBar: TTrackBar
@@ -172,7 +170,6 @@ object CropForm: TCropForm
     Top = 340
     Width = 70
     Height = 26
-    Anchors = [akLeft, akBottom]
     Caption = '&OK'
     Default = True
     ModalResult = 1

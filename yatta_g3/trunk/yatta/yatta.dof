@@ -115,7 +115,7 @@ AutoIncBuild=1
 MajorVer=7
 MinorVer=131
 Release=0
-Build=197
+Build=198
 Debug=0
 PreRelease=0
 Special=0
@@ -126,7 +126,7 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=
 FileDescription=Yet Another Telecide Tool for Anime
-FileVersion=7.131.0.197
+FileVersion=7.131.0.198
 InternalName=YATTA
 LegalCopyright=Fredrik Mellbin
 LegalTrademarks=
