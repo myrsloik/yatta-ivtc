@@ -861,6 +861,8 @@ begin
       5: SL.Append(Format('TDeint(clip2=YattaPreMatchClip,hints=true,order=%d,type=%d,sharp=%s)', [Form11.RadioGroup1.ItemIndex, Form1.PostThreshold, IfThen(not SharpKernel.Checked, 'false', 'true')]));
       6: SL.Append(Format('TelecideHints(NNEDI())', []));
       7: SL.Append(Format('TelecideHints(NNEDI2())', []));
+      8: SL.Append(Format('TelecideHints(NNEDI3())', []));
+      9: SL.Append(Format('TelecideHints(EEDI3())', []));
     end;
     SL.Append('');
   end;
@@ -1581,6 +1583,7 @@ begin
 
   SharpKernel.Visible := PostProcessor.ItemIndex in [3..5];
   TwoWayKernel.Visible := PostProcessor.ItemIndex in [3..4];
+  PostThreshold.Visible := PostProcessor.ItemIndex in [0..5];
 end;
 
 procedure TForm2.PostThresholdChange(Sender: TObject);

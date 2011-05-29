@@ -4,7 +4,7 @@ object Form2: TForm2
   AutoScroll = False
   Caption = 'Tools'
   ClientHeight = 311
-  ClientWidth = 519
+  ClientWidth = 595
   Color = clBtnFace
   Constraints.MinHeight = 338
   Constraints.MinWidth = 527
@@ -23,7 +23,7 @@ object Form2: TForm2
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 519
+    Width = 595
     Height = 311
     ActivePage = TabSheet8
     Align = alClient
@@ -32,12 +32,12 @@ object Form2: TForm2
       Caption = 'Sections'
       ImageIndex = 7
       DesignSize = (
-        511
+        587
         283)
       object PresetListBox: TListBox
         Left = 257
         Top = 0
-        Width = 254
+        Width = 330
         Height = 256
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
@@ -93,7 +93,7 @@ object Form2: TForm2
     object TabSheet1: TTabSheet
       Caption = 'Presets'
       DesignSize = (
-        511
+        587
         283)
       object updatepreset: TButton
         Left = 48
@@ -128,7 +128,7 @@ object Form2: TForm2
       object ComboBox2: TComboBox
         Left = 0
         Top = 0
-        Width = 511
+        Width = 587
         Height = 21
         AutoDropDown = True
         AutoCloseUp = True
@@ -142,7 +142,7 @@ object Form2: TForm2
       object Memo1: TMemo
         Left = 0
         Top = 24
-        Width = 511
+        Width = 587
         Height = 232
         Anchors = [akLeft, akTop, akRight, akBottom]
         ScrollBars = ssBoth
@@ -150,7 +150,7 @@ object Form2: TForm2
         WordWrap = False
       end
       object Button19: TButton
-        Left = 317
+        Left = 393
         Top = 260
         Width = 72
         Height = 22
@@ -160,7 +160,7 @@ object Form2: TForm2
         OnClick = Button19Click
       end
       object ComboBox3: TComboBox
-        Left = 392
+        Left = 468
         Top = 260
         Width = 120
         Height = 21
@@ -215,9 +215,10 @@ object Form2: TForm2
       object PostProcessor: TRadioGroup
         Left = 417
         Top = 0
-        Width = 93
+        Width = 168
         Height = 135
         Caption = 'PostProcessor'
+        Columns = 2
         ItemIndex = 0
         Items.Strings = (
           'Blend'
@@ -227,12 +228,14 @@ object Form2: TForm2
           'LeakKDeint'
           'TDeint'
           'NNEDI'
-          'NNEDI2')
+          'NNEDI2'
+          'NNEDI3'
+          'EEDI3')
         TabOrder = 7
         OnClick = PostProcessorClick
       end
       object SaveAvs: TButton
-        Left = 421
+        Left = 493
         Top = 214
         Width = 86
         Height = 22
@@ -405,7 +408,7 @@ object Form2: TForm2
         end
       end
       object PreviewAvs: TButton
-        Left = 421
+        Left = 493
         Top = 236
         Width = 86
         Height = 22
@@ -414,7 +417,7 @@ object Form2: TForm2
         OnClick = PreviewAvsClick
       end
       object SaveLiteAvs: TButton
-        Left = 421
+        Left = 493
         Top = 258
         Width = 86
         Height = 22
@@ -423,7 +426,7 @@ object Form2: TForm2
         OnClick = SaveLiteAvsClick
       end
       object PostThreshold: TLabeledEdit
-        Left = 416
+        Left = 424
         Top = 153
         Width = 89
         Height = 21
@@ -434,7 +437,7 @@ object Form2: TForm2
         OnChange = PostThresholdChange
       end
       object SharpKernel: TCheckBox
-        Left = 415
+        Left = 423
         Top = 178
         Width = 57
         Height = 16
@@ -445,7 +448,7 @@ object Form2: TForm2
         Visible = False
       end
       object TwoWayKernel: TCheckBox
-        Left = 415
+        Left = 423
         Top = 195
         Width = 66
         Height = 16
@@ -481,7 +484,7 @@ object Form2: TForm2
       Caption = 'Ranges'
       ImageIndex = 3
       DesignSize = (
-        511
+        587
         283)
       object deleteff: TButton
         Left = 71
@@ -528,7 +531,7 @@ object Form2: TForm2
       object Nodecimates: TListBox
         Left = 257
         Top = 0
-        Width = 254
+        Width = 330
         Height = 256
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
@@ -660,19 +663,19 @@ object Form2: TForm2
       object GroupBox4: TGroupBox
         Left = 140
         Top = 0
-        Width = 371
+        Width = 447
         Height = 283
         Align = alClient
         Caption = 'Entries'
         TabOrder = 1
         OnClick = Edit1Change
         DesignSize = (
-          371
+          447
           283)
         object CustomRanges: TListBox
           Left = 8
           Top = 16
-          Width = 355
+          Width = 431
           Height = 204
           Style = lbVirtual
           Anchors = [akLeft, akTop, akRight, akBottom]
@@ -686,7 +689,7 @@ object Form2: TForm2
         object Edit1: TEdit
           Left = 8
           Top = 226
-          Width = 355
+          Width = 431
           Height = 21
           Anchors = [akLeft, akRight, akBottom]
           TabOrder = 1
@@ -695,7 +698,7 @@ object Form2: TForm2
         object Edit2: TEdit
           Left = 8
           Top = 253
-          Width = 355
+          Width = 431
           Height = 21
           Anchors = [akLeft, akRight, akBottom]
           TabOrder = 2
