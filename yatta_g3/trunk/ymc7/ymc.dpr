@@ -1,7 +1,6 @@
 program YMC;
 
 uses
-  FastMM4,
   Forms,
   Main in 'Main.pas' {MainForm},
   FrameGet in 'frameget.pas',
@@ -13,14 +12,12 @@ uses
   Asif in '..\Asif.pas',
   AsifAdditions in '..\AsifAdditions.pas',
   tfm in 'tfm.pas' {TFMForm},
-  it in 'it.pas' {ITForm},
   YMCTask in 'YMCTask.pas',
   FunctionHooking in 'FunctionHooking.pas',
   yshared in '..\yshared.pas',
   scxvid in 'scxvid.pas' {SCXvidForm},
   cutter in 'cutter.pas' {CutterForm},
-  resize in 'resize.pas' {ResizeForm},
-  enpipe in 'enpipe.pas' {ENPipeForm};
+  resize in 'resize.pas' {ResizeForm};
 
 {$R *.res}
 

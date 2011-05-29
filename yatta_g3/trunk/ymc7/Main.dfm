@@ -1,10 +1,10 @@
 object MainForm: TMainForm
-  Left = 352
+  Left = 353
   Top = 182
   AutoScroll = False
   Caption = 'Yatta Metrics Collector 7.8'
   ClientHeight = 450
-  ClientWidth = 622
+  ClientWidth = 621
   Color = clBtnFace
   Constraints.MinHeight = 330
   Constraints.MinWidth = 489
@@ -20,24 +20,24 @@ object MainForm: TMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   DesignSize = (
-    622
+    621
     450)
   PixelsPerInch = 96
   TextHeight = 13
   object Jobs: TGroupBox
     Left = 0
     Top = 0
-    Width = 425
+    Width = 424
     Height = 450
     Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Job List'
     ParentBackground = False
     TabOrder = 0
     DesignSize = (
-      425
+      424
       450)
     object MoveJobUpButton: TSpeedButton
-      Left = 398
+      Left = 397
       Top = 13
       Width = 22
       Height = 22
@@ -59,7 +59,7 @@ object MainForm: TMainForm
       NumGlyphs = 2
     end
     object MoveJobDownButton: TSpeedButton
-      Left = 398
+      Left = 397
       Top = 35
       Width = 22
       Height = 22
@@ -83,7 +83,7 @@ object MainForm: TMainForm
     object JobList: TListBox
       Left = 7
       Top = 13
-      Width = 386
+      Width = 385
       Height = 401
       Style = lbVirtual
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -126,7 +126,7 @@ object MainForm: TMainForm
     end
   end
   object Settings: TGroupBox
-    Left = 430
+    Left = 429
     Top = 0
     Width = 191
     Height = 62
@@ -152,7 +152,7 @@ object MainForm: TMainForm
     end
   end
   object Mpeg2DecRadioGroup: TRadioGroup
-    Left = 430
+    Left = 429
     Top = 68
     Width = 191
     Height = 69
@@ -167,7 +167,7 @@ object MainForm: TMainForm
     OnClick = Mpeg2DecRadioGroupClick
   end
   object Metrics: TGroupBox
-    Left = 430
+    Left = 429
     Top = 144
     Width = 191
     Height = 306

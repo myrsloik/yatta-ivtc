@@ -1,11 +1,12 @@
 7-131
 UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
+The memry error on exiting ymc should no longer happen.
 Fixed the resize filter in ymc, it has been broken forever but nobody mentioned it.
 Correctly flag the cutter filter in ymc as not a metrics collecor.
 Made the cutter window resizable in ymc.
 Added some more filters to filterlist.txt.
 Yatta will now try to suggest the appropriate audio file and delay, pressing no in the dialog makes it suggest the next matching file.
-Dropped all sclavc support. SCXvid has better in every way for many years now.
+Dropped all sclavc and IT support. SCXvid and TFM have better in every way for many years now.
 Now saves and loads the messages in the log window.
 Extend preset backward to previous occurrence key. (default b)
 Added buttons and hotkeys to jump +-50 frames in the YMC cutter.

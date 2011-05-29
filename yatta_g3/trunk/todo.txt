@@ -1,2 +1,7 @@
+update file info regularly in ymc
+show failed files clearly in ymc
+add eedi3/needi3
+save decimate/tdecimate decisions and add a config dialog
+
 cutter allows insertion of overlapping ranges?
 zoom out in ymc dialogs, general implementation?

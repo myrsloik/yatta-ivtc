@@ -24,10 +24,6 @@ type
     VMetric: array[0..2] of Integer;
   end;
 
-  TITsettings = record
-    Order: 0..1;
-  end;
-
   TTelecidesettings = record
     Guide: 0..3;
     VThresh: 0..255;
@@ -43,12 +39,6 @@ type
     Blend: Boolean;
     Chroma: Boolean;
     Show: Boolean;
-  end;
-
-  TSClavcSettings = record
-    MBCmp, Cmp, SubCmp, PreMe, Dia, PreDia: Integer;
-    V4MV: Boolean;
-    LogOutput: array[0..2047] of AnsiChar;
   end;
 
   TSCXvidSettings = record
@@ -87,33 +77,6 @@ type
   TResizeSettings = record
     Width, Height: Integer;
     Resizer: string;
-  end;
-
-  TENPipeSettings = record
-    VideoCL, AudioCL: string;
-    WaitMS: Integer;
-    Y4M: Boolean;
-  end;
-
-  TIT = class(TYMCPlugin)
-  private
-    FFramecount: Integer;
-    FSettings: TITsettings;
-  protected
-    FLogPath: string;
-    function GetSettings: string; override;
-  public
-    constructor Create(Settings: string; Selected: Boolean); override;
-    procedure Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string); override;
-    function Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip; override;
-    procedure ProcessLog(Log: TStrings; Outfile: TStrings; var Header: TYMCProjectHeader); override;
-
-    class function GetConfiguration: TYMCPluginConfig; override;
-    class function GetName: string; override;
-    class function GetPluginType: TYMCPluginType; override;
-    class function GetSupportedColorSpaces: TColorSpaces; override;
-    class function GetUsedFunctions: TStringDynArray; override;
-    class function MTSafe: Boolean; override;
   end;
 
   TTelecide = class(TYMCPlugin)
@@ -273,35 +236,16 @@ type
     class function MTSafe: Boolean; override;
   end;
 
-  TENPipe = class(TYMCPlugin)
-  private
-    FSettings: TENPipeSettings;
-  protected
-    function GetSettings: string; override;
-  public
-    constructor Create(Settings: string; Selected: Boolean); override;
-    procedure Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string); override;
-    function Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip; override;
-
-    class function GetConfiguration: TYMCPluginConfig; override;
-    class function GetName: string; override;
-    class function GetPluginType: TYMCPluginType; override;
-    class function GetSupportedColorSpaces: TColorSpaces; override;
-    class function GetUsedFunctions: TStringDynArray; override;
-    class function MTSafe: Boolean; override;
-  end;
-
-
 procedure YMCPluginInit(AddPlugin: TAddPlugin);
 
 implementation
 
 uses
-  telecide, crop, it, tfm, scxvid, cutter, resize;
+  telecide, crop, tfm, scxvid, cutter, resize;
 
 const
-  PluginClasses: array[0..9] of TYMCPluginClass =
-  (TCutter, TCrop, TIT, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TDecimate, TTDecimate, TResize);
+  PluginClasses: array[0..8] of TYMCPluginClass =
+  (TCutter, TCrop, TTelecide, TTFM, TTFMandTelecide, TSCXvid, TDecimate, TTDecimate, TResize);
 
 function MemoryToHex(Ptr: Pointer; Size: Integer): string;
 var
@@ -1116,186 +1060,6 @@ begin
   Result[0] := 'Telecide';
 end;
 
-{ TIT }
-
-procedure TIT.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip; out NewDefault: string);
-begin
-  with TITForm.Create(Env, Video, nil) do
-  try
-    OrderGroup.ItemIndex := FSettings.Order;
-    OrderGroup.Hint := Format('Avisynth reports the correct order as %s but this is far from reliable for sources that aren''t d2v.', [IfThen(Video.GetVideoInfo.ImageType and 1 = 1, '0 (bff)', '1 (tff)')]);
-    RefreshVideo;
-    ShowModal;
-
-    FSettings.Order := OrderGroup.ItemIndex;
-    if MakeDefault.Checked then
-      NewDefault := GetSettings;
-
-  finally
-    Free;
-  end;
-end;
-
-constructor TIT.Create(Settings: string; Selected: Boolean);
-begin
-  inherited;
-  FSettings.Order := StrToIntDef(Settings, 1);
-end;
-
-class function TIT.GetConfiguration: TYMCPluginConfig;
-begin
-  Result := pcVideo;
-end;
-
-class function TIT.GetName: string;
-begin
-  Result := 'IT';
-end;
-
-class function TIT.GetPluginType: TYMCPluginType;
-begin
-  Result := ypMetricsCollector;
-end;
-
-function TIT.GetSettings: string;
-begin
-  Result := IntToStr(FSettings.Order);
-end;
-
-class function TIT.GetSupportedColorSpaces: TColorSpaces;
-begin
-  Result := [csYUY2];
-end;
-
-class function TIT.GetUsedFunctions: TStringDynArray;
-begin
-  SetLength(Result, 1);
-  Result[0] := 'IT';
-end;
-
-function TIT.Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip; Preview: Boolean): IAsifClip;
-begin
-  FFramecount := Video.GetVideoInfo.NumFrames;
-
-  with Env do
-  begin
-    ClipArg(Video);
-    CharArg(PChar(IfThen(FSettings.Order = 1, 'TOP', 'BOTTOM')), 'ref');
-
-    if not Preview then
-    begin
-      FLogPath := GetTempFile;
-      DeleteFile(FLogPath);
-      CharArg(PChar(FLogPath), 'log');
-    end;
-
-    Result := InvokeWithClipResult('IT')
-  end;
-end;
-
-class function TIT.MTSafe: Boolean;
-begin
-  Result := True;
-end;
-
-procedure TIT.ProcessLog(Log, Outfile: TStrings;
-  var Header: TYMCProjectHeader);
-var
-  FrameArray: array of TFrame;
-  Counter, C2: integer;
-  FN: Integer;
-  ITLog: TStringList;
-  Line: string;
-begin
-  with Header do
-  begin
-    ProjectType := 1;
-    Order := FSettings.Order;
-  end;
-
-  SetLength(FrameArray, FFramecount + 25);
-
-  ITLog := TStringList.Create;
-
-  try
-    ITLog.LoadFromFile(FLogPath);
-
-    FN := 0;
-
-    for Counter := 0 to ITLog.Count - 1 do
-    begin
-      for C2 := 0 to 4 do
-      begin
-        Line := ITLog[Counter];
-
-        case UpCase(Line[9 + C2]) of
-          'P': FrameArray[FN + C2].Match := 2;
-          'C': FrameArray[FN + C2].Match := 1;
-          'N': FrameArray[FN + C2].Match := 0;
-        end;
-
-        FrameArray[FN + C2].Decimate := UpCase(Line[15 + C2]) = 'D';
-        FrameArray[FN + C2].PostProcess := Line[21 + C2] = 'I';
-      end;
-
-      Inc(FN, 5);
-    end;
-
-    with Outfile do
-    begin
-      Append('[MATCHES]');
-
-      for Counter := 0 to FFramecount - 1 do
-      begin
-        case FrameArray[Counter].Match of
-          0: Append('n');
-          1: Append('c');
-          2: Append('p');
-        end;
-      end;
-
-      Append('');
-
-      Append('[ORIGINALMATCHES]');
-
-      for Counter := 0 to FFramecount - 1 do
-      begin
-        case FrameArray[Counter].Match of
-          0: Append('n');
-          1: Append('c');
-          2: Append('p');
-        end;
-      end;
-
-      Append('');
-
-      Append('[POSTPROCESS]');
-
-      for Counter := 0 to FFramecount - 1 do
-      begin
-        if FrameArray[Counter].PostProcess then
-          Append(IntToStr(Counter));
-      end;
-
-      Append('');
-
-      Append('[DECIMATE]');
-
-      for Counter := 0 to FFramecount - 1 do
-      begin
-        if FrameArray[Counter].Decimate then
-          Append(IntToStr(Counter));
-      end;
-
-    end;
-
-    //DeleteFile(FLogPath);
-
-  finally
-    ITLog.Free;
-  end;
-end;
-
 { TTFMandTelecide }
 
 class function TTFMAndTelecide.GetName: string;
@@ -1750,87 +1514,6 @@ begin
 end;
 
 class function TResize.MTSafe: Boolean;
-begin
-  Result := True;
-end;
-
-{ TENPipe }
-
-procedure TENPipe.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip;
-  out NewDefault: string);
-begin
-
-end;
-
-constructor TENPipe.Create(Settings: string; Selected: Boolean);
-begin
-  inherited;
-
-  FSettings.WaitMS := StrToIntDef(GetToken(Settings, 0, [',']), 2000);
-  FSettings.Y4M := StrToBoolDef(GetToken(Settings, 1, [',']), false);
-  FSettings.VideoCL := GetToken(Settings, 3, [',']);
-  FSettings.AudioCL := GetToken(Settings, 4, [',']);
-end;
-
-class function TENPipe.GetConfiguration: TYMCPluginConfig;
-begin
-  Result := pcNormal;
-end;
-
-class function TENPipe.GetName: string;
-begin
-  Result := 'ENPipe';
-end;
-
-class function TENPipe.GetPluginType: TYMCPluginType;
-begin
-  Result := ypMetricsCollector;
-end;
-
-function TENPipe.GetSettings: string;
-begin
-
-end;
-
-class function TENPipe.GetSupportedColorSpaces: TColorSpaces;
-begin
-  Result := [csYV12, csYUY2, csRGB24, csRGB32];
-end;
-
-class function TENPipe.GetUsedFunctions: TStringDynArray;
-begin
-  SetLength(Result, 1);
-  Result[0] := 'ENPipe';
-end;
-
-function TENPipe.Invoke(Env: IAsifScriptEnvironment; Video: IAsifClip;
-  Preview: Boolean): IAsifClip;
-var
-  VTemp, ATemp: string;
-  VI: VideoInfo;
-begin
-  if Preview then
-    Result := Video
-  else
-    with Env, FSettings do
-    begin
-      VI := Video.GetVideoInfo;
-      VTemp := VideoCL;
-      VTemp := AnsiReplaceStr(VTemp, '$width$', IntToStr(VI.Width));
-      VTemp := AnsiReplaceStr(VTemp, '$height$', IntToStr(VI.Height));
-      ATemp := AudioCL;
-
-      ClipArg(Video);
-      CharArg(PChar(VTemp), 'videocl');
-      CharArg(PChar(ATemp), 'audiocl');
-      IntArg(WaitMS, 'waitms');
-      BoolArg(Y4M, 'y4m');
-
-      Result := InvokeWithClipResult('ENPipe');
-    end;
-end;
-
-class function TENPipe.MTSafe: Boolean;
 begin
   Result := True;
 end;
