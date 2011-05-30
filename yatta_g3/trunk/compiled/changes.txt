@@ -1,10 +1,11 @@
 7-131
 UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
+Fixed scroll bars in SCXvid config window.
 Fix resizing issues with the ymc crop window for small videos.
 Added EEDI3 and NNEDI3 to the postprocessor list in yatta and fixed a minor bug with the list.
 The memory error on exiting ymc should no longer happen.
 Fixed the resize filter in ymc, it has been broken forever but nobody mentioned it.
-Correctly flag the cutter filter in ymc as not a metrics collecor.
+Correctly flag the cutter filter in ymc as not a metrics collector.
 Made the cutter window resizable in ymc.
 Added some more filters to filterlist.txt.
 Yatta will now try to suggest the appropriate audio file and delay, pressing no in the dialog makes it suggest the next matching file.
