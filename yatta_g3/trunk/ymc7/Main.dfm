@@ -400,8 +400,4 @@ object MainForm: TMainForm
       OnClick = SetMaxRunningJobs1Click
     end
   end
-  object XPManifest: TXPManifest
-    Left = 312
-    Top = 136
-  end
 end

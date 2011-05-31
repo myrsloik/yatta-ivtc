@@ -2875,6 +2875,7 @@ object Form1: TForm1
       object UseExperimentalAlgorithm1: TMenuItem
         AutoCheck = True
         Caption = 'Use Experimental Algorithm'
+        Enabled = False
       end
     end
     object Recalculate1: TMenuItem

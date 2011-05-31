@@ -1,5 +1,6 @@
 7-131
 UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
+Disabled xp style controls in ymc to work around a delphi 7 vcl bug that made some dialogs not always draw properly in win7.
 Fixed scroll bars in SCXvid config window.
 Fix resizing issues with the ymc crop window for small videos.
 Added EEDI3 and NNEDI3 to the postprocessor list in yatta and fixed a minor bug with the list.

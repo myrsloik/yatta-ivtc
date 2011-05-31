@@ -5,8 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, StrUtils, ExtCtrls, Buttons, Math, YMCTask, YMCPlugin, YMCInternalPlugins, asif, frameget, inifiles,
-  filectrl, CheckLst, shellapi, AsifAdditions, ActnList, AppEvnts, Menus, YShared,
-  XPMan;
+  filectrl, CheckLst, shellapi, AsifAdditions, ActnList, AppEvnts, Menus, YShared;
 
 const
   INIVersion = 20;
@@ -42,7 +41,6 @@ type
     JobPopupMenu: TPopupMenu;
     MoveJobUpButton: TSpeedButton;
     MoveJobDownButton: TSpeedButton;
-    XPManifest: TXPManifest;
     ClearErrors1: TMenuItem;
     N1: TMenuItem;
     SetAvisynthPluginDirectory1: TMenuItem;
