@@ -70,7 +70,7 @@ end;
 
 procedure TYMCPlugin.ProcessLog(Log: TStrings; Outfile: TStrings; var Header: TYMCProjectHeader);
 begin
-  raise EYMCPluginException.Create('The plugin ' + GetName + ' is a metrics collector but has no log processing.');
+
 end;
 
 class function TYMCPlugin.GetConfiguration: TYMCPluginConfig;

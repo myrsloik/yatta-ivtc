@@ -423,7 +423,7 @@ begin
 
   try
     for Counter := 0 to Count - 1 do
-      if (Items[Counter].GetPluginType = ypMetricsCollector) and Items[Counter].Selected then
+      if Items[Counter].Selected then
         Items[Counter].ProcessLog(DebugStrings, MetricsFile, Header);
 
     MetricsFile.Insert(0, '');
