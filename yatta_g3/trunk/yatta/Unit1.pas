@@ -1103,8 +1103,8 @@ begin
       end;
     end;
 
-    if form11.ShowCLInfo.Checked and (Form2.CustomRangeLists.ItemIndex >= 0) then
-      FInfoText.Append('Range List: ' + Form2.CustomRangeLists.Items[Form2.CustomRangeLists.ItemIndex]);
+    if form11.ShowCLInfo.Checked and (Form2.SelectedCustomList <> nil) then
+      FInfoText.Append('Range List: ' + Form2.SelectedCustomList.Name);
 
     if decimatecurrent then
       FInfoText.Append('Decimate')
@@ -2590,19 +2590,19 @@ begin
     end
     else if IsKeyEvent(kMarkCustomList, msg.CharCode) then
     begin
-      if (Form2.CustomRangeLists.ItemIndex >= 0) and FRangeOn then
+      if (Form2.SelectedCustomList <> nil) and FRangeOn then
       begin
         if Form11.SwapCustomList.Checked and (FRange > TrackBar1.Position) then
-          TCustomList(Form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex]).Add(TCustomRange.Create(TrackBar1.Position, FRange))
+          Form2.SelectedCustomList.Add(TCustomRange.Create(TrackBar1.Position, FRange))
         else
-          TCustomList(Form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex]).Add(TCustomRange.Create(FRange, TrackBar1.Position));
+          Form2.SelectedCustomList.Add(TCustomRange.Create(FRange, TrackBar1.Position));
 
-        form2.CustomRanges.Count := TCustomList(form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex]).Count;
-        TCustomList(form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex]).Sort(customlistsort);
+        Form2.CustomRanges.Count := Form2.SelectedCustomList.Count;
+        Form2.SelectedCustomList.Sort(CustomListSort);
         FRangeOn := False;
         FInfoText.Append('Added range; Start: ' + IntToStr(FRange) + '; End: ' + inttostr(TrackBar1.Position));
       end
-      else if (form2.CustomRangeLists.ItemIndex >= 0) then
+      else if (Form2.SelectedCustomList <> nil) then
         Button8Click(nil)
       else
         FInfoText.Append('No list selected');
@@ -2916,25 +2916,25 @@ begin
     end
     else if IsKeyEvent(kNextCLEntry, msg.CharCode) then
     begin
-      if (form2.CustomRangeLists.ItemIndex >= 0) and (form2.CustomRanges.ItemIndex >= 1) then
+      if (Form2.SelectedCustomList <> nil) and (form2.CustomRanges.ItemIndex >= 1) then
       begin
 
-        with form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex] as TCustomList do
+        with Form2.SelectedCustomList do
           with Items[form2.CustomRanges.ItemIndex - 1] as TCustomRange do
           begin
             TrackBar1.Position := startframe;
-            form2.CustomRanges.ItemIndex := form2.CustomRanges.ItemIndex - 1;
-            form2.CustomRanges.ClearSelection;
-            form2.CustomRanges.Selected[form2.CustomRanges.ItemIndex] := true;
+            Form2.CustomRanges.ItemIndex := Form2.CustomRanges.ItemIndex - 1;
+            Form2.CustomRanges.ClearSelection;
+            Form2.CustomRanges.Selected[form2.CustomRanges.ItemIndex] := true;
           end;
       end;
     end
     else if IsKeyEvent(kPreviousCLEntry, msg.CharCode) then
     begin
-      if (form2.CustomRangeLists.ItemIndex >= 0) and (Form2.CustomRanges.ItemIndex < Form2.CustomRanges.Count - 1) then
+      if (Form2.SelectedCustomList <> nil) and (Form2.CustomRanges.ItemIndex < Form2.CustomRanges.Count - 1) then
       begin
 
-        with form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex] as TCustomList do
+        with Form2.SelectedCustomList do
           with Items[form2.CustomRanges.ItemIndex + 1] as TCustomRange do
           begin
             TrackBar1.Position := startframe;
@@ -2946,8 +2946,8 @@ begin
     end
     else if IsKeyEvent(kDeleteCurrentCLEntry, msg.CharCode) then
     begin
-      if (Form2.CustomRangeLists.ItemIndex >= 0) then
-        with Form2.CustomRangeLists.Items.Objects[form2.CustomRangeLists.ItemIndex] as TCustomList do
+      if Form2.SelectedCustomList <> nil then
+        with Form2.SelectedCustomList do
           for Counter := Count - 1 downto 0 do
             with Items[counter] as TCustomRange do
               if (startframe <= TrackBar1.Position) and (endframe >= TrackBar1.Position) then
@@ -2999,7 +2999,7 @@ begin
           ItemIndex := 0
         else
           ItemIndex := ItemIndex + 1;
-      DrawFrame;
+      Form2.CustomRangeListsClick(nil);
     end
     else if IsKeyEvent(kCyclePrevCustomList, msg.CharCode) then
     begin
@@ -3008,7 +3008,7 @@ begin
           ItemIndex := Count - 1
         else
           ItemIndex := ItemIndex - 1;
-      DrawFrame;
+      Form2.CustomRangeListsClick(nil);
     end
     else if IsKeyEvent(kExtendPresetToPrev, msg.CharCode) then
     begin

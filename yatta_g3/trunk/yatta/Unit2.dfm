@@ -1,6 +1,6 @@
 object Form2: TForm2
-  Left = 566
-  Top = 178
+  Left = 256
+  Top = 189
   AutoScroll = False
   Caption = 'Tools'
   ClientHeight = 311
@@ -25,7 +25,7 @@ object Form2: TForm2
     Top = 0
     Width = 595
     Height = 311
-    ActivePage = TabSheet8
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 0
     object TabSheet8: TTabSheet

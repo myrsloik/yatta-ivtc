@@ -271,6 +271,7 @@ type
     function GetPresetProperty(Index: Integer): TPreset;
     function GetPresetCount: Integer;
 
+    function GetSelectedCustomList: TCustomList;
   public
     procedure CreateParams(var Params: TCreateParams); override;
     procedure AddPreset(Name: string; Id: Integer; Chain: string);
@@ -296,6 +297,7 @@ type
     property SectionCount: Integer read GetSectionCount;
     property Presets[Index: Integer]: TPreset read GetPresetProperty;
     property PresetCount: Integer read GetPresetCount;
+    property SelectedCustomList: TCustomList read GetSelectedCustomList;
   end;
 
 function CustomListSort(Item1, Item2: Pointer): Integer;
@@ -1753,8 +1755,8 @@ procedure TForm2.CustomRangeListsClick(Sender: TObject);
 var
   Counter: Integer;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-    with CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex] as TCustomList do
+  if SelectedCustomList <> nil then
+    with SelectedCustomList do
     begin
       Edit1.Text := Processing;
       Edit2.Enabled := OutputMethod = omFile;
@@ -1766,17 +1768,16 @@ begin
 
       CustomRanges.Count := Count;
     end;
+    Form1.DrawFrame;
 end;
 
 procedure TForm2.CustomRangesData(Control: TWinControl; Index: Integer;
   var Data: string);
-var entry: TCustomList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-  begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-    data := inttostr(TCustomRange(entry[index]).startframe) + ' ' + inttostr(TCustomRange(entry[index]).endframe);
-  end;
+  if SelectedCustomList <> nil then
+    Data := Format('%d %d', [SelectedCustomList[Index].StartFrame, SelectedCustomList[Index].EndFrame])
+  else
+    Data := 'Internal error';
 end;
 
 function TCustomList.GetItem(Index: Integer): TCustomRange;
@@ -1823,18 +1824,15 @@ begin
 end;
 
 procedure TForm2.Delete1Click(Sender: TObject);
-var counter: integer;
-  entry: TCustomList;
+var Counter: Integer;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
+  if SelectedCustomList <> nil then
   begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
+    for Counter := CustomRanges.Count - 1 downto 0 do
+      if CustomRanges.Selected[Counter] then
+        SelectedCustomList.Delete(Counter);
 
-    for counter := CustomRanges.Count - 1 downto 0 do
-      if CustomRanges.Selected[counter] then
-        entry.Delete(counter);
-
-    CustomRanges.Count := entry.Count;
+    CustomRanges.Count := SelectedCustomList.Count;
   end;
 end;
 
@@ -1859,90 +1857,69 @@ end;
 
 procedure TForm2.mclick1Click(Sender: TObject);
 var
-  source, dest: TCustomList;
-  counter: integer;
+  Dest: TCustomList;
+  Counter: Integer;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
+  if SelectedCustomList <> nil then
   begin
-    source := CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex] as TCustomList;
-    dest := CustomRangeLists.Items.Objects[MoveTo1.IndexOf(tmenuitem(sender))] as TCustomList;
+    Dest := CustomRangeLists.Items.Objects[MoveTo1.IndexOf(TMenuItem(Sender))] as TCustomList;
 
-    for counter := CustomRanges.Count - 1 downto 0 do
-      if CustomRanges.Selected[counter] then
-        dest.Add(source.Extract(source.GetItem(counter)));
+    for Counter := CustomRanges.Count - 1 downto 0 do
+      if CustomRanges.Selected[Counter] then
+        Dest.Add(SelectedCustomList.Extract(SelectedCustomList[Counter]));
 
-    source.Sort(customlistsort);
-    dest.Sort(customlistsort);
+    Dest.Sort(CustomListSort);
 
-    CustomRanges.Count := source.Count;
+    CustomRanges.Count := SelectedCustomList.Count;
   end;
 end;
 
 procedure TForm2.cclick1Click(Sender: TObject);
-var source, dest: TCustomList;
-  counter: integer;
+var Dest: TCustomList;
+  Counter: Integer;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
+  if SelectedCustomList <> nil then
   begin
-    source := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-    dest := TCustomList(CustomRangeLists.Items.Objects[CopyTo1.IndexOf(tmenuitem(sender))]);
+    Dest := TCustomList(CustomRangeLists.Items.Objects[CopyTo1.IndexOf(TMenuItem(Sender))]);
 
-    for counter := CustomRanges.Count - 1 downto 0 do
-      if CustomRanges.Selected[counter] then
-        with TCustomRange(source.GetItem(counter)) do
-          dest.Add(TCustomRange.Create(startframe, endframe));
+    for Counter := CustomRanges.Count - 1 downto 0 do
+      if CustomRanges.Selected[Counter] then
+        with SelectedCustomList[Counter] do
+          Dest.Add(TCustomRange.Create(StartFrame, EndFrame));
 
-    source.Sort(customlistsort);
-    dest.Sort(customlistsort);
-
-    CustomRanges.Count := source.Count;
+    Dest.Sort(CustomListSort);
   end;
 end;
 
 procedure TForm2.CustomRangesDblClick(Sender: TObject);
-var entry: TCustomList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-  begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-    form1.TrackBar1.Position := TCustomRange(entry[CustomRanges.ItemIndex]).startframe;
-  end;
+  if SelectedCustomList <> nil then
+    Form1.TrackBar1.Position := SelectedCustomList[CustomRanges.ItemIndex].StartFrame;
 end;
 
 procedure TForm2.Edit1Change(Sender: TObject);
-var entry: TCustomList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-  begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-    entry.processing := edit1.Text;
-  end;
+  if SelectedCustomList <> nil then
+    SelectedCustomList.Processing := Edit1.Text;
 end;
 
 procedure TForm2.Edit2Change(Sender: TObject);
-var entry: TCustomList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-  begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-    entry.output := edit2.Text;
-  end;
+  if SelectedCustomList <> nil then
+    SelectedCustomList.Output := Edit2.Text;
 end;
 
 procedure TForm2.ExternalFile1Click(Sender: TObject);
-var entry: TCustomList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
+  if SelectedCustomList <> nil then
   begin
-    entry := TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]);
-
     with TMenuItem(sender) do
       if Checked then
-        entry.OutputMethod := toutputmethod(tag)
+        SelectedCustomList.OutputMethod := TOutputMethod(Tag)
       else
-        entry.OutputMethod := omNone;
+        SelectedCustomList.OutputMethod := omNone;
 
-    edit2.Enabled := entry.OutputMethod = omFile;
+    Edit2.Enabled := SelectedCustomList.OutputMethod = omFile;
   end;
 end;
 
@@ -1963,10 +1940,10 @@ var
   c2: integer;
   sl: TStringList;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
+  if SelectedCustomList <> nil then
   begin
 
-    with TCustomList(CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex]) do
+    with SelectedCustomList do
     begin
       if OutputMethod <> omFile then
       begin
@@ -1982,7 +1959,7 @@ begin
       sl := TStringList.Create;
 
       for c2 := 0 to count - 1 do
-        with TCustomRange(Items[c2]) do
+        with Items[c2] do
           sl.Append(AnsiReplaceStr(AnsiReplaceStr(processing, '%s', inttostr(startframe)), '%e', inttostr(endframe)));
 
       try
@@ -2093,8 +2070,8 @@ end;
 procedure TForm2.CopytoSections1Click(Sender: TObject);
 var counter: integer;
 begin
-  if CustomRangeLists.ItemIndex >= 0 then
-    with CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex] as TCustomList do
+  if SelectedCustomList <> nil then
+    with SelectedCustomList do
       for counter := 0 to Count - 1 do
         if CustomRanges.Selected[counter] then
           with Items[counter] as TCustomRange do
@@ -2145,7 +2122,7 @@ begin
   if CustomRangeLists.ItemIndex >= 0 then
   begin
     CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex].Free;
-    CustomRangeLists.DeleteSelected;
+    CustomRangeLists.Items.Delete(CustomRangeLists.ItemIndex);
     CustomRanges.Count := 0;
   end;
 end;
@@ -2266,6 +2243,13 @@ end;
 function TForm2.GetSectionSelected(Index: Integer): Boolean;
 begin
   Result := SectionListBox.Selected[Index];
+end;
+
+function TForm2.GetSelectedCustomList: TCustomList;
+begin
+  Result := nil;
+  if CustomRangeLists.ItemIndex >= 0 then
+    Result := CustomRangeLists.Items.Objects[CustomRangeLists.ItemIndex] as TCustomList;
 end;
 
 end.
