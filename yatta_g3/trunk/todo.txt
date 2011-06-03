@@ -1,3 +1,19 @@
+<mirkosp> have two custom lists
+<Myrsloik_> you mean so you can have two seleccted at the same time?
+<mirkosp> possibly with a lot of entries already
+<mirkosp> keep the tools window at disposal with the custom list tab
+<mirkosp> and have one selected
+<mirkosp> then
+<mirkosp> try to click directly on the other custom list's name while on the main yatta window
+<mirkosp> gives me List index out of bounds (10)
+<mirkosp> although sometimes it gives another number
+<Eilafan> Lord: as far as I can see analog TV in Japan just followed NTSC's usual recommendations in that way
+<mirkosp> if I click ok, error keeps popping up
+<Daemon404> woah
+<Daemon404> woah
+<Daemon404> wait
+<mirkosp> so I p much have to kill yatta
+
 save decimate/tdecimate decisions and add a config dialog
 
 cutter allows insertion of overlapping ranges?
