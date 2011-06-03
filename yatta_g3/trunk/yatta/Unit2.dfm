@@ -134,7 +134,7 @@ object Form2: TForm2
         AutoCloseUp = True
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 13
+        ItemHeight = 0
         Sorted = True
         TabOrder = 0
         OnChange = ComboBox2Change

@@ -1774,7 +1774,7 @@ end;
 procedure TForm2.CustomRangesData(Control: TWinControl; Index: Integer;
   var Data: string);
 begin
-  if SelectedCustomList <> nil then
+  if (SelectedCustomList <> nil) and (Index < SelectedCustomList.Count) then
     Data := Format('%d %d', [SelectedCustomList[Index].StartFrame, SelectedCustomList[Index].EndFrame])
   else
     Data := 'Internal error';
