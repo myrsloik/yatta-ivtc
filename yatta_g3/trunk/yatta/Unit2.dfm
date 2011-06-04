@@ -3,11 +3,11 @@ object Form2: TForm2
   Top = 189
   AutoScroll = False
   Caption = 'Tools'
-  ClientHeight = 311
+  ClientHeight = 312
   ClientWidth = 595
   Color = clBtnFace
-  Constraints.MinHeight = 338
-  Constraints.MinWidth = 527
+  Constraints.MinHeight = 350
+  Constraints.MinWidth = 611
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,8 +24,8 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 595
-    Height = 311
-    ActivePage = TabSheet4
+    Height = 312
+    ActivePage = TabSheet8
     Align = alClient
     TabOrder = 0
     object TabSheet8: TTabSheet
@@ -33,12 +33,12 @@ object Form2: TForm2
       ImageIndex = 7
       DesignSize = (
         587
-        283)
+        284)
       object PresetListBox: TListBox
         Left = 257
         Top = 0
         Width = 330
-        Height = 256
+        Height = 257
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
         Sorted = True
@@ -49,7 +49,7 @@ object Form2: TForm2
       end
       object Button8: TButton
         Left = 142
-        Top = 260
+        Top = 261
         Width = 75
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -59,7 +59,7 @@ object Form2: TForm2
       end
       object Button6: TButton
         Left = 71
-        Top = 260
+        Top = 261
         Width = 71
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -69,7 +69,7 @@ object Form2: TForm2
       end
       object Button5: TButton
         Left = 0
-        Top = 260
+        Top = 261
         Width = 71
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -81,7 +81,7 @@ object Form2: TForm2
         Left = 0
         Top = 0
         Width = 254
-        Height = 256
+        Height = 257
         Anchors = [akLeft, akTop, akBottom]
         ItemHeight = 13
         TabOrder = 4
@@ -94,10 +94,10 @@ object Form2: TForm2
       Caption = 'Presets'
       DesignSize = (
         587
-        283)
+        284)
       object updatepreset: TButton
         Left = 48
-        Top = 260
+        Top = 261
         Width = 46
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -107,7 +107,7 @@ object Form2: TForm2
       end
       object newpreset: TButton
         Left = 0
-        Top = 260
+        Top = 261
         Width = 48
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -117,7 +117,7 @@ object Form2: TForm2
       end
       object deletepreset: TButton
         Left = 232
-        Top = 260
+        Top = 261
         Width = 46
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -134,7 +134,7 @@ object Form2: TForm2
         AutoCloseUp = True
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 0
+        ItemHeight = 13
         Sorted = True
         TabOrder = 0
         OnChange = ComboBox2Change
@@ -143,7 +143,7 @@ object Form2: TForm2
         Left = 0
         Top = 24
         Width = 587
-        Height = 232
+        Height = 233
         Anchors = [akLeft, akTop, akRight, akBottom]
         ScrollBars = ssBoth
         TabOrder = 1
@@ -151,7 +151,7 @@ object Form2: TForm2
       end
       object Button19: TButton
         Left = 393
-        Top = 260
+        Top = 261
         Width = 72
         Height = 22
         Anchors = [akRight, akBottom]
@@ -161,7 +161,7 @@ object Form2: TForm2
       end
       object ComboBox3: TComboBox
         Left = 468
-        Top = 260
+        Top = 261
         Width = 120
         Height = 21
         Style = csDropDownList
@@ -179,7 +179,7 @@ object Form2: TForm2
       end
       object Button3: TButton
         Left = 186
-        Top = 260
+        Top = 261
         Width = 46
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -189,7 +189,7 @@ object Form2: TForm2
       end
       object Button20: TButton
         Left = 140
-        Top = 260
+        Top = 261
         Width = 46
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -199,7 +199,7 @@ object Form2: TForm2
       end
       object Button1: TButton
         Left = 94
-        Top = 260
+        Top = 261
         Width = 46
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -485,10 +485,10 @@ object Form2: TForm2
       ImageIndex = 3
       DesignSize = (
         587
-        283)
+        284)
       object deleteff: TButton
         Left = 71
-        Top = 260
+        Top = 261
         Width = 71
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -498,7 +498,7 @@ object Form2: TForm2
       end
       object savevfr: TButton
         Left = 0
-        Top = 260
+        Top = 261
         Width = 71
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -508,7 +508,7 @@ object Form2: TForm2
       end
       object deletend: TButton
         Left = 142
-        Top = 260
+        Top = 261
         Width = 71
         Height = 22
         Anchors = [akLeft, akBottom]
@@ -520,7 +520,7 @@ object Form2: TForm2
         Left = 0
         Top = 0
         Width = 254
-        Height = 256
+        Height = 257
         Anchors = [akLeft, akTop, akBottom]
         ItemHeight = 13
         MultiSelect = True
@@ -532,7 +532,7 @@ object Form2: TForm2
         Left = 257
         Top = 0
         Width = 330
-        Height = 256
+        Height = 257
         Anchors = [akLeft, akTop, akRight, akBottom]
         ItemHeight = 13
         MultiSelect = True
@@ -635,24 +635,24 @@ object Form2: TForm2
       object Splitter1: TSplitter
         Left = 137
         Top = 0
-        Height = 283
+        Height = 284
       end
       object GroupBox3: TGroupBox
         Left = 0
         Top = 0
         Width = 137
-        Height = 283
+        Height = 284
         Align = alLeft
         Caption = 'Lists'
         TabOrder = 0
         DesignSize = (
           137
-          283)
+          284)
         object CustomRangeLists: TListBox
           Left = 8
           Top = 16
           Width = 121
-          Height = 257
+          Height = 258
           Anchors = [akLeft, akTop, akRight, akBottom]
           ItemHeight = 13
           PopupMenu = PopupMenu2
@@ -664,19 +664,19 @@ object Form2: TForm2
         Left = 140
         Top = 0
         Width = 447
-        Height = 283
+        Height = 284
         Align = alClient
         Caption = 'Entries'
         TabOrder = 1
         OnClick = Edit1Change
         DesignSize = (
           447
-          283)
+          284)
         object CustomRanges: TListBox
           Left = 8
           Top = 16
           Width = 431
-          Height = 204
+          Height = 205
           Style = lbVirtual
           Anchors = [akLeft, akTop, akRight, akBottom]
           ItemHeight = 16
@@ -688,7 +688,7 @@ object Form2: TForm2
         end
         object Edit1: TEdit
           Left = 8
-          Top = 226
+          Top = 227
           Width = 431
           Height = 21
           Anchors = [akLeft, akRight, akBottom]
@@ -697,7 +697,7 @@ object Form2: TForm2
         end
         object Edit2: TEdit
           Left = 8
-          Top = 253
+          Top = 254
           Width = 431
           Height = 21
           Anchors = [akLeft, akRight, akBottom]
