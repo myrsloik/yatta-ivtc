@@ -764,6 +764,7 @@ initialization
   DebugStrings := TStringList.Create;
   HookDbgOut(DebugStrings);
 finalization
+  SetDbgOutput(nil);
   DebugStrings.Free
 end.
 

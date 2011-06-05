@@ -20,6 +20,7 @@ type
   TOutputDebugStringWFunc = procedure(Str: PWideChar); stdcall;
 
 procedure HookDbgOut(AOutput: TStrings);
+procedure SetDbgOutput(AOutput: TStrings);
 
 implementation
 
@@ -29,7 +30,12 @@ const
 var
   g_origOutputDebugStringA: TOutputDebugStringAFunc = nil;
   g_origOutputDebugStringW: TOutputDebugStringWFunc = nil;
-  Output: TStrings;
+  Output: TStrings = nil;
+
+procedure SetDbgOutput(AOutput: TStrings);
+begin
+  Output := AOutput;
+end;
 
 procedure WriteModName(Ptr: Pointer);
 var
@@ -51,13 +57,15 @@ end;
 
 procedure MyOutputDebugStringA(Str: PAnsiChar); stdcall;
 begin
-  Output.Append(Str);
+  if Output <> nil then
+    Output.Append(Str);
   g_origOutputDebugStringA(Str);
 end;
 
 procedure MyOutputDebugStringW(Str: PWideChar); stdcall;
 begin
-  Output.Append(Str);
+  if Output <> nil then
+    Output.Append(Str);
   g_origOutputDebugStringW(Str);
 end;
 
