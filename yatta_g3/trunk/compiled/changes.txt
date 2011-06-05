@@ -1,5 +1,6 @@
 7-131
 UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
+Fixed the fastmm error that sometimes happened on ymc close.
 Fixed a rare list index out of bounds error when selecting a custom list in the tool window.
 Disabled xp style controls in ymc to work around a delphi 7 vcl bug that made some dialogs not always draw properly in win7.
 Fixed scroll bars in SCXvid config window.
