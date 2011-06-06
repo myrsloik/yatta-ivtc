@@ -25,7 +25,7 @@ object Form2: TForm2
     Top = 0
     Width = 595
     Height = 312
-    ActivePage = TabSheet8
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 0
     object TabSheet8: TTabSheet
@@ -134,7 +134,7 @@ object Form2: TForm2
         AutoCloseUp = True
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 13
+        ItemHeight = 0
         Sorted = True
         TabOrder = 0
         OnChange = ComboBox2Change
