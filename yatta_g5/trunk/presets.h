@@ -2,12 +2,7 @@
 #define PRESETS_H
 
 #include <QtCore/QString>
-
-struct TDecimationRate
-{
-    unsigned int m;
-    unsigned int n;
-};
+#include <QtCore/QList>
 
 class TSectionPreset
 {
@@ -31,10 +26,23 @@ public:
     QString name;
     QString script;
     bool scriptDecimation;
-    TDecimationRate decimationRate;
+    unsigned int m;
+    unsigned int n;
 
     TDecimationPreset(const QString &name, const QString &script, int id);
     int id();
+};
+
+class TSectionPresets
+{
+private:
+    //owner so use can be checked
+    QList<TSectionPreset> presets;
+public:
+    TSectionPreset &operator [](int i) {return presets[i]; }
+    int add(const QString &name, const QString &script, int id = -1);
+    bool remove(int i);
+    TSectionPreset & getPresetById(int id);
 };
 
 #endif // PRESETS_H
