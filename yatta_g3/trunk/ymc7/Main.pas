@@ -299,10 +299,6 @@ var
 begin
   if OpenDialog.Execute then
   begin
-    //fixme, adds magic sleep when being debugged or it hangs
-    //if DebugHook <> 0 then
-    Sleep(100);
-
     JobList.Items.BeginUpdate;
     for Counter := 0 to OpenDialog.Files.Count - 1 do
       AddFile(OpenDialog.Files[Counter]);
