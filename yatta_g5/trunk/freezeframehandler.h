@@ -1,8 +1,7 @@
 #ifndef FREEZEFRAMEHANDLER_H
 #define FREEZEFRAMEHANDLER_H
 
-#include <QtCore/QList>
-#include "matchhandler.h"
+#include <QList>
 
 struct TFreezeFrame
 {
@@ -19,7 +18,6 @@ private:
     QList<TFreezeFrame> freezeFrames;
     TFreezeFrame *lastFF;
 public:
-    TFreezeFrameHandler();
     const TFreezeFrame &operator [] (int i);
     int count();
     const TFreezeFrame *getByFrame(int frame);

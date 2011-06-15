@@ -12,11 +12,6 @@ TFreezeFrame::TFreezeFrame(int start, int end, int replace)
     this->replace = replace;
 }
 
-TFreezeFrameHandler::TFreezeFrameHandler()
-{
-
-}
-
 const TFreezeFrame &TFreezeFrameHandler::operator [] (int i)
 {
     return freezeFrames[i];
