@@ -41,8 +41,6 @@ type
     JobPopupMenu: TPopupMenu;
     MoveJobUpButton: TSpeedButton;
     MoveJobDownButton: TSpeedButton;
-    ClearErrors1: TMenuItem;
-    N1: TMenuItem;
     SetAvisynthPluginDirectory1: TMenuItem;
     SetDefaultTaskPriority1: TMenuItem;
     Higher1: TMenuItem;
@@ -50,10 +48,8 @@ type
     Lower1: TMenuItem;
     Lowest1: TMenuItem;
     Idle1: TMenuItem;
-    MarkAsReadyAction: TAction;
     MoveFilterUpAction: TAction;
     MoveFilterDownAction: TAction;
-    ClearAllErrors1: TMenuItem;
     SetMaxRunningJobs1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -78,14 +74,11 @@ type
       var DataObject: TObject);
     procedure SetAvisynthPluginDirectory1Click(Sender: TObject);
     procedure Mpeg2DecRadioGroupClick(Sender: TObject);
-    procedure MarkAsReadyActionExecute(Sender: TObject);
-    procedure MarkAsReadyActionUpdate(Sender: TObject);
     procedure SetDefaultPriorityClick(Sender: TObject);
     procedure MoveFilterUpActionExecute(Sender: TObject);
     procedure MoveFilterUpActionUpdate(Sender: TObject);
     procedure MoveFilterDownActionExecute(Sender: TObject);
     procedure MoveFilterDownActionUpdate(Sender: TObject);
-    procedure ClearAllErrors1Click(Sender: TObject);
     procedure SetMaxRunningJobs1Click(Sender: TObject);
     procedure MetricFilterListDblClick(Sender: TObject);
   private
@@ -287,7 +280,7 @@ begin
   begin
     with FTaskList[JobList.ItemIndex] do
       JobList.Hint := 'Task Id: ' + IntToStr(TaskId) + #13#10'Destination: ' +
-        OutputFile + #13#10'Status: ' + TaskStatusToText(Status);
+        OutputFile;
   end;
 
   MetricFilterList.Clear;
@@ -397,7 +390,11 @@ begin
 end;
 
 procedure TMainForm.StartActionExecute(Sender: TObject);
+var Counter: Integer;
 begin
+  for Counter := 0 to FTaskList.Count - 1 do
+    FTaskList[Counter].ResetStatus;
+    
   try
     FTaskList.CollectMetrics;
     if FTaskList.RunningThreads > 0 then
@@ -436,17 +433,6 @@ begin
       NewPluginPath := NewPluginPath + '\';
     FTaskList.PluginPath := NewPluginPath;
   end;
-end;
-
-procedure TMainForm.MarkAsReadyActionExecute(Sender: TObject);
-begin
-  FTaskList[JobList.ItemIndex].ResetStatus;
-  UpdateSelectedJob;
-end;
-
-procedure TMainForm.MarkAsReadyActionUpdate(Sender: TObject);
-begin
-  (Sender as TAction).Enabled := JobList.ItemIndex >= 0;
 end;
 
 procedure TMainForm.SetDefaultPriorityClick(Sender: TObject);
@@ -508,15 +494,6 @@ procedure TMainForm.Show;
 begin
   inherited;
   ShowWindow(Application.Handle, SW_SHOW);
-end;
-
-procedure TMainForm.ClearAllErrors1Click(Sender: TObject);
-var
-  Counter: Integer;
-begin
-  for Counter := 0 to FTaskList.Count - 1 do
-    FTaskList[Counter].ResetStatus;
-  UpdateSelectedJob;
 end;
 
 procedure TMainForm.SetMaxRunningJobs1Click(Sender: TObject);

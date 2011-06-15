@@ -317,12 +317,6 @@ object MainForm: TMainForm
       OnExecute = StartActionExecute
       OnUpdate = StartActionUpdate
     end
-    object MarkAsReadyAction: TAction
-      Category = 'JobList'
-      Caption = 'Mark As Ready'
-      OnExecute = MarkAsReadyActionExecute
-      OnUpdate = MarkAsReadyActionUpdate
-    end
     object MoveFilterUpAction: TAction
       Category = 'MetricsCollection'
       OnExecute = MoveFilterUpActionExecute
@@ -337,17 +331,6 @@ object MainForm: TMainForm
   object JobPopupMenu: TPopupMenu
     Left = 280
     Top = 136
-    object ClearErrors1: TMenuItem
-      Action = MarkAsReadyAction
-      Caption = 'Clear Errors'
-    end
-    object ClearAllErrors1: TMenuItem
-      Caption = 'Clear All Errors'
-      OnClick = ClearAllErrors1Click
-    end
-    object N1: TMenuItem
-      Caption = '-'
-    end
     object SetAvisynthPluginDirectory1: TMenuItem
       Caption = 'Set Avisynth Plugin Directory'
       OnClick = SetAvisynthPluginDirectory1Click

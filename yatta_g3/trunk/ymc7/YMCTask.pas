@@ -13,7 +13,7 @@ type
 
   TYMCTaskList = class;
 
-  TYMCTask = class(TObjectList)
+  TYMCTask = class(TObjectList)                                                  
   private
     FStatus: TTaskStatus;
     FInputFile: string;
@@ -96,7 +96,6 @@ type
 
 procedure AddPlugin(Plugin: TYMCPluginClass);
 
-function TaskStatusToText(Status: TTaskStatus): string;
 function Mpeg2DecoderToString(Decoder: TMpeg2Decoder): string;
 
 implementation
@@ -119,15 +118,6 @@ begin
   case Decoder of
     mdMpeg2Dec3: Result := 'Mpeg2Dec3';
     mdDGDecode: Result := 'DGDecode';
-  end;
-end;
-
-function TaskStatusToText(Status: TTaskStatus): string;
-begin
-  case Status of
-    tsReady: Result := 'Ready';
-    tsRunning: Result := 'Running';
-    tsFailed: Result := 'Failed';
   end;
 end;
 
