@@ -42,7 +42,7 @@ type
   end;
 
   TSCXvidSettings = record
-    LogOutput: string;
+    LogOutput: array[0..2047] of AnsiChar;
   end;
 
   TCropsettings = record
@@ -76,7 +76,7 @@ type
 
   TResizeSettings = record
     Width, Height: Integer;
-    Resizer: string;
+    Resizer: array[0..63] of AnsiChar;
   end;
 
   TTelecide = class(TYMCPlugin)
@@ -1175,7 +1175,7 @@ begin
 
     ShowModal;
 
-    LogOutput := LogEdit.Text;
+    StrLCopy(LogOutput, PChar(LogEdit.Text), SizeOf(LogOutput) - 1);
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1190,7 +1190,7 @@ begin
 
   FSettings.LogOutput := '';
   if Settings <> '' then
-    FSettings.LogOutput := Settings;
+    StrLCopy(FSettings.LogOutput, PChar(Settings), SizeOf(FSettings.LogOutput) - 1);
 end;
 
 class function TSCXvid.GetConfiguration: TYMCPluginConfig;
@@ -1274,7 +1274,7 @@ begin
   end;
 
   if FSettings.LogOutput <> '' then
-    CopyFile(PChar(FLogPath), PChar(FSettings.LogOutput), False);
+    CopyFile(PChar(FLogPath), FSettings.LogOutput, False);
 
   DeleteFile(FLogPath);
 end;
@@ -1457,7 +1457,7 @@ begin
 
     Width := StrToIntDef(WidthEdit.Text, Width);
     Height := StrToIntDef(HeightEdit.Text, Height);
-    Resizer := ResizerGroup.Items[ResizerGroup.Itemindex];
+    StrLCopy(Resizer, PChar(ResizerGroup.Items[ResizerGroup.Itemindex]), SizeOf(Resizer) - 1);
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1471,7 +1471,9 @@ begin
   inherited;
   FSettings.Width := StrToIntDef(GetToken(Settings, 0, [',']), 720);
   FSettings.Height := StrToIntDef(GetToken(Settings, 1, [',']), 480);
-  FSettings.Resizer := GetToken(Settings, 2, [',']);
+  StrLCopy(FSettings.Resizer, PChar(GetToken(Settings, 2, [','])), SizeOf(FSettings.Resizer) - 1);
+  if FSettings.Resizer = '' then
+    FSettings.Resizer := 'Bicubic';
 end;
 
 class function TResize.GetConfiguration: TYMCPluginConfig;

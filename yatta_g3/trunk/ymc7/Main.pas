@@ -8,7 +8,7 @@ uses
   filectrl, CheckLst, shellapi, AsifAdditions, ActnList, AppEvnts, Menus, YShared;
 
 const
-  INIVersion = 20;
+  INIVersion = 21;
   MainIniKey = 'YMC7';
 
 type
