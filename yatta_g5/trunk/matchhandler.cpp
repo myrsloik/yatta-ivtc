@@ -10,12 +10,7 @@ TFrameInfo::TFrameInfo(int frame)
     originalFromRFF = false;
 }
 
-TMatchHandler::TMatchHandler()
-{
-
-}
-
-TFrameInfo &TMatchHandler::operator [] (int i)
+const TFrameInfo &TMatchHandler::operator [] (int i)
 {
     return matches[i];
 }
