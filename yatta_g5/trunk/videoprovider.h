@@ -3,14 +3,8 @@
 
 #include <QtCore/QList>
 #include <QtCore/QString>
+#include "coreshared.h"
 
-struct TCutRange
-{
-    int start;
-    int end;
-};
-
-typedef QList<TCutRange> TCutList;
 
 enum TColorSpace { csDEFAULT, csYV12, csYUY2, csRGB32 };
 
@@ -37,7 +31,7 @@ public:
     virtual void videoInfo(TVideoInfo &videoInfo) = 0;
     virtual void setColorSpace(TColorSpace colorSpace) = 0;
     virtual const TVideoFrame &getFrame(int n) = 0;
-    virtual TVideoWrapper *clone();
+    virtual TVideoWrapper *clone() = 0;
 };
 
 class TVideoProvider

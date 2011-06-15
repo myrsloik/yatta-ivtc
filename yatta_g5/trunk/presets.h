@@ -40,6 +40,7 @@ private:
     QList<TSectionPreset> presets;
 public:
     TSectionPreset &operator [](int i) {return presets[i]; }
+    int count();
     int add(const QString &name, const QString &script, int id = -1);
     bool remove(int i);
     TSectionPreset & getPresetById(int id);
