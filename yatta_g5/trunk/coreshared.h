@@ -1,13 +1,16 @@
 #ifndef CORESHARED_H
 #define CORESHARED_H
 
-enum TLayerType { ltSection, ltCustomList, ltMatching };
+#include <QString>
+
+enum TLayerType { ltSection = 100, ltMatching = 200, ltCustomList = 300 };
 
 class TLayer
 {
 public:
-    virtual const QString &name() const = 0;
+    QString name;
     virtual TLayerType layerType() const = 0;
+    virtual bool isPresetUsed(int id) const = 0;
 };
 
 typedef struct TRange
@@ -36,8 +39,6 @@ typedef QList<TCutRange> TCutList;
 
 struct TSection : public TRange
 {
-    int start;
-    int end;
     int preset;
     int index;
     TSection(int start, int preset) : TRange(start, 0)

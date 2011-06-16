@@ -15,29 +15,32 @@ const TFrameInfo &TMatchHandler::operator [] (int i)
     return matches[i];
 }
 
+bool TMatchHandler::setMatch(int frame, int top, int bottom)
+{
+    matches[frame].top = top;
+    matches[frame].bottom = bottom;
+    emit matchChanged(frame);
+    return true;
+}
+
 void TMatchHandler::setMatchChar(int frame, char match)
 {
     TFrameInfo &f = matches[frame];
     switch (match) {
     case 'c':
-        f.top = frame;
-        f.bottom = frame;
+        setMatch(frame, frame, frame);
         break;
     case 'u':
-        f.top = frame + (f.topFieldFirst ? 1 : 0);
-        f.bottom = frame + (f.topFieldFirst ? 0 : 1);
+        setMatch(frame, frame + (f.topFieldFirst ? 1 : 0), frame + (f.topFieldFirst ? 0 : 1));
         break;
     case 'n':
-        f.top = frame + (f.topFieldFirst ? 0 : 1);
-        f.bottom = frame + (f.topFieldFirst ? 1 : 0);
+        setMatch(frame, frame + (f.topFieldFirst ? 0 : 1), frame + (f.topFieldFirst ? 1 : 0));
         break;
     case 'b':
-        f.top = frame - (f.topFieldFirst ? 0 : 1);
-        f.bottom = frame - (f.topFieldFirst ? 1 : 0);
+        setMatch(frame, frame - (f.topFieldFirst ? 0 : 1), frame - (f.topFieldFirst ? 1 : 0));
         break;
     case 'p':
-        f.top = frame - (f.topFieldFirst ? 1 : 0);
-        f.bottom = frame - (f.topFieldFirst ? 0 : 1);
+        setMatch(frame, frame - (f.topFieldFirst ? 1 : 0), frame - (f.topFieldFirst ? 0 : 1));
         break;
     }
 }

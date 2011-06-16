@@ -25,7 +25,7 @@ private:
 
 public:
     const TFrameInfo &operator [] (int i);
-    bool setMatch(int top, int bottom);
+    bool setMatch(int frame, int top, int bottom);
     void resetMatch(int frame);
     void setMatchChar(int frame, char match);
     char matchChar(int frame);
