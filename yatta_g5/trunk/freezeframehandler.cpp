@@ -1,17 +1,5 @@
 #include "freezeframehandler.h"
 
-bool TFreezeFrame::operator<(const TFreezeFrame &freezeFrame) const
-{
-    return start < freezeFrame.start;
-}
-
-TFreezeFrame::TFreezeFrame(int start, int end, int replace)
-{
-    this->start = start;
-    this->end = end;
-    this->replace = replace;
-}
-
 const TFreezeFrame &TFreezeFrameHandler::operator [] (int i)
 {
     return freezeFrames[i];

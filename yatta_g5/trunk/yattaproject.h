@@ -33,7 +33,7 @@ public:
     // to fix up user input while the others look ahead in the file
     // without a loaded video file this will just act like
     // a dmetric container
-    // the actual metric calculationimplementation will most likely be borrowed
+    // the actual metric calculation implementation will most likely be borrowed
     // straight from tdecimate
     // needs access to the current matches to work properly
 

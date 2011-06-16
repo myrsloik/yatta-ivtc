@@ -1,8 +1,8 @@
 #ifndef LAYERS_H
 #define LAYERS_H
 
-#include <QtCore/QList>
-#include <QtCore/QString>
+#include <QList>
+#include <QString>
 #include "coreshared.h"
 
 
@@ -11,22 +11,25 @@ class TSectionLayer : public TLayer
 private:
     QList<TSection> sections;
 public:
+    TSectionLayer();
     bool add(int start, int end);
-    void remove(int index);
+    bool remove(int index);
     int count();
-    TSection &getByFrame(int frame);
+    const TSection &getByFrame(int frame);
+    const TSection &operator [](int i);
 };
 
 class TCustomListLayer : public TLayer
 {
 private:
-    QList<TCustomRange> sections;
+    QList<TCustomRange> ranges;
 public:
     QString script;
     bool add(int start, int end);
-    void remove(int index);
+    bool remove(int index);
     int count();
-    TCustomRange *getByFrame(int frame);
+    const TCustomRange *getByFrame(int frame);
+    const TCustomRange &operator [](int i);
 };
 
 class TLayers
@@ -34,11 +37,13 @@ class TLayers
 private:
     QList<TLayer *> order;
 public:
+    bool isPresetUsed(int id);
     int count();
     int customListLayerCount();
     int sectionLayerCount();
-    void exchange(int i1, int i2);
 
+    void exchange(int i1, int i2);
+    const TLayer &operator [](int i);
     TLayers();
 };
 

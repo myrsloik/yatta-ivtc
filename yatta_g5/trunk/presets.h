@@ -1,49 +1,43 @@
 #ifndef PRESETS_H
 #define PRESETS_H
 
-#include <QtCore/QString>
-#include <QtCore/QList>
+#include <QString>
+#include <QList>
 
-class TSectionPreset
+class TPreset
 {
 private:
     int fId;
-
 public:
     QString name;
     QString script;
-
-    TSectionPreset(const QString &name, const QString &script, int id);
-    int id();
+    TPreset(const QString &name, const QString &script, int id);
+    int id() const;
 };
 
-class TDecimationPreset
+class TDecimationPreset : public TPreset
 {
-private:
-    int fId;
-
-public:
-    QString name;
-    QString script;
+    unsigned m;
+    unsigned n;
     bool scriptDecimation;
-    unsigned int m;
-    unsigned int n;
-
-    TDecimationPreset(const QString &name, const QString &script, int id);
-    int id();
+    TDecimationPreset(const QString &name, const QString &script, unsigned m, unsigned n, bool scriptDecimation, int id);
 };
 
-class TSectionPresets
+class TLayers;
+
+class TPresets
 {
 private:
-    //owner so use can be checked
-    QList<TSectionPreset> presets;
+    TLayers *layers;
+    QList<TPreset> presets;
 public:
-    TSectionPreset &operator [](int i) {return presets[i]; }
+    TPreset &operator [](int i);
     int count();
-    int add(const QString &name, const QString &script, int id = -1);
+    bool add(const QString &name, const QString &script, int m, int n, int id = -1);
+    bool add(const QString &name, const QString &script, int id = -1);
     bool remove(int i);
-    TSectionPreset & getPresetById(int id);
+    bool removeById(int id);
+    const TPreset *getPresetById(int id);
 };
 
 #endif // PRESETS_H

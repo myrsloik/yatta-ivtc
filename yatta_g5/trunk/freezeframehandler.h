@@ -2,15 +2,7 @@
 #define FREEZEFRAMEHANDLER_H
 
 #include <QList>
-
-struct TFreezeFrame
-{
-    int start;
-    int end;
-    int replace;
-    bool operator<(const TFreezeFrame &freezeFrame) const;
-    TFreezeFrame(int start, int end, int replace);
-};
+#include "coreshared.h"
 
 class TFreezeFrameHandler
 {
