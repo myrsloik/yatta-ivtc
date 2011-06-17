@@ -39,10 +39,13 @@ public:
 class TCustomListLayer : public TLayer
 {
 private:
-    QString fName;
+    TPresets *presets;
     QList<TCustomRange> ranges;
+    int fPreset;
 public:
-    int preset;
+    TCustomListLayer(TPresets *presets);
+    int preset() const;
+    bool setPreset(int preset);
     bool add(int start, int end);
     void remove(int index);
     int count();
@@ -62,12 +65,13 @@ public:
 
     bool isPresetUsed(int id);
     int count();
-    int customListLayerCount();
-    int sectionLayerCount();
-
-
     void exchange(int i1, int i2);
     const TLayer &operator [](int i);
+    int customListLayerCount();
+    int sectionLayerCount();
+    TDecimationLayer *decimationLayer();
+    TSectionLayer *sectionLayer(int index);
+    TCustomListLayer *customListLayer(int index);
 
     TLayers();
     ~TLayers();

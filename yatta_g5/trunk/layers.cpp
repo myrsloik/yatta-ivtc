@@ -33,7 +33,13 @@ const TSection &TMarkerLayer::getByFrame(int frame)
 
 const TSection &TMarkerLayer::operator [](int i)
 {
-    return sections[i];
+    TSection &s = sections[i];
+    s.index = i;
+    if (i + 1 < sections.count())
+        s.end = sections[i + 1].start - 1;
+    else
+        s.end = -1;
+    return s;
 }
 
 bool TMarkerLayer::setPreset(int index, int preset)
@@ -90,6 +96,147 @@ TDecimationLayer::TDecimationLayer(TPresets *apresets) : TMarkerLayer(apresets)
 TLayerType TDecimationLayer::layerType() const
 {
     return ltMatching;
+}
+
+TCustomListLayer::TCustomListLayer(TPresets *presets)
+{
+    this->presets = presets;
+    fPreset = ltCustomList;
+}
+
+int TCustomListLayer::preset() const
+{
+    return fPreset;
+}
+
+bool TCustomListLayer::setPreset(int preset)
+{
+    const TPreset *p = presets->getPresetById(preset);
+    if (!p || p->type != layerType())
+        return false;
+
+    fPreset = preset;
+    return true;
+}
+
+bool TCustomListLayer::add(int start, int end)
+{
+    // fixme, overlap check
+    ranges.append(TCustomRange(start, end));
+    return true;
+}
+
+void TCustomListLayer::remove(int index)
+{
+    remove(index);
+}
+
+int TCustomListLayer::count()
+{
+    return ranges.count();
+}
+
+const TCustomRange *TCustomListLayer::getByFrame(int frame)
+{
+    QListIterator<TCustomRange> i(ranges);
+    while (i.hasNext()) {
+        const TCustomRange &c = i.next();
+        if (c.start >= frame && c.end <= frame)
+            return &c;
+    }
+    return NULL;
+}
+
+const TCustomRange &TCustomListLayer::operator [](int i)
+{
+    return ranges[i];
+}
+
+TLayerType TCustomListLayer::layerType() const
+{
+    return ltCustomList;
+}
+
+bool TCustomListLayer::isPresetUsed(int id) const
+{
+    return fPreset == id;
+}
+
+bool TLayers::isPresetUsed(int id)
+{
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext()) {
+        if (i.next()->isPresetUsed(id))
+            return true;
+    }
+    return false;
+}
+
+int TLayers::count()
+{
+    return layers.count();
+}
+
+void TLayers::exchange(int i1, int i2)
+{
+    layers.swap(i1, i2);
+}
+
+const TLayer &TLayers::operator [](int i)
+{
+    return *(layers[i]);
+}
+
+int TLayers::customListLayerCount()
+{
+    int n = 0;
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext())
+        if (i.next()->layerType() == ltCustomList)
+            n++;
+    return n;
+}
+
+int TLayers::sectionLayerCount()
+{
+    int n = 0;
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext())
+        if (i.next()->layerType() == ltCustomList)
+            n++;
+    return n;
+}
+
+TDecimationLayer *TLayers::decimationLayer()
+{
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext()) {
+        if (i.next()->layerType() == ltMatching)
+            return static_cast<TDecimationLayer *>(i.peekPrevious());
+    }
+    return NULL;
+}
+
+TSectionLayer *TLayers::sectionLayer(int index)
+{
+    int j = 0;
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext()) {
+        if (i.next()->layerType() == ltMatching && j++ == index)
+            return static_cast<TSectionLayer *>(i.peekPrevious());
+    }
+    return NULL;
+}
+
+TCustomListLayer *TLayers::customListLayer(int index)
+{
+    int j = 0;
+    QListIterator<TLayer *> i(layers);
+    while (i.hasNext()) {
+        if (i.next()->layerType() == ltMatching && j++ == index)
+            return static_cast<TCustomListLayer *>(i.peekPrevious());
+    }
+    return NULL;
 }
 
 TLayers::TLayers() : presets(this)

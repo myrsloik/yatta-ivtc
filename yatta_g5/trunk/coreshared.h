@@ -3,7 +3,7 @@
 
 #include <QString>
 
-enum TLayerType { ltSection = 100, ltMatching = 200, ltCustomList = 300 };
+enum TLayerType { ltSection = 200, ltMatching = 600, ltCustomList = 800 };
 
 class TLayer
 {
@@ -18,7 +18,7 @@ typedef struct TRange
     int start;
     int end;
     bool operator<(const TRange &range) const;
-    // add an overlap checking function here
+    // fixme, add an overlap checking function here
     TRange(int start, int end)
     {
         this->start = start;

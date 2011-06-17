@@ -92,7 +92,7 @@ const TVideoFrame &TFFMSVideoWrapper::getFrame(int n)
     return vf;
 }
 
-TVideoWrapper *TFFMSVideoWrapper::clone()
+TFFMSVideoWrapper *TFFMSVideoWrapper::clone()
 {
     return new TFFMSVideoWrapper(*this);
 }

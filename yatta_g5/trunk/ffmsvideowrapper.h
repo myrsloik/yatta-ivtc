@@ -23,7 +23,7 @@ public:
     void videoInfo(TVideoInfo &videoInfo);
     void setColorSpace(TColorSpace colorSpace);
     const TVideoFrame &getFrame(int n);
-    TVideoWrapper *clone();
+    TFFMSVideoWrapper *clone();
 };
 
 #endif // FFMSVIDEOWRAPPER_H
