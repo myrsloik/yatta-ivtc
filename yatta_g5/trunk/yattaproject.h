@@ -5,6 +5,7 @@
 #include "metricscontainers.h"
 #include "matchhandler.h"
 #include "freezeframehandler.h"
+#include "layers.h"
 
 class TYattaProject
 {
@@ -59,12 +60,7 @@ public:
     // will handle a list of decimation presets as well
 
     // layer container
-    // has a preset handling class as well, the preset class will always
-    // provide the "null" default preset and it should be unchangable, also
-    // a preset should not be deletable if it's in use
-    // handles section and custom list style layers
-    // stores ordering of the layers, including a special marker for
-    // matching placement
+    TLayers *layers;
 
 
     TYattaProject();

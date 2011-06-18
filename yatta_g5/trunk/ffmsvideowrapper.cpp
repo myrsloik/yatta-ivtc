@@ -81,15 +81,32 @@ void TFFMSVideoWrapper::setColorSpace(TColorSpace colorSpace)
     FFMS_SetOutputFormatV(video, targetFormats, frame->EncodedWidth, frame->EncodedHeight, FFMS_RESIZER_BICUBIC, &errorInfo);
 }
 
-const TVideoFrame &TFFMSVideoWrapper::getFrame(int n)
+TFFMSVideoFrame::TFFMSVideoFrame(const FFMS_Frame *frame)
+{
+    for (int i = 0; i < 4; i++) {
+        lineSize[i] = frame->Linesize[i];
+        if (frame->Data[i]) {
+            int memSize = lineSize[i] * frame->ScaledHeight;
+            data[i] = new uint8_t[memSize];
+            memcpy(data[i], frame->Data[i], memSize);
+        } else {
+            data[i] = NULL;
+        }
+    }
+    topFieldFirst = frame->TopFieldFirst;
+}
+
+TFFMSVideoFrame::~TFFMSVideoFrame()
+{
+    for (int i = 0; i < 4; i++)
+        delete [] data[i];
+}
+
+PVideoFrame TFFMSVideoWrapper::getFrame(int n)
 {
     const FFMS_Frame *frame = FFMS_GetFrame(video, n, &errorInfo);
-    for (int i = 0; i < 4; i++) {
-        vf.Data[i] = frame->Data[i];
-        vf.Linesize[i] = frame->Linesize[i];
-    }
-    vf.TopFieldFirst = frame->TopFieldFirst;
-    return vf;
+    TFFMSVideoFrame *newFrame = new TFFMSVideoFrame(frame);
+    return PVideoFrame(newFrame);
 }
 
 TFFMSVideoWrapper *TFFMSVideoWrapper::clone()

@@ -12,6 +12,7 @@ int TFreezeFrameHandler::count()
 
 const TFreezeFrame *TFreezeFrameHandler::getByFrame(int frame)
 {
+    // fixme, iterator type
     for (QList<TFreezeFrame>::const_iterator i = freezeFrames.constBegin(); i != freezeFrames.constEnd(); ++i) {
         if (i->start <= frame && i->end >= frame)
             return &(*i);
@@ -33,6 +34,7 @@ bool TFreezeFrameHandler::add(int start, int end, int replace)
     if (start > end || start < 0 || (start == end && replace == end))
         return false;
 
+    // fixme, mess and iterator type
     for (QList<TFreezeFrame>::const_iterator i = freezeFrames.constBegin(); i != freezeFrames.constEnd(); ++i) {
         if ((i->start <= replace) && (i->end >= replace) || (i->start >= start) && (i->start <= end) || (i->end <= end) && (i->end >= start) || (i->start <= start) && (i->end >= end) || (i->replace >= start) && (i->replace <= end))
             return false;
