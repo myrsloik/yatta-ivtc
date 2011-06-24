@@ -55,7 +55,7 @@ void TVideoProvider::setColorSpace(TColorSpace colorSpace)
     //adjust for cuts
 }
 
-PVideoFrame TVideoProvider::getFrame(int n)
+TVideoFrame *TVideoProvider::getFrame(int n)
 {
     // adjust for cuts
     return video->getFrame(n);

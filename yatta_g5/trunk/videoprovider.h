@@ -35,7 +35,7 @@ public:
     virtual ~TVideoWrapper();
     virtual void videoInfo(TVideoInfo &videoInfo) = 0;
     virtual void setColorSpace(TColorSpace colorSpace) = 0;
-    virtual PVideoFrame getFrame(int n) = 0;
+    virtual TVideoFrame *getFrame(int n) = 0;
     virtual TVideoWrapper *clone() = 0;
 };
 
@@ -55,7 +55,7 @@ public:
     const TCutList &cuts() const;
     const TVideoInfo &videoInfo() const;
     void setColorSpace(TColorSpace colorSpace);
-    PVideoFrame getFrame(int n);
+    TVideoFrame *getFrame(int n);
     // add keyframe hinting where it's possible
     // add caching
 };

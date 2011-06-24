@@ -28,7 +28,7 @@ public:
     ~TFFMSVideoWrapper();
     void videoInfo(TVideoInfo &videoInfo);
     void setColorSpace(TColorSpace colorSpace);
-    PVideoFrame getFrame(int n);
+    TFFMSVideoFrame *getFrame(int n);
     TFFMSVideoWrapper *clone();
 };
 

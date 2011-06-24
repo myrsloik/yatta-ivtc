@@ -102,11 +102,10 @@ TFFMSVideoFrame::~TFFMSVideoFrame()
         delete [] data[i];
 }
 
-PVideoFrame TFFMSVideoWrapper::getFrame(int n)
+TFFMSVideoFrame *TFFMSVideoWrapper::getFrame(int n)
 {
     const FFMS_Frame *frame = FFMS_GetFrame(video, n, &errorInfo);
-    TFFMSVideoFrame *newFrame = new TFFMSVideoFrame(frame);
-    return PVideoFrame(newFrame);
+    return new TFFMSVideoFrame(frame);
 }
 
 TFFMSVideoWrapper *TFFMSVideoWrapper::clone()

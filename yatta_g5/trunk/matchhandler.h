@@ -1,7 +1,7 @@
 #ifndef MATCHHANDLER_H
 #define MATCHHANDLER_H
 
-#include <QList>
+#include <QVector>
 #include <QString>
 #include <QObject>
 #include "coreshared.h"
@@ -13,6 +13,7 @@ struct TFrameInfo {
     int originalBottom;
     bool topFieldFirst;
     bool originalFromRFF;
+    TFrameInfo() {}
     TFrameInfo(int frame);
 };
 
@@ -21,7 +22,7 @@ class TMatchHandler : private QObject
     Q_OBJECT
 
 private:
-    QList<TFrameInfo> matches;
+    QVector<TFrameInfo> matches;
 
 public:
     const TFrameInfo &operator [] (int i);
