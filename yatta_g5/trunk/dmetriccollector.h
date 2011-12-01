@@ -11,14 +11,14 @@
 #include "layers.h"
 #include "matchhandler.h"
 
-class TDMetrics;
+class TDecimationHandler;
 
 class TDMetricCollector : public QThread
 {
     Q_OBJECT
 private:
     TVideoProvider *video;
-    TDMetrics &fOwner;
+    TDecimationHandler &fOwner;
     QCache<int, TVideoFrame> cache;
     int currentArea;
 
@@ -26,7 +26,7 @@ private:
                       const TVideoFrame *f2top, const TVideoFrame *f2bottom,
                       const TVideoInfo &vi, int &dmetric, int &sad);
 public:
-    TDMetricCollector(TVideoProvider *video, TDMetrics &owner);
+    TDMetricCollector(TVideoProvider *video, TDecimationHandler &owner);
     void run();
 
 public slots:
@@ -52,7 +52,9 @@ struct TDecimationError
 
 enum TCanDecimateResult { cdOK = 0, cdScriptDecimate, cdAlreadyForceDecimated, cdNoDecimation, cdFullyDecimated };
 
-class TDMetrics : private QObject
+enum TDPosError { dpOK = 0, dpMissingMetrics, dpScriptDecimate, dpOverDecimated };
+
+class TDecimationHandler : private QObject
 {
     Q_OBJECT
 
@@ -60,6 +62,8 @@ class TDMetrics : private QObject
 
 private:
     TMatchHandler &fMatches;
+    TLayers &fLayers;
+    TDecimationLayer &fDecimationLayer;
     QVector<TDecimationRecord> metrics;
     QList<int> unprocessedAreas;
     QMutex mutex;
@@ -70,9 +74,10 @@ public:
     void startCollection(int threads);
     int operator [](int i);
     TCanDecimateResult canForceDecimate(int frame);
-    void setForceDecimate(int frame, bool decimate);
-    QList<TDecimationError> makeErrorReport();
-    TDMetrics(TMatchHandler &matches);
+    TCanDecimateResult setForceDecimate(int frame, bool decimate);
+    QList<TDecimationError> makeErrorReport(int start, int end);
+    TDecimationHandler(TMatchHandler &matches, TLayers &layers);
+    int getDecimatedFrameNumber(int frame);
 public slots:
     void matchChanged(int frame);
 

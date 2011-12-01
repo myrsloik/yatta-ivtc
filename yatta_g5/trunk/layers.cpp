@@ -1,8 +1,8 @@
 #include "layers.h"
 
-TMarkerLayer::TMarkerLayer(TPresets *presets)
+TMarkerLayer::TMarkerLayer(TPresets &apresets) : presets(apresets)
 {
-    this->presets = presets;
+
 }
 
 bool TMarkerLayer::remove(int index)
@@ -44,7 +44,7 @@ const TSection &TMarkerLayer::operator [](int i)
 
 bool TMarkerLayer::setPreset(int index, int preset)
 {
-    const TPreset *p = presets->getPresetById(preset);
+    const TPreset *p = presets.getPresetById(preset);
     if (!p || p->type != layerType())
         return false;
     sections[index].preset = preset;
@@ -53,7 +53,7 @@ bool TMarkerLayer::setPreset(int index, int preset)
 
 bool TMarkerLayer::add(int start, int preset)
 {
-    const TPreset *p = presets->getPresetById(preset);
+    const TPreset *p = presets.getPresetById(preset);
     if (!p || p->type != layerType())
         return false;
 
@@ -78,7 +78,7 @@ bool TMarkerLayer::isPresetUsed(int id) const
     return false;
 }
 
-TSectionLayer::TSectionLayer(TPresets *apresets) : TMarkerLayer(apresets)
+TSectionLayer::TSectionLayer(TPresets &apresets) : TMarkerLayer(apresets)
 {
     sections.append(TSection(0, ltSection));
 }
@@ -88,7 +88,7 @@ TLayerType TSectionLayer::layerType() const
     return ltSection;
 }
 
-TDecimationLayer::TDecimationLayer(TPresets *apresets) : TMarkerLayer(apresets)
+TDecimationLayer::TDecimationLayer(TPresets &apresets) : TMarkerLayer(apresets)
 {
     sections.append(TSection(0, ltMatching));
 }
@@ -98,9 +98,8 @@ TLayerType TDecimationLayer::layerType() const
     return ltMatching;
 }
 
-TCustomListLayer::TCustomListLayer(TPresets *presets)
+TCustomListLayer::TCustomListLayer(TPresets &apresets) : presets(apresets)
 {
-    this->presets = presets;
     fPreset = ltCustomList;
 }
 
@@ -111,7 +110,7 @@ int TCustomListLayer::preset() const
 
 bool TCustomListLayer::setPreset(int preset)
 {
-    const TPreset *p = presets->getPresetById(preset);
+    const TPreset *p = presets.getPresetById(preset);
     if (!p || p->type != layerType())
         return false;
 
@@ -207,41 +206,38 @@ int TLayers::sectionLayerCount()
     return n;
 }
 
-TDecimationLayer *TLayers::decimationLayer()
+TDecimationLayer &TLayers::decimationLayer()
 {
     QListIterator<TLayer *> i(layers);
     while (i.hasNext()) {
         if (i.next()->layerType() == ltMatching)
-            return static_cast<TDecimationLayer *>(i.peekPrevious());
+            return *static_cast<TDecimationLayer *>(i.peekPrevious());
     }
-    return NULL;
 }
 
-TSectionLayer *TLayers::sectionLayer(int index)
+TSectionLayer &TLayers::sectionLayer(int index)
 {
     int j = 0;
     QListIterator<TLayer *> i(layers);
     while (i.hasNext()) {
         if (i.next()->layerType() == ltMatching && j++ == index)
-            return static_cast<TSectionLayer *>(i.peekPrevious());
+            return *static_cast<TSectionLayer *>(i.peekPrevious());
     }
-    return NULL;
 }
 
-TCustomListLayer *TLayers::customListLayer(int index)
+TCustomListLayer &TLayers::customListLayer(int index)
 {
     int j = 0;
     QListIterator<TLayer *> i(layers);
     while (i.hasNext()) {
         if (i.next()->layerType() == ltMatching && j++ == index)
-            return static_cast<TCustomListLayer *>(i.peekPrevious());
+            return *static_cast<TCustomListLayer *>(i.peekPrevious());
     }
-    return NULL;
 }
 
 TLayers::TLayers() : presets(this)
 {
-
+    layers.append(new TDecimationLayer(presets));
 }
 
 TLayers::~TLayers()

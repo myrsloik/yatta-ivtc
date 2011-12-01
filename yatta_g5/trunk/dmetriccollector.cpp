@@ -75,7 +75,7 @@ void TDMetricCollector::calculateSAD(const TVideoFrame *f1top, const TVideoFrame
     }
 }
 
-TDMetricCollector::TDMetricCollector(TVideoProvider *video, TDMetrics &owner) : fOwner(owner), cache(10)
+TDMetricCollector::TDMetricCollector(TVideoProvider *video, TDecimationHandler &owner) : fOwner(owner), cache(10)
 {
     this->video = video->clone();
     currentArea = -1;
@@ -88,10 +88,15 @@ void TDMetricCollector::run()
         fOwner.mutex.lock();
         if (unprocessed.contains(++currentArea)) {
             unprocessed.removeOne(currentArea);
-        } else {
+        } else if (!unprocessed.empty()) {
             currentArea = unprocessed.takeAt((qrand() * unprocessed.count()) / RAND_MAX);
+        } else {
+            fOwner.mutex.unlock();
+            msleep(500);
+            continue;
         }
         fOwner.mutex.unlock();
+
         int start = fOwner.blockSize * currentArea;
         int end = start + fOwner.blockSize;
         for (int i = start; i < end; ++i) {
@@ -131,4 +136,74 @@ void TDMetricCollector::run()
     }
 
     // no more work to do for the moment, reduce the cache size?
+}
+
+void TDecimationHandler::startCollection(int threads)
+{
+
+}
+
+int TDecimationHandler::operator [](int i)
+{
+
+}
+
+TCanDecimateResult TDecimationHandler::canForceDecimate(int frame)
+{
+
+}
+
+TCanDecimateResult TDecimationHandler::setForceDecimate(int frame, bool decimate)
+{
+
+}
+
+QList<TDecimationError> TDecimationHandler::makeErrorReport(int start, int end)
+{
+
+}
+
+TDecimationHandler::TDecimationHandler(TMatchHandler &matches, TLayers &layers) : fMatches(matches), fLayers(layers), fDecimationLayer(layers.decimationLayer())
+{
+    metrics.resize(matches.numFrames());
+}
+
+int TDecimationHandler::getDecimatedFrameNumber(int frame)
+{
+    int framesPassed = 0;
+    for (int i = 0; i < fDecimationLayer.count(); ++i) {
+        const TSection &t = fDecimationLayer[i];
+        const TPreset *p = fLayers.presets.getPresetById(t.preset);
+        int m = p->m;
+        int n = p->n;
+        if (frame < t.start) {
+            // just add up all the frame before, no metrics are needed for these
+            int length = t.end - t.start + 1;
+            if (m <= n)
+                framesPassed += length - ((length / n) * m); // the remainder in a section is not decimated
+            else if (n == 1 && m > 1)
+                framesPassed += length * m; // if n = 1 it's a framerate multiplier section
+        } else {
+            int length = frame - t.start;
+            if (m <= n) {
+                // add the frames before
+                framesPassed += (length / n) * (n - m);
+
+                // are we in the undecimated tail?
+                if (t.start + ((t.end - t.start + 1) / n) * n <= frame)
+                    return framesPassed + (frame - t.start) % n;
+                // fixme, check so the frame isn't decimated
+
+                // are all frames
+
+                // special case for normal telecine decimation
+                if (m == 1 && n == 5) {
+
+                }
+
+            } else if (n == 1 && m > 1) {
+                return framesPassed + length * m;
+            }
+        }
+    }
 }

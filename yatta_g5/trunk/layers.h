@@ -10,10 +10,10 @@
 class TMarkerLayer : public TLayer
 {
 protected:
-    TPresets *presets;
+    TPresets &presets;
     QList<TSection> sections;
 public:
-    TMarkerLayer(TPresets *presets);
+    TMarkerLayer(TPresets &apresets);
     bool remove(int index);
     int count();
     const TSection &getByFrame(int frame);
@@ -25,13 +25,13 @@ public:
 
 class TSectionLayer : public TMarkerLayer {
 public:
-    TSectionLayer(TPresets *apresets);
+    TSectionLayer(TPresets &apresets);
     TLayerType layerType() const;
 };
 
 class TDecimationLayer : public TMarkerLayer {
 public:
-    TDecimationLayer(TPresets *apresets);
+    TDecimationLayer(TPresets &apresets);
     TLayerType layerType() const;
 };
 
@@ -39,11 +39,11 @@ public:
 class TCustomListLayer : public TLayer
 {
 private:
-    TPresets *presets;
+    TPresets &presets;
     QList<TCustomRange> ranges;
     int fPreset;
 public:
-    TCustomListLayer(TPresets *presets);
+    TCustomListLayer(TPresets &apresets);
     int preset() const;
     bool setPreset(int preset);
     bool add(int start, int end);
@@ -69,9 +69,10 @@ public:
     const TLayer &operator [](int i);
     int customListLayerCount();
     int sectionLayerCount();
-    TDecimationLayer *decimationLayer();
-    TSectionLayer *sectionLayer(int index);
-    TCustomListLayer *customListLayer(int index);
+    TDecimationLayer &decimationLayer();
+    TSectionLayer &sectionLayer(int index);
+    TCustomListLayer &customListLayer(int index);
+    bool addLayer(QString &name, TLayerType type, int index = -1);
 
     TLayers();
     ~TLayers();
