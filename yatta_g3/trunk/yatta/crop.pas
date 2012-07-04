@@ -57,7 +57,7 @@ implementation
 {$R *.dfm}
 
 uses
-  Unit2, Unit1;
+  Unit2, Unit1, GR32_Backends;
 
 var
   CFP: TBitmap32;

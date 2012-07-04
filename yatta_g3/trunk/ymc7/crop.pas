@@ -48,6 +48,8 @@ var
 
 implementation
 
+uses GR32_Backends;
+
 {$R *.dfm}
 
 var

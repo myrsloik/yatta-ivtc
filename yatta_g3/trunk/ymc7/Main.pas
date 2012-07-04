@@ -134,9 +134,9 @@ begin
 
   Application.UpdateFormatSettings := False;
 
-  DecimalSeparator := '.';
-  LongTimeFormat := 'hh:nn:ss';
-  ShortTimeFormat := 'hh:nn:ss';
+  FormatSettings.DecimalSeparator := '.';
+  FormatSettings.LongTimeFormat := 'hh:nn:ss';
+  FormatSettings.ShortTimeFormat := 'hh:nn:ss';
 
   try
     InitializeFilterlist(ExtractFilePath(Application.ExeName) + 'filterlist.txt');

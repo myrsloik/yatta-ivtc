@@ -19,8 +19,8 @@ function AnsiDequotedStrY(const S: string; const AQuote: Char): string;
 function ZeroPad(S: string; PadSize: Integer): string;
 procedure SetVariablePrompt(var Result: Integer; AType: Integer);
 
-function GetNextToken(const S: string; var Offset: Integer; const Separators: TAnsiCharSet = [' ', #13, #10]): string;
-function GetToken(const S: string; const Token: Integer; const Separators: TAnsiCharSet = [' ', #13, #10]): string;
+function GetNextToken(const S: string; var Offset: Integer; const Separators: TSysCharSet = [' ', #13, #10]): string;
+function GetToken(const S: string; const Token: Integer; const Separators: TSysCharSet = [' ', #13, #10]): string;
 
 const
   YattaExt = '.yap';
@@ -31,7 +31,7 @@ const
 
 implementation
 
-function GetNextToken(const S: string; var Offset: Integer; const Separators: TAnsiCharSet): string;
+function GetNextToken(const S: string; var Offset: Integer; const Separators: TSysCharSet): string;
 var
   TokenStart: Integer;
   TokenEnd: Integer;
@@ -45,9 +45,9 @@ begin
 
   for Counter := Offset to Length(S) do
   begin
-    if (TokenStart = -1) and not (S[Counter] in Separators) then
+    if (TokenStart = -1) and not CharInSet(S[Counter], Separators) then
       TokenStart := Counter
-    else if (TokenStart <> -1) and (S[Counter] in Separators) then
+    else if (TokenStart <> -1) and CharInSet(S[Counter], Separators) then
     begin
       TokenEnd := Counter;
       Break;
@@ -63,7 +63,7 @@ begin
   end;
 end;
 
-function GetToken(const S: string; const Token: Integer; const Separators: TAnsiCharSet): string;
+function GetToken(const S: string; const Token: Integer; const Separators: TSysCharSet): string;
 var
   Counter: Integer;
   Offset: Integer;

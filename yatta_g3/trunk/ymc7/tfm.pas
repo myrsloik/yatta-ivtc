@@ -52,6 +52,8 @@ implementation
 {$R *.dfm}
 
 procedure TTFMForm.RefreshVideo;
+var
+  Temp: AnsiString;
 begin
   with FEnv do
   begin
@@ -75,7 +77,8 @@ begin
     BoolArg(MChromaCheckbox.Checked, 'mchroma');
     BoolArg(DisplayCheckbox.Checked, 'display');
     BoolArg(False, 'debug');
-    CharArg(PChar(D2VOpenDialog.FileName), 'd2v');
+    Temp := AnsiString(D2VOpenDialog.FileName);
+    CharArg(PAnsiChar(Temp), 'd2v');
 
     FProcessedVideo := InvokeWithClipResult('TFM');
 

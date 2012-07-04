@@ -58,7 +58,7 @@ end;
 procedure MyOutputDebugStringA(Str: PAnsiChar); stdcall;
 begin
   if Output <> nil then
-    Output.Append(Str);
+    Output.Append(string(Str));
   g_origOutputDebugStringA(Str);
 end;
 

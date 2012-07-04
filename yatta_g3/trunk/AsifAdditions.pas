@@ -144,7 +144,7 @@ begin
     for Counter := 0 to Length(FilterList) - 1 do
       with FilterList[Counter] do
       begin
-        if (AnsiSameText(PluginText, FunctionName) or (Tokens.IndexOf(FunctionName) <> -1)) and ((not Env.FunctionExists(FunctionName)) or AllPlugins) and not PluginAlreadyAdded(Result, FilterList[Counter]) then
+        if (AnsiSameText(PluginText, FunctionName) or (Tokens.IndexOf(FunctionName) <> -1)) and ((not Env.FunctionExists(AnsiString(FunctionName))) or AllPlugins) and not PluginAlreadyAdded(Result, FilterList[Counter]) then
         begin
           SetLength(Result, Length(Result) + 1);
           Result[High(Result)] := FilterList[Counter];
@@ -183,6 +183,7 @@ var
   Plugins: TAvisynthFilterDynArray;
   Counter: Integer;
   CurrentPath: string;
+  Temp: AnsiString;
 begin
   CurrentPath := GetCurrentDir;
 
@@ -198,7 +199,8 @@ begin
           if FilterType = ft25STDCALL then
           begin
             try
-              Env.CharArg(PChar(PluginPath + FileName));
+              Temp := AnsiString(PluginPath + FileName);
+              Env.CharArg(PAnsiChar(Temp));
               Env.Invoke('load_stdcall_plugin');
             except on EAsifException do
                 raise EAsifException.Create('Couldn''t load the plugin "' + FileName + '"');
@@ -207,7 +209,8 @@ begin
           else if FilterType = ft25 then
           begin
             try
-              Env.CharArg(PChar(PluginPath + FileName));
+              Temp := AnsiString(PluginPath + FileName);
+              Env.CharArg(PAnsiChar(Temp));
               Env.Invoke('LoadPlugin');
             except on EAsifException do
                 raise EAsifException.Create('Couldn''t load the plugin "' + FileName + '"');
@@ -226,7 +229,8 @@ begin
           if FilterType = ftImport then
           begin
             try
-              Env.CharArg(PChar(PluginPath + FileName));
+              Temp := AnsiString(PluginPath + FileName);
+              Env.CharArg(PAnsiChar(Temp));
               Env.Invoke('Import');
             except on EAsifException do
                 raise EAsifException.Create('Couldn''t import the script "' + FileName + '"');

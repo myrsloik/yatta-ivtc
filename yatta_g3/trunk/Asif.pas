@@ -40,7 +40,7 @@ type
       2: (BoolVal: Boolean);
       3: (IntVal: Integer);
       4: (FloatVal: Single);
-      5: (StringVal: PChar);
+      5: (StringVal: PAnsiChar);
   end;
 
   VideoInfo = record
@@ -97,20 +97,20 @@ type
   end;
 
   IAsifScriptEnvironment = interface(IInterface)
-    procedure SetVar(VarName: string; Value: AVSValueStruct);
-    procedure SetGlobalVar(VarName: string; Value: AVSValueStruct);
+    procedure SetVar(VarName: AnsiString; Value: AVSValueStruct);
+    procedure SetGlobalVar(VarName: AnsiString; Value: AVSValueStruct);
     procedure SetGlobalMemoryLimit(MaxLimit: Integer);
-    function Invoke(Command: string): AVSValueStruct;
-    function InvokeWithClipResult(Command: string): IAsifClip;
-    procedure CharArg(Arg: PChar; ArgName: PChar = nil);
-    procedure IntArg(Arg: Integer; ArgName: PChar = nil);
-    procedure BoolArg(Arg: Boolean; ArgName: PChar = nil);
-    procedure FloatArg(Arg: Single; ArgName: PChar = nil);
-    procedure ClipArg(Video: IAsifClip; ArgName: PChar = nil);
+    function Invoke(Command: AnsiString): AVSValueStruct;
+    function InvokeWithClipResult(Command: AnsiString): IAsifClip;
+    procedure CharArg(Arg: PAnsiChar; ArgName: PAnsiChar = nil);
+    procedure IntArg(Arg: Integer; ArgName: PAnsiChar = nil);
+    procedure BoolArg(Arg: Boolean; ArgName: PAnsiChar = nil);
+    procedure FloatArg(Arg: Single; ArgName: PAnsiChar = nil);
+    procedure ClipArg(Video: IAsifClip; ArgName: PAnsiChar = nil);
     procedure CheckVersion(Version: Integer);
-    function FunctionExists(Name: string): Boolean;
+    function FunctionExists(Name: AnsiString): Boolean;
     function MakeWritable(PVF: IAsifVideoFrame): Boolean;
-    procedure SaveString(S: PChar; Length: Integer);
+    procedure SaveString(S: PAnsiChar; Length: Integer);
     procedure BitBlt(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer);
   end;
 
@@ -120,20 +120,20 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure SetVar(VarName: string; Value: AVSValueStruct);
-    procedure SetGlobalVar(VarName: string; Value: AVSValueStruct);
+    procedure SetVar(VarName: AnsiString; Value: AVSValueStruct);
+    procedure SetGlobalVar(VarName: AnsiString; Value: AVSValueStruct);
     procedure SetGlobalMemoryLimit(MaxLimit: Integer);
-    function Invoke(Command: string): AVSValueStruct;
-    function InvokeWithClipResult(Command: string): IAsifClip;
-    procedure CharArg(Arg: PChar; ArgName: PChar = nil);
-    procedure IntArg(Arg: Integer; ArgName: PChar = nil);
-    procedure BoolArg(Arg: Boolean; ArgName: PChar = nil);
-    procedure FloatArg(Arg: Single; ArgName: PChar = nil);
-    procedure ClipArg(Video: IAsifClip; ArgName: PChar = nil);
+    function Invoke(Command: AnsiString): AVSValueStruct;
+    function InvokeWithClipResult(Command: AnsiString): IAsifClip;
+    procedure CharArg(Arg: PAnsiChar; ArgName: PAnsiChar = nil);
+    procedure IntArg(Arg: Integer; ArgName: PAnsiChar = nil);
+    procedure BoolArg(Arg: Boolean; ArgName: PAnsiChar = nil);
+    procedure FloatArg(Arg: Single; ArgName: PAnsiChar = nil);
+    procedure ClipArg(Video: IAsifClip; ArgName: PAnsiChar = nil);
     procedure CheckVersion(Version: Integer);
-    function FunctionExists(Name: string): Boolean;
+    function FunctionExists(Name: AnsiString): Boolean;
     function MakeWritable(PVF: IAsifVideoFrame): Boolean;
-    procedure SaveString(S: PChar; Length: Integer);
+    procedure SaveString(S: PAnsiChar; Length: Integer);
     procedure BitBlt(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer);
   end;
 
@@ -145,24 +145,24 @@ procedure DeInitializeAsif(Data: PAsifData); cdecl; external 'asif.dll';
 function NewAsifScriptEnvironment(Data: PAsifData): PAsifScriptEnvironment; cdecl; external 'asif.dll';
 procedure DeleteAsifClip(Clip: PAsifClip); cdecl; external 'asif.dll';
 procedure DeleteAsifScriptEnvironment(Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-function CharArg(Arg: PChar; ArgName: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function IntArg(Arg: Integer; ArgName: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function BoolArg(Arg: Boolean; ArgName: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function FloatArg(Arg: Single; ArgName: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function ClipArg(Clip: PAsifClip; ArgName: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function SetWorkingDir(Dir: PChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function CharArg(Arg: PAnsiChar; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function IntArg(Arg: Integer; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function BoolArg(Arg: Boolean; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function FloatArg(Arg: Single; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function ClipArg(Clip: PAsifClip; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
+function SetWorkingDir(Dir: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
 function SetMemoryMax(MB: Integer; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
 procedure BitBltExp(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-procedure AddFunction(Name: PChar; Params: PChar; Apply: TApplyfunc; UserData: Pointer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
+procedure AddFunction(Name: PAnsiChar; Params: PAnsiChar; Apply: TApplyfunc; UserData: Pointer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function GetCPUFlags(Env: PAsifScriptEnvironment): Cardinal; cdecl; external 'asif.dll';
-procedure SetGlobalVar(VarName: PChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
+procedure SetGlobalVar(VarName: PAnsiChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 procedure CheckVersion(Version: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-function FunctionExists(Name: PChar; Env: PAsifScriptEnvironment): Boolean; cdecl; external 'asif.dll';
+function FunctionExists(Name: PAnsiChar; Env: PAsifScriptEnvironment): Boolean; cdecl; external 'asif.dll';
 function MakeWritable(PVF: PAsifVideoFrame; Env: PAsifScriptEnvironment): Boolean; cdecl; external 'asif.dll';
 procedure AtExit(ShutdownFunc: TShutdownFunc; UserData: Pointer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function NewVideoFrame(var VI: VideoInfo; Align: Integer; Env: PAsifScriptEnvironment): PAsifVideoFrame; cdecl; external 'asif.dll';
 function Subframe(SRC: PAsifVideoFrame; RelOffset: Integer; NewPitch: Integer; NewRowSize: Integer; NewHeight: Integer; Env: PAsifScriptEnvironment): PAsifVideoFrame; cdecl; external 'asif.dll';
-procedure SaveString(S: PChar; Length: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
+procedure SaveString(S: PAnsiChar; Length: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function GetFrame(N: Integer; Clip: PAsifClip): PAsifVideoFrame; cdecl; external 'asif.dll';
 procedure SetCacheHints(CacheHints: Integer; FrameRange: Integer; Clip: PAsifClip); cdecl; external 'asif.dll';
 function GetParity(N: Integer; Clip: PAsifClip): Boolean; cdecl; external 'asif.dll';
@@ -173,8 +173,8 @@ function GetRowSize(Plane: Integer; VF: PAsifVideoFrame): Integer; cdecl; extern
 function IsWritable(VF: PAsifVideoFrame): Boolean; cdecl; external 'asif.dll';
 function GetWritePtr(Plane: Integer; VF: PAsifVideoFrame): PByte; cdecl; external 'asif.dll';
 function GetReadPtr(Plane: Integer; VF: PAsifVideoFrame): PByte; cdecl; external 'asif.dll';
-procedure SetVar(VarName: PChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-function Invoke(Command: PChar; Env: PAsifScriptEnvironment): AVSValueStruct; cdecl; external 'asif.dll';
+procedure SetVar(VarName: PAnsiChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
+function Invoke(Command: PAnsiChar; Env: PAsifScriptEnvironment): AVSValueStruct; cdecl; external 'asif.dll';
 function GetVideoInfo(Clip: PAsifClip): VideoInfo; cdecl; external 'asif.dll';
 function GetVideoPointer(N: Integer; Clip: PAsifClip): PAsifVideoFrame; cdecl; external 'asif.dll';
 procedure DeleteAsifVideoFrame(Frame: PAsifVideoFrame); cdecl; external 'asif.dll';
@@ -221,9 +221,9 @@ begin
   Result := (p.PixelType and AVS_CS_YV12 = AVS_CS_YV12) or (p.PixelType and AVS_CS_I420 = AVS_CS_I420);
 end;
 
-procedure TAsifScriptEnvironment.SetGlobalVar(Varname: string; Value: AVSValueStruct);
+procedure TAsifScriptEnvironment.SetGlobalVar(Varname: AnsiString; Value: AVSValueStruct);
 begin
-  Asif.SetGlobalVar(PChar(Varname), Value, FEnv);
+  Asif.SetGlobalVar(PAnsiChar(Varname), Value, FEnv);
 end;
 
 procedure TAsifScriptEnvironment.CheckVersion(Version: Integer);
@@ -231,9 +231,9 @@ begin
   Asif.CheckVersion(Version, FEnv);
 end;
 
-function TAsifScriptEnvironment.FunctionExists(Name: string): Boolean;
+function TAsifScriptEnvironment.FunctionExists(Name: AnsiString): Boolean;
 begin
-  Result := Asif.FunctionExists(PChar(Name), FEnv);
+  Result := Asif.FunctionExists(PAnsiChar(Name), FEnv);
 end;
 
 function TAsifScriptEnvironment.MakeWritable(PVF: IAsifVideoFrame): Boolean;
@@ -241,7 +241,7 @@ begin
   Result := Asif.MakeWritable(PVF.GetFramePointer, FEnv);
 end;
 
-procedure TAsifScriptEnvironment.SaveString(S: PChar; Length: Integer);
+procedure TAsifScriptEnvironment.SaveString(S: PAnsiChar; Length: Integer);
 begin
   Asif.SaveString(S, Length, FEnv);
 end;
@@ -302,9 +302,9 @@ begin
   DeleteAsifVideoFrame(FFrame);
 end;
 
-procedure TAsifScriptEnvironment.SetVar(VarName: string; Value: AVSValueStruct);
+procedure TAsifScriptEnvironment.SetVar(VarName: AnsiString; Value: AVSValueStruct);
 begin
-  Asif.SetVar(PChar(Varname), Value, FEnv);
+  Asif.SetVar(PAnsiChar(Varname), Value, FEnv);
 end;
 
 function TAsifClip.GetVideoInfo: VideoInfo;
@@ -335,52 +335,52 @@ begin
     raise EInitializationFailed.Create('Avisynth 2.5 failed to initialize.');
 end;
 
-function TAsifScriptEnvironment.Invoke(Command: string): AVSValueStruct;
+function TAsifScriptEnvironment.Invoke(Command: AnsiString): AVSValueStruct;
 var
-  StringPointer: PChar;
+  StringPointer: PAnsiChar;
 begin
-  StringPointer := PChar(Command);
+  StringPointer := PAnsiChar(Command);
 
   if not FunctionExists(StringPointer) then
-    raise EInvokeFailed.Create('Function "' + Command + '" does not exist.');
+    raise EInvokeFailed.Create('Function "' + string(Command) + '" does not exist.');
 
   Result := Asif.Invoke(StringPointer, FEnv);
   if Result.Errors = 1 then
-    raise EInvokeFailed.Create('Failed to invoke "' + Command + '"'#13#10 + Result.StringVal);
+    raise EInvokeFailed.Create('Failed to invoke "' + string(Command) + '"'#13#10 + string(Result.StringVal));
 end;
 
-function TAsifScriptEnvironment.InvokeWithClipResult(Command: string): IAsifClip;
+function TAsifScriptEnvironment.InvokeWithClipResult(Command: AnsiString): IAsifClip;
 var
   Res: AVSValueStruct;
 begin
-  Res := Invoke(command);
+  Res := Invoke(Command);
   if Res.AVSType <> 1 then
-    raise EInvokeFailed.Create('Clip not returned for "' + Command + '"');
+    raise EInvokeFailed.Create('Clip not returned for "' + string(Command) + '"');
 
   Result := TAsifClip.Create(Res.ClipVal);
 end;
 
-procedure TAsifScriptEnvironment.CharArg(Arg: PChar; ArgName: PChar);
+procedure TAsifScriptEnvironment.CharArg(Arg: PAnsiChar; ArgName: PAnsiChar);
 begin
   Asif.CharArg(Arg, ArgName, FEnv);
 end;
 
-procedure TAsifScriptEnvironment.IntArg(Arg: Integer; ArgName: PChar);
+procedure TAsifScriptEnvironment.IntArg(Arg: Integer; ArgName: PAnsiChar);
 begin
   Asif.IntArg(Arg, ArgName, FEnv);
 end;
 
-procedure TAsifScriptEnvironment.BoolArg(Arg: Boolean; ArgName: PChar);
+procedure TAsifScriptEnvironment.BoolArg(Arg: Boolean; ArgName: PAnsiChar);
 begin
   Asif.BoolArg(Arg, ArgName, FEnv);
 end;
 
-procedure TAsifScriptEnvironment.FloatArg(Arg: Single; ArgName: PChar);
+procedure TAsifScriptEnvironment.FloatArg(Arg: Single; ArgName: PAnsiChar);
 begin
   Asif.FloatArg(Arg, ArgName, FEnv);
 end;
 
-procedure TAsifScriptEnvironment.ClipArg(Video: IAsifClip; ArgName: PChar);
+procedure TAsifScriptEnvironment.ClipArg(Video: IAsifClip; ArgName: PAnsiChar);
 begin
   Asif.ClipArg(Video.GetClipPointer, ArgName, FEnv);
 end;

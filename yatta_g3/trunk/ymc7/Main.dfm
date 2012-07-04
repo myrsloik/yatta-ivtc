@@ -1,8 +1,7 @@
 object MainForm: TMainForm
   Left = 353
   Top = 182
-  AutoScroll = False
-  Caption = 'Yatta Metrics Collector 7.8'
+  Caption = 'Yatta Metrics Collector 7.9'
   ClientHeight = 450
   ClientWidth = 621
   Color = clBtnFace
@@ -15,7 +14,6 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefaultPosOnly
   Visible = True
   OnCreate = FormCreate
   OnDestroy = FormDestroy

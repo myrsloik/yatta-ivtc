@@ -1,7 +1,6 @@
 program yatta;
 
 uses
-  FastMM4,
   Forms,
   windows,
   sysutils,

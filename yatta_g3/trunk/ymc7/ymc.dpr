@@ -1,7 +1,6 @@
 program YMC;
 
 uses
-  FastMM4,
   Forms,
   Main in 'Main.pas' {MainForm},
   FrameGet in 'frameget.pas',

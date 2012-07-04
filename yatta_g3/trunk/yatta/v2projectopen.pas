@@ -196,7 +196,7 @@ begin
         if AnsiMatchText(ExtractFileExt(FR.Name), AudioExts) then
         begin
           AudioDelay := 0;
-          SearchString := AnsiLowerCaseFileName(ExtractFileName(FR.Name));
+          SearchString := AnsiLowerCase(ExtractFileName(FR.Name));
           if AnsiPos(' delay ', SearchString) <> 0 then
           begin
             SearchString := RightStr(SearchString, Length(SearchString) - AnsiPos(' delay ', SearchString) - 6);
@@ -307,17 +307,21 @@ var
   FileExt: string;
   TempTrims: array of IAsifClip;
   I: Integer;
+  AnsiFilename: AnsiString;
+  Temp: AnsiString;
 begin
   if not FileExists(Filename) then
     raise EInitializationFailed.Create('Video file not found.');
 
   FileExt := AnsiLowerCase(ExtractFileExt(Filename));
+  AnsiFilename := AnsiString(Filename);
 
   if FileExt = '.d2v' then
   begin
     LoadPlugins(Mpeg2Dec + '_mpeg2source', PluginPath, SE);
-    SE.CharArg(PChar(Filename));
-    Result := SE.InvokeWithClipResult(PChar(Mpeg2Dec + '_Mpeg2Source'));
+    SE.CharArg(PAnsiChar(AnsiFilename));
+    Temp := AnsiString(Mpeg2Dec + '_Mpeg2Source');
+    Result := SE.InvokeWithClipResult(PAnsiChar(Temp));
 
     if not AnsiSameText('DGDecode', Mpeg2Dec) and SE.FunctionExists('SetPlanarLegacyAlignment') then
     begin
@@ -329,23 +333,23 @@ begin
   else if FileExt = '.dga' then
   begin
     LoadPlugins('AVCSource', PluginPath, SE);
-    SE.CharArg(PChar(Filename));
+    SE.CharArg(PAnsiChar(AnsiFilename));
     Result := SE.InvokeWithClipResult('AVCSource');
   end
   else if FileExt = '.avs' then
   begin
-    SE.CharArg(PChar(Filename));
+    SE.CharArg(PAnsiChar(AnsiFilename));
     Result := SE.InvokeWithClipResult('Import');
   end
   else if FileExt = '.avi' then
   begin
-    SE.CharArg(PChar(Filename));
+    SE.CharArg(PAnsiChar(AnsiFilename));
     Result := SE.InvokeWithClipResult('AviSource');
   end
   else
   begin
     LoadPlugins('FFVideoSource', PluginPath, SE);
-    SE.CharArg(PChar(Filename));
+    SE.CharArg(PAnsiChar(AnsiFilename));
     Result := SE.InvokeWithClipResult('FFVideoSource');
   end;
 

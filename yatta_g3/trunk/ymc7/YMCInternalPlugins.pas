@@ -661,7 +661,7 @@ begin
     BlockYEdit.Text := IntToStr(BlockY);
     CThreshEdit.Text := IntToStr(CThresh);
     MThreshEdit.Text := IntToStr(MThresh);
-    D2VOpenDialog.FileName := D2VPath;
+    D2VOpenDialog.FileName := string(D2VPath);
     RefreshVideo;
     ShowModal;
 
@@ -679,7 +679,7 @@ begin
     BlockY := StrToIntDef(BlockYEdit.Text, 16);
     CThresh := StrToIntDef(CThreshEdit.Text, 10);
     MThresh := StrToIntDef(MThreshEdit.Text, 5);
-    StrLCopy(D2VPath, PChar(D2VOpenDialog.FileName), SizeOf(D2VPath) - 1);
+    StrLCopy(D2VPath, PAnsiChar(AnsiString(D2VOpenDialog.FileName)), SizeOf(D2VPath) - 1);
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -781,7 +781,7 @@ begin
     if not Preview then
     begin
       FLogPath := GetTempFile;
-      CharArg(PChar(FLogPath), 'output');
+      CharArg(PAnsiChar(AnsiString(FLogPath)), 'output');
     end;
 
     Result := InvokeWithClipResult('TFM');
@@ -959,7 +959,7 @@ begin
   if not Preview then
   begin
     FLogPath := GetTempFile;
-    Env.CharArg(PChar(FLogPath), 'Output');
+    Env.CharArg(PAnsiChar(AnsiString(FLogPath)), 'Output');
   end;
 
   Result := Env.InvokeWithClipResult('TDecimate');
@@ -1171,11 +1171,11 @@ procedure TSCXvid.Configure(Env: IAsifScriptEnvironment; Video: IAsifClip;
 begin
   with TSCXvidForm.Create(nil), FSettings do
   try
-    LogEdit.Text := LogOutput;
+    LogEdit.Text := string(LogOutput);
 
     ShowModal;
 
-    StrLCopy(LogOutput, PChar(LogEdit.Text), SizeOf(LogOutput) - 1);
+    StrLCopy(LogOutput, PAnsiChar(AnsiString(LogEdit.Text)), SizeOf(LogOutput) - 1);
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1190,7 +1190,7 @@ begin
 
   FSettings.LogOutput := '';
   if Settings <> '' then
-    StrLCopy(FSettings.LogOutput, PChar(Settings), SizeOf(FSettings.LogOutput) - 1);
+    StrLCopy(FSettings.LogOutput, PAnsiChar(AnsiString(Settings)), SizeOf(FSettings.LogOutput) - 1);
 end;
 
 class function TSCXvid.GetConfiguration: TYMCPluginConfig;
@@ -1210,7 +1210,7 @@ end;
 
 function TSCXvid.GetSettings: string;
 begin
-  Result := FSettings.LogOutput;
+  Result := string(FSettings.LogOutput);
 end;
 
 class function TSCXvid.GetSupportedColorSpaces: TColorSpaces;
@@ -1232,7 +1232,7 @@ begin
     begin
       ClipArg(Video);
       FLogPath := GetTempFile;
-      CharArg(PChar(FLogPath), 'log');
+      CharArg(PAnsiChar(AnsiString(FLogPath)), 'log');
       Result := InvokeWithClipResult('SCXvid');
     end
   else
@@ -1274,7 +1274,7 @@ begin
   end;
 
   if FSettings.LogOutput <> '' then
-    CopyFile(PChar(FLogPath), FSettings.LogOutput, False);
+    CopyFile(PWideChar(FLogPath), PChar(string(FSettings.LogOutput)), False);
 
   DeleteFile(FLogPath);
 end;
@@ -1450,14 +1450,14 @@ begin
   begin
     WidthEdit.Text := IntToStr(Width);
     HeightEdit.Text := IntToStr(Height);
-    Index := ResizerGroup.Items.IndexOf(Resizer);
+    Index := ResizerGroup.Items.IndexOf(string(Resizer));
     ResizerGroup.ItemIndex := Max(Index, 0);
 
     ShowModal;
 
     Width := StrToIntDef(WidthEdit.Text, Width);
     Height := StrToIntDef(HeightEdit.Text, Height);
-    StrLCopy(Resizer, PChar(ResizerGroup.Items[ResizerGroup.Itemindex]), SizeOf(Resizer) - 1);
+    StrLCopy(Resizer, PAnsiChar(AnsiString(ResizerGroup.Items[ResizerGroup.Itemindex])), SizeOf(Resizer) - 1);
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1471,7 +1471,7 @@ begin
   inherited;
   FSettings.Width := StrToIntDef(GetToken(Settings, 0, [',']), 720);
   FSettings.Height := StrToIntDef(GetToken(Settings, 1, [',']), 480);
-  StrLCopy(FSettings.Resizer, PChar(GetToken(Settings, 2, [','])), SizeOf(FSettings.Resizer) - 1);
+  StrLCopy(FSettings.Resizer, PAnsiChar(AnsiString(GetToken(Settings, 2, [',']))), SizeOf(FSettings.Resizer) - 1);
   if FSettings.Resizer = '' then
     FSettings.Resizer := 'Bicubic';
 end;
@@ -1512,7 +1512,7 @@ begin
   Env.ClipArg(Video);
   Env.IntArg(FSettings.Width);
   Env.IntArg(FSettings.Height);
-  Result := Env.InvokeWithClipResult(FSettings.Resizer + 'Resize');
+  Result := Env.InvokeWithClipResult(AnsiString(FSettings.Resizer) + 'Resize');
 end;
 
 class function TResize.MTSafe: Boolean;

@@ -350,17 +350,19 @@ end;
 function TYMCTask.OpenVideo(Filename: string): IAsifClip;
 var
   FileExt: string;
+  AnsiFilename: AnsiString;
 begin
   if not FileExists(Filename) then
     raise EYMCTaskException.Create('Video file not found.');
 
   FileExt := AnsiLowerCase(ExtractFileExt(Filename));
+  AnsiFilename := AnsiString(Filename);
 
   if FileExt = '.d2v' then
   begin
     LoadPlugins(FOwner.Mpeg2DecoderString + '_Mpeg2Source', FOwner.PluginPath, FScriptEnvironment);
-    FScriptEnvironment.CharArg(PChar(Filename));
-    Result := FScriptEnvironment.InvokeWithClipResult(PChar(FOwner.Mpeg2DecoderString + '_Mpeg2Source'));
+    FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
+    Result := FScriptEnvironment.InvokeWithClipResult(PAnsiChar(AnsiString(FOwner.Mpeg2DecoderString) + '_Mpeg2Source'));
 
     if (FOwner.Mpeg2Decoder <> mdDGDecode) and FScriptEnvironment.FunctionExists('SetPlanarLegacyAlignment') then
     begin
@@ -372,23 +374,23 @@ begin
   else if FileExt = '.dga' then
   begin
     LoadPlugins('AVCSource', FOwner.PluginPath, FScriptEnvironment);
-    FScriptEnvironment.CharArg(PChar(Filename));
+    FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
     Result := FScriptEnvironment.InvokeWithClipResult('AVCSource');
   end
   else if FileExt = '.avs' then
   begin
-    FScriptEnvironment.CharArg(PChar(Filename));
+    FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
     Result := FScriptEnvironment.InvokeWithClipResult('Import');
   end
   else if FileExt = '.avi' then
   begin
-    FScriptEnvironment.CharArg(PChar(Filename));
+    FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
     Result := FScriptEnvironment.InvokeWithClipResult('AviSource');
   end
   else
   begin
     LoadPlugins('FFVideoSource', FOwner.PluginPath, FScriptEnvironment);
-    FScriptEnvironment.CharArg(PChar(Filename));
+    FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
     Result := FScriptEnvironment.InvokeWithClipResult('FFVideoSource');
   end;
 end;

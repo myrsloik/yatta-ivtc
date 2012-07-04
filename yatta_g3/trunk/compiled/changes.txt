@@ -1,3 +1,6 @@
+7-132
+Migrated to unicode (avisynth is still not though), delphi xe2 is now the recommended compiler.
+
 7-131
 UPDATE TO FIELDHINT 0.12 FOR BETTER PERFORMANCE.
 Changed the stupid ymc behavior where failed and cancelled tasks had to be reset.

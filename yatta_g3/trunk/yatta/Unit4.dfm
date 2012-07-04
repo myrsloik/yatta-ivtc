@@ -14,7 +14,6 @@ object Form4: TForm4
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefaultPosOnly
   Scaled = False
   OnClose = FormClose
   OnCreate = FormCreate

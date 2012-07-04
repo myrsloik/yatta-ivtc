@@ -1,7 +1,6 @@
 object Form2: TForm2
   Left = 256
   Top = 189
-  AutoScroll = False
   Caption = 'Tools'
   ClientHeight = 312
   ClientWidth = 595
@@ -15,7 +14,6 @@ object Form2: TForm2
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefaultPosOnly
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -31,6 +29,10 @@ object Form2: TForm2
     object TabSheet8: TTabSheet
       Caption = 'Sections'
       ImageIndex = 7
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         587
         284)
@@ -92,6 +94,10 @@ object Form2: TForm2
     end
     object TabSheet1: TTabSheet
       Caption = 'Presets'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         587
         284)
@@ -134,7 +140,6 @@ object Form2: TForm2
         AutoCloseUp = True
         Style = csDropDownList
         Anchors = [akLeft, akTop, akRight]
-        ItemHeight = 0
         Sorted = True
         TabOrder = 0
         OnChange = ComboBox2Change
@@ -166,7 +171,6 @@ object Form2: TForm2
         Height = 21
         Style = csDropDownList
         Anchors = [akRight, akBottom]
-        ItemHeight = 13
         ItemIndex = 0
         TabOrder = 8
         Text = 'Pre Telecide'
@@ -212,6 +216,10 @@ object Form2: TForm2
       Caption = 'AVS Generation'
       ImageIndex = 6
       OnShow = TabSheet7Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object PostProcessor: TRadioGroup
         Left = 417
         Top = 0
@@ -483,6 +491,10 @@ object Form2: TForm2
     object TabSheet2: TTabSheet
       Caption = 'Ranges'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         587
         284)
@@ -546,6 +558,10 @@ object Form2: TForm2
       ImageIndex = 4
       TabVisible = False
       OnShow = TabSheet3Show
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 164
         Top = 0
@@ -632,6 +648,10 @@ object Form2: TForm2
     object TabSheet4: TTabSheet
       Caption = 'Custom Lists'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 137
         Top = 0
@@ -679,7 +699,6 @@ object Form2: TForm2
           Height = 205
           Style = lbVirtual
           Anchors = [akLeft, akTop, akRight, akBottom]
-          ItemHeight = 16
           MultiSelect = True
           PopupMenu = PopupMenu1
           TabOrder = 0

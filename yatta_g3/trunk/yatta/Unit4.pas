@@ -64,7 +64,7 @@ end;
 procedure TForm4.CopyFrametoClipboard1Click(Sender: TObject);
 var
   MyFormat: Word;
-  AData: Cardinal;
+  AData: THandle;
   APalette: HPALETTE;
   TempImage: TBitmap;
 begin

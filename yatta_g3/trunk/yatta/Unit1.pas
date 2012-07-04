@@ -316,7 +316,7 @@ implementation
 
 {$R *.dfm}
 
-uses Unit6, Unit11, Unit2, crop, Unit7, Unit4, v2projectopen, logbox;
+uses Unit6, Unit11, Unit2, crop, Unit7, Unit4, v2projectopen, logbox, GR32_Backends;
 
 procedure TForm1.WMDROPFILES(var Msg: TWMDROPFILES);
 var
@@ -1846,7 +1846,7 @@ end;
 procedure TForm1.CopyToClipboard1Click(Sender: TObject);
 var
   MyFormat: Word;
-  AData: Cardinal;
+  AData: THandle;
   APalette: HPALETTE;
   TempImage: TBitmap;
 begin
@@ -1983,9 +1983,9 @@ begin
   SetExceptionMask(GetExceptionMask + [exInvalidOp, exOverflow, exZeroDivide]);
   Application.UpdateFormatSettings := False;
 
-  DecimalSeparator := '.';
-  LongTimeFormat := 'hh:nn:ss.zzz';
-  ShortTimeFormat := 'hh:nn:ss.zzz';
+  FormatSettings.DecimalSeparator := '.';
+  FormatSettings.LongTimeFormat := 'hh:nn:ss.zzz';
+  FormatSettings.ShortTimeFormat := 'hh:nn:ss.zzz';
 
   OriginalCaption := Caption;
 
@@ -2280,6 +2280,7 @@ var
   SplitList: TStringList;
   Counter: Integer;
   Line: Integer;
+  Temp: AnsiString;
 begin
   if SaveDialog5.FileName <> '' then
   begin
@@ -2302,7 +2303,8 @@ begin
 
         SL.Append('converttorgb32()');
 
-        SE.CharArg(PChar(SL.Text));
+        Temp := AnsiString(SL.Text);
+        SE.CharArg(PAnsiChar(Temp));
 
         try
           Form4.PreviewClip := SE.InvokeWithClipResult('Eval');
@@ -2544,7 +2546,7 @@ end;
 procedure TForm1.ApplicationEvents1ShortCut(var Msg: TWMKey;
   var Handled: Boolean);
 var
-  T1P, TI: Integer;
+  TI: Integer;
   PV: Boolean;
   Counter, C2: Integer;
   IPS: set of byte;
@@ -2811,18 +2813,20 @@ begin
       DrawFrame;
     end
     else if IsKeyEvent(kNoDecimateS, msg.CharCode) and (OpenMode in MatchingProjects) then
-      with Form2.SectionInfo(TrackBar1.Position) do
+    begin
+      SIF := Form2.SectionInfo(TrackBar1.Position);
+      with SIF do
       begin
-
         if Form2.NoDecimateExists(StartFrame, StartFrame) then
           Inc(StartFrame, Distance);
-        if Form2.nodecimateexists(endframe, EndFrame) then
+        if Form2.nodecimateexists(EndFrame, EndFrame) then
           Dec(EndFrame, Distance);
         if not (Form2.AddNoDecimate(StartFrame, EndFrame) = []) then
           FInfoText.Append('Overlapping/invalid ranges');
 
         DrawFrame;
-      end
+      end;
+    end
     else if IsKeyEvent(kPatternShiftInS, msg.CharCode) and (OpenMode in MatchingProjects) then
     begin
       with form2.sectioninfo(TrackBar1.Position) do
