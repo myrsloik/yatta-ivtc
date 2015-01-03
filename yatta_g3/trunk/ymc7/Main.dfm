@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 353
   Top = 182
-  Caption = 'Yatta Metrics Collector 7.9'
+  Caption = 'Yatta Metrics Collector 8.10'
   ClientHeight = 450
   ClientWidth = 621
   Color = clBtnFace
@@ -149,33 +149,18 @@ object MainForm: TMainForm
       TabOrder = 1
     end
   end
-  object Mpeg2DecRadioGroup: TRadioGroup
-    Left = 429
-    Top = 68
-    Width = 191
-    Height = 69
-    Anchors = [akTop, akRight]
-    Caption = 'Mpeg2Dec'
-    ItemIndex = 0
-    Items.Strings = (
-      'Mpeg2Dec3'
-      'DGDecode')
-    ParentBackground = False
-    TabOrder = 2
-    OnClick = Mpeg2DecRadioGroupClick
-  end
   object Metrics: TGroupBox
     Left = 429
-    Top = 144
+    Top = 61
     Width = 191
-    Height = 306
+    Height = 389
     Anchors = [akTop, akRight, akBottom]
     Caption = 'Metric Collection'
     ParentBackground = False
-    TabOrder = 3
+    TabOrder = 2
     DesignSize = (
       191
-      306)
+      389)
     object MoveFilterUpButton: TSpeedButton
       Left = 164
       Top = 13
@@ -222,32 +207,35 @@ object MainForm: TMainForm
     end
     object ConfigureButton: TButton
       Left = 7
-      Top = 246
+      Top = 329
       Width = 177
       Height = 25
       Action = ConfigureAction
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 1
+      ExplicitTop = 246
     end
     object StartButton: TButton
       Left = 7
-      Top = 275
+      Top = 358
       Width = 177
       Height = 25
       Action = StartAction
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 2
+      ExplicitTop = 275
     end
     object MetricFilterList: TCheckListBox
       Left = 7
       Top = 13
       Width = 152
-      Height = 227
+      Height = 310
       OnClickCheck = MetricFilterListClickCheck
       Anchors = [akLeft, akTop, akRight, akBottom]
       ItemHeight = 13
       TabOrder = 0
       OnDblClick = MetricFilterListDblClick
+      ExplicitHeight = 227
     end
   end
   object OpenDialog: TOpenDialog

@@ -2,7 +2,7 @@ unit yshared;
 
 interface
 
-uses SysUtils, Math, Dialogs, Controls, ConvUtils, StdConvs, Classes, StrUtils;
+uses SysUtils, Math, Dialogs, Controls, ConvUtils, StdConvs, Classes, StrUtils, System.UITypes;
 
 type
   TAnsiCharSet = set of AnsiChar;

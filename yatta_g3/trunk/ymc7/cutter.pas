@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, GR32_Image, ComCtrls, Asif, AsifAdditions, Math;
+  Dialogs, StdCtrls, GR32_Image, ComCtrls, Asif, AsifAdditions, Math, System.UITypes;
 
 type
   TCutRange = class

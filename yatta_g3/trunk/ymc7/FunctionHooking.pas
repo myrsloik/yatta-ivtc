@@ -3,7 +3,7 @@ unit FunctionHooking;
 interface
 
 uses
-  SysUtils, Windows, Types, Classes;
+  SysUtils, Windows, Types, Classes, AnsiStrings;
 
 type
   TDWORDArray = array[0..10000] of DWORD;
@@ -49,7 +49,7 @@ begin
   if GetModuleFileNameA(HMODULE(MemInfo.AllocationBase), FileName, SizeOf(FileName)) = 0 then
     Exit;
 
-  FNEnd := FileName + StrLen(FileName);
+  FNEnd := FileName + AnsiStrings.StrLen(FileName);
 
   while (FNEnd > FileName) and (FNEnd[-1] <> '/') and (FNEnd[-1] <> '\') do
     Dec(FNEnd);
@@ -80,7 +80,7 @@ begin
   while (I <= J) do
   begin
     Mid := (I + J) shr 1;
-    CMP := StrComp(Name, (Base + Names[Mid]));
+    CMP := AnsiStrings.StrComp(Name, (Base + Names[Mid]));
     if CMP = 0 then
     begin
       Result := Mid;

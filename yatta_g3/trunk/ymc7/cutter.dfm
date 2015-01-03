@@ -1,10 +1,10 @@
 object CutterForm: TCutterForm
   Left = 326
   Top = 111
-  Width = 671
-  Height = 580
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Cutter'
+  ClientHeight = 541
+  ClientWidth = 655
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,10 +12,9 @@ object CutterForm: TCutterForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefaultPosOnly
   DesignSize = (
     655
-    542)
+    541)
   PixelsPerInch = 96
   TextHeight = 13
   object GotoButton: TButton

@@ -5,7 +5,7 @@ interface
 uses
   Windows, SysUtils, Classes, Forms,
   Dialogs, StdCtrls, Controls, ComCtrls, Menus, Contnrs, FrameGet,
-  ConvUtils, StdConvs;
+  ConvUtils, StdConvs, System.UITypes;
 
 type
   TProgressForm = class;

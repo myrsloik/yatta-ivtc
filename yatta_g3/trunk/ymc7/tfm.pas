@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, StdCtrls, asif, asifadditions, ComCtrls, Math,
+  Dialogs, ExtCtrls, StdCtrls, asif, asifadditions, ComCtrls, Math, System.UITypes,
   GR32_Image;
 
 type

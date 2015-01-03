@@ -3,9 +3,10 @@ unit Main;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Classes, Graphics, System.UITypes, Controls, Forms,
   Dialogs, StdCtrls, StrUtils, ExtCtrls, Buttons, Math, YMCTask, YMCPlugin, YMCInternalPlugins, asif, frameget, inifiles,
-  filectrl, CheckLst, shellapi, AsifAdditions, ActnList, AppEvnts, Menus, YShared;
+  filectrl, CheckLst, shellapi, AsifAdditions, ActnList, AppEvnts, Menus, YShared,
+  System.Actions;
 
 const
   INIVersion = 21;
@@ -25,7 +26,6 @@ type
     Settings: TGroupBox;
     CloseWhenDone: TCheckBox;
     LaunchWhenDone: TCheckBox;
-    Mpeg2DecRadioGroup: TRadioGroup;
     Metrics: TGroupBox;
     MetricFilterList: TCheckListBox;
     MoveFilterUpButton: TSpeedButton;
@@ -73,7 +73,6 @@ type
     procedure JobListDataObject(Control: TWinControl; Index: Integer;
       var DataObject: TObject);
     procedure SetAvisynthPluginDirectory1Click(Sender: TObject);
-    procedure Mpeg2DecRadioGroupClick(Sender: TObject);
     procedure SetDefaultPriorityClick(Sender: TObject);
     procedure MoveFilterUpActionExecute(Sender: TObject);
     procedure MoveFilterUpActionUpdate(Sender: TObject);
@@ -166,8 +165,6 @@ begin
     if MessageDlg('Avisynth plugin path has to be set. If you want to change it later delete or edit the ini file.', mtWarning, [mbok, mbcancel], 0) = mrok then
       SetAvisynthPluginDirectory;
 
-  Mpeg2DecRadioGroup.ItemIndex := Integer(FTaskList.Mpeg2Decoder);
-
   case FTaskList.DefaultPriority of
     tpIdle: Idle1.Checked := True;
     tpLowest: Lowest1.Checked := True;
@@ -202,7 +199,6 @@ begin
     WriteInteger(MainIniKey, 'Version', INIVersion);
     WriteBool(MainIniKey, 'CloseWhenDone', CloseWhenDone.Checked);
     WriteBool(MainIniKey, 'LaunchYatta', LaunchWhenDone.Checked);
-    WriteInteger(MainIniKey, 'Mpeg2Decoder', Mpeg2DecRadioGroup.ItemIndex);
     WriteString(MainIniKey, 'PluginDir', FTaskList.PluginPath);
     WriteInteger(MainIniKey, 'MaxJobs', FTaskList.MaxThreads);
 
@@ -410,11 +406,6 @@ end;
 procedure TMainForm.SetAvisynthPluginDirectory1Click(Sender: TObject);
 begin
   SetAvisynthPluginDirectory;
-end;
-
-procedure TMainForm.Mpeg2DecRadioGroupClick(Sender: TObject);
-begin
-  FTaskList.Mpeg2Decoder := TMpeg2Decoder(Mpeg2DecRadioGroup.ItemIndex);
 end;
 
 procedure TMainForm.SetAvisynthPluginDirectory;

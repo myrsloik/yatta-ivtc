@@ -679,7 +679,7 @@ begin
     BlockY := StrToIntDef(BlockYEdit.Text, 16);
     CThresh := StrToIntDef(CThreshEdit.Text, 10);
     MThresh := StrToIntDef(MThreshEdit.Text, 5);
-    StrLCopy(D2VPath, PAnsiChar(AnsiString(D2VOpenDialog.FileName)), SizeOf(D2VPath) - 1);
+    CopyMemory(@D2VPath, PRawByteString(UTF8Encode(D2VOpenDialog.FileName)), sizeof(D2VPath));
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1175,7 +1175,7 @@ begin
 
     ShowModal;
 
-    StrLCopy(LogOutput, PAnsiChar(AnsiString(LogEdit.Text)), SizeOf(LogOutput) - 1);
+    CopyMemory(@LogOutput, PRawByteString(UTF8Encode(LogEdit.Text)), sizeof(LogOutput));
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1190,7 +1190,7 @@ begin
 
   FSettings.LogOutput := '';
   if Settings <> '' then
-    StrLCopy(FSettings.LogOutput, PAnsiChar(AnsiString(Settings)), SizeOf(FSettings.LogOutput) - 1);
+    CopyMemory(@FSettings.LogOutput, PRawByteString(UTF8Encode(Settings)), sizeof(FSettings.LogOutput));
 end;
 
 class function TSCXvid.GetConfiguration: TYMCPluginConfig;
@@ -1457,7 +1457,7 @@ begin
 
     Width := StrToIntDef(WidthEdit.Text, Width);
     Height := StrToIntDef(HeightEdit.Text, Height);
-    StrLCopy(Resizer, PAnsiChar(AnsiString(ResizerGroup.Items[ResizerGroup.Itemindex])), SizeOf(Resizer) - 1);
+    CopyMemory(@Resizer, PRawByteString(UTF8Encode(ResizerGroup.Items[ResizerGroup.Itemindex])), sizeof(Resizer));
 
     if MakeDefault.Checked then
       NewDefault := GetSettings;
@@ -1471,7 +1471,8 @@ begin
   inherited;
   FSettings.Width := StrToIntDef(GetToken(Settings, 0, [',']), 720);
   FSettings.Height := StrToIntDef(GetToken(Settings, 1, [',']), 480);
-  StrLCopy(FSettings.Resizer, PAnsiChar(AnsiString(GetToken(Settings, 2, [',']))), SizeOf(FSettings.Resizer) - 1);
+  CopyMemory(@FSettings.Resizer, PRawByteString(UTF8Encode(GetToken(Settings, 2, [',']))), sizeof(FSettings.Resizer));
+
   if FSettings.Resizer = '' then
     FSettings.Resizer := 'Bicubic';
 end;
