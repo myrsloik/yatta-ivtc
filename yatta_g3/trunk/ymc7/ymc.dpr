@@ -3,7 +3,7 @@ program YMC;
 uses
   Forms,
   Main in 'Main.pas' {MainForm},
-  FrameGet in 'frameget.pas',
+  frameget in 'frameget.pas',
   progress in 'progress.pas' {ProgressForm},
   YMCPlugin in 'YMCPlugin.pas',
   YMCInternalPlugins in 'YMCInternalPlugins.pas',
@@ -17,12 +17,15 @@ uses
   yshared in '..\yshared.pas',
   scxvid in 'scxvid.pas' {SCXvidForm},
   cutter in 'cutter.pas' {CutterForm},
-  resize in 'resize.pas' {ResizeForm};
+  resize in 'resize.pas' {ResizeForm},
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 begin
   Application.Initialize;
+  TStyleManager.TrySetStyle('Silver');
   Application.Title := 'Yatta Metrics Collector';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;
