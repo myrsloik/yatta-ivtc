@@ -9,7 +9,7 @@ procedure OpenProject(IniFile: TMemIniFile); // not cleaned
 procedure newproject(pt: integer);
 procedure projectcheck(inifile: TMemIniFile);
 procedure projectinit;
-function OpenVideo(Filename: string; Mpeg2Dec: string): IAsifClip; // not cleaned
+function OpenVideo(Filename: string; Mpeg2Dec: string = 'DGDecode'): IAsifClip; // not cleaned
 procedure EnableByProjectType(PT: Integer);
 procedure GetType0Values(IniFile: TMemIniFile);
 procedure GetType0SharedValues(IniFile: TMemIniFile);
@@ -69,7 +69,6 @@ begin
     try
       IniFile := TMemIniFile.Create(Form1.SaveDialog5.FileName);
 
-      MPEG2DecName := ChangeFileExt(IniFile.ReadString('YATTA V2', 'MPEG2DECODER', 'mpeg2dec3.dll'), '');
       VideoSource := LeftStr(Filename, Length(Filename) - 4);
       Line := IniFile.ReadString('YATTA V2', 'CUTLIST', '');
       SetLength(Form1.FCuts, 0);
@@ -91,7 +90,7 @@ begin
       if (FileExists(VideoSource)) then
       begin
         RetryOpen:
-        Form1.OriginalVideo := OpenVideo(VideoSource, mpeg2decname);
+        Form1.OriginalVideo := OpenVideo(VideoSource);
         Form1.SourceFile := VideoSource;
        end
       else
@@ -119,8 +118,7 @@ begin
   end
   else
   begin
-    MPEG2DecName := Form11.RadioGroup2.Items[Form11.RadioGroup2.ItemIndex];
-    Form1.OriginalVideo := OpenVideo(filename, mpeg2decname);
+    Form1.OriginalVideo := OpenVideo(filename);
 
     Form1.SourceFile := Filename;
 
@@ -170,13 +168,6 @@ begin
   Form1.Caption := 'YATTA - ' + Form1.SaveDialog5.FileName;
 
   CropForm.FormShow(nil);
-
-  TempName := LowerCase(MPEG2DecName);
-
-  if TempName = 'mpeg2dec3' then
-    Form11.RadioGroup2.ItemIndex := 0
-  else if TempName = 'dgdecode' then
-    Form11.RadioGroup2.ItemIndex := 1;
 
   Form1.FileOpen := True;
 
@@ -458,7 +449,6 @@ begin
   end;
   Form11.RadioGroup1.Enabled := (PT in MatchingProjects);
   Form11.RadioGroup3.Enabled := not (PT in AllProjects);
-  Form11.RadioGroup2.Enabled := not (PT in AllProjects);
   Form11.LabeledEdit2.Enabled := PT in MatchingProjects;
   Form11.Decimation.Enabled := PT in [1];
   Form11.AudioFileEdit.Enabled := PT in AllProjects;

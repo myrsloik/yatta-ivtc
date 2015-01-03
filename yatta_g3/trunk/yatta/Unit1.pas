@@ -302,7 +302,6 @@ var
   FrameArray: array of TFrame;
   Form1: TForm1;
   Settings: TMemIniFile;
-  MPEG2DecName: string = 'mpeg2dec3';
   PadSize: Integer = 3;
   OriginalCaption: string;
   SE: IAsifScriptEnvironment;
@@ -1504,7 +1503,7 @@ begin
     Append('ORDER=' + IntToStr(Form11.RadioGroup1.ItemIndex));
     Append('FRAME=' + IntToStr(TrackBar1.Position));
     Append('FRAMECOUNT=' + IntToStr(FActualFramecount));
-    Append('MPEG2DECODER=' + MPEG2DecName);
+    Append('MPEG2DECODER=DGDecode');
     Append('CUTLIST=' + CutList);
     Append('AUDIOFILE=' + FAudioFile);
     Append('AUDIODELAY=' + IntToStr(FAudioDelay));
