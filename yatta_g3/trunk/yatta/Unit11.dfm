@@ -25,16 +25,12 @@ object Form11: TForm11
     Top = 0
     Width = 386
     Height = 236
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabOrder = 0
     object TabSheet3: TTabSheet
       Caption = 'Project Settings'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         378
         208)
@@ -143,10 +139,6 @@ object Form11: TForm11
     end
     object TabSheet1: TTabSheet
       Caption = 'Global Settings'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object CheckBox1: TCheckBox
         Left = 3
         Top = 104
@@ -310,10 +302,6 @@ object Form11: TForm11
     object TabSheet2: TTabSheet
       Caption = 'Key Associations'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 0
         Top = 177

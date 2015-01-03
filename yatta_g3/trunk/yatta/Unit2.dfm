@@ -23,16 +23,12 @@ object Form2: TForm2
     Top = 0
     Width = 595
     Height = 312
-    ActivePage = TabSheet4
+    ActivePage = TabSheet8
     Align = alClient
     TabOrder = 0
     object TabSheet8: TTabSheet
       Caption = 'Sections'
       ImageIndex = 7
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         587
         284)
@@ -648,10 +644,6 @@ object Form2: TForm2
     object TabSheet4: TTabSheet
       Caption = 'Custom Lists'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter1: TSplitter
         Left = 137
         Top = 0

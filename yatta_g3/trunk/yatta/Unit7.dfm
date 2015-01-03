@@ -3245,7 +3245,7 @@ object Form7: TForm7
     Top = 360
     Width = 169
     Height = 13
-    Caption = 'Copyright 2003-2007 Fredrik Mellbin'
+    Caption = 'Copyright 2003-2015 Fredrik Mellbin'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
