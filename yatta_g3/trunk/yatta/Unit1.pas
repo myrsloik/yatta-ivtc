@@ -2280,7 +2280,7 @@ var
   SplitList: TStringList;
   Counter: Integer;
   Line: Integer;
-  Temp: AnsiString;
+  Temp: UTF8String;
 begin
   if SaveDialog5.FileName <> '' then
   begin
@@ -2303,7 +2303,7 @@ begin
 
         SL.Append('converttorgb32()');
 
-        Temp := AnsiString(SL.Text);
+        Temp := UTF8Encode(SL.Text);
         SE.CharArg(PAnsiChar(Temp));
 
         try

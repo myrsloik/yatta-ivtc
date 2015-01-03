@@ -307,20 +307,20 @@ var
   FileExt: string;
   TempTrims: array of IAsifClip;
   I: Integer;
-  AnsiFilename: AnsiString;
-  Temp: AnsiString;
+  UTF8Filename: UTF8String;
+  Temp: UTF8String;
 begin
   if not FileExists(Filename) then
     raise EInitializationFailed.Create('Video file not found.');
 
   FileExt := AnsiLowerCase(ExtractFileExt(Filename));
-  AnsiFilename := AnsiString(Filename);
+  UTF8Filename := UTF8Encode(Filename);
 
   if FileExt = '.d2v' then
   begin
     LoadPlugins(Mpeg2Dec + '_mpeg2source', PluginPath, SE);
-    SE.CharArg(PAnsiChar(AnsiFilename));
-    Temp := AnsiString(Mpeg2Dec + '_Mpeg2Source');
+    SE.CharArg(PAnsiChar(UTF8Filename));
+    Temp := UTF8Encode(Mpeg2Dec + '_Mpeg2Source');
     Result := SE.InvokeWithClipResult(PAnsiChar(Temp));
 
     if not AnsiSameText('DGDecode', Mpeg2Dec) and SE.FunctionExists('SetPlanarLegacyAlignment') then
@@ -333,23 +333,23 @@ begin
   else if FileExt = '.dga' then
   begin
     LoadPlugins('AVCSource', PluginPath, SE);
-    SE.CharArg(PAnsiChar(AnsiFilename));
+    SE.CharArg(PAnsiChar(UTF8Filename));
     Result := SE.InvokeWithClipResult('AVCSource');
   end
   else if FileExt = '.avs' then
   begin
-    SE.CharArg(PAnsiChar(AnsiFilename));
+    SE.CharArg(PAnsiChar(UTF8Filename));
     Result := SE.InvokeWithClipResult('Import');
   end
   else if FileExt = '.avi' then
   begin
-    SE.CharArg(PAnsiChar(AnsiFilename));
+    SE.CharArg(PAnsiChar(UTF8Filename));
     Result := SE.InvokeWithClipResult('AviSource');
   end
   else
   begin
     LoadPlugins('FFVideoSource', PluginPath, SE);
-    SE.CharArg(PAnsiChar(AnsiFilename));
+    SE.CharArg(PAnsiChar(UTF8Filename));
     Result := SE.InvokeWithClipResult('FFVideoSource');
   end;
 
