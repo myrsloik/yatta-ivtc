@@ -3,7 +3,7 @@ unit Unit11;
 interface
 
 uses
-  Windows, StrUtils, Messages, SysUtils, Classes, Graphics, Controls, Forms,
+  Windows, StrUtils, Messages, SysUtils, Classes, Graphics, Controls, Forms, System.UITypes,
   Dialogs, StdCtrls, ExtCtrls, ComCtrls, FileCtrl, Grids, ValEdit, menus;
 
 type

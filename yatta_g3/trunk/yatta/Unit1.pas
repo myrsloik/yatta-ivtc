@@ -3,7 +3,7 @@ unit Unit1;
 interface
 
 uses
-  Windows, Messages, SysUtils, Types, Clipbrd, Classes, Contnrs, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Types, Clipbrd, Classes, Contnrs, Graphics, Controls, Forms, System.UITypes,
   StdCtrls, asif, ComCtrls, strutils, Menus, math, inifiles,
   yshared, AppEvnts, shellapi, keymap, keydefaults, GR32_Layers, GR32_Image, GR32, AsifAdditions,
   ExtCtrls, Dialogs, jpeg;
@@ -575,7 +575,7 @@ begin
           SetLength(MatchInfo, Length(MatchInfo) + Length(TempResult));
           for Counter := 0 to Length(TempResult) - 1 do
             MatchInfo[MatchInfoOffset + Counter] := TempResult[Counter];
-          Inc(MatchInfoOffset, Length(TempResult));
+          //Inc(MatchInfoOffset, Length(TempResult));
         end;
 
         HeapSort(MatchInfo);

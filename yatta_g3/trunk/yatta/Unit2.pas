@@ -3,7 +3,7 @@ unit Unit2;
 interface
 
 uses
-  Windows, Math, StrUtils, Messages, SysUtils, Types, Classes, Graphics, Controls, Forms,
+  Windows, Math, StrUtils, Messages, SysUtils, Types, Classes, Graphics, Controls, Forms, System.UITypes,
   Dialogs, ExtCtrls, StdCtrls, ComCtrls, asif, asifadditions, inifiles, contnrs,
   Menus, keymap, keydefaults, GR32_Image, GR32, CheckLst;
 

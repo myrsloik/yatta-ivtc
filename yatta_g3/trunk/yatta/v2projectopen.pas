@@ -2,7 +2,7 @@ unit v2projectopen;
 
 interface
 
-uses unit6, graphics, math, unit1, inifiles, asif, strutils, sysutils, unit11, classes, unit2, crop, dialogs, controls, yshared, logbox;
+uses System.UITypes, System.Contnrs, unit6, graphics, math, unit1, inifiles, asif, strutils, sysutils, unit11, classes, unit2, crop, dialogs, controls, yshared, logbox;
 
 procedure OpenSource(Filename: string);
 procedure OpenProject(IniFile: TMemIniFile); // not cleaned
