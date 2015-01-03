@@ -24,7 +24,7 @@ object CutterForm: TCutterForm
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Goto'
-    TabOrder = 0
+    TabOrder = 9
     OnClick = GotoButtonClick
   end
   object OKButton: TButton
@@ -36,7 +36,7 @@ object CutterForm: TCutterForm
     Caption = '&OK'
     Default = True
     ModalResult = 1
-    TabOrder = 1
+    TabOrder = 10
   end
   object FrameTrackbar: TTrackBar
     Left = 0
@@ -59,7 +59,7 @@ object CutterForm: TCutterForm
     BitmapAlign = baTopLeft
     Scale = 1.000000000000000000
     ScaleMode = smResize
-    TabOrder = 3
+    TabOrder = 1
   end
   object CutListBox: TListBox
     Left = 0
@@ -69,7 +69,7 @@ object CutterForm: TCutterForm
     Anchors = [akLeft, akTop, akBottom]
     ItemHeight = 13
     MultiSelect = True
-    TabOrder = 4
+    TabOrder = 0
     OnDblClick = CutListBoxDblClick
   end
   object AddCutButton: TButton
@@ -79,7 +79,7 @@ object CutterForm: TCutterForm
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Add Cut'
-    TabOrder = 5
+    TabOrder = 3
     OnClick = AddCutButtonClick
   end
   object DeleteCutButton: TButton
@@ -89,7 +89,7 @@ object CutterForm: TCutterForm
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Delete Cut'
-    TabOrder = 6
+    TabOrder = 4
     OnClick = DeleteCutButtonClick
   end
   object CutStartButton: TButton
@@ -99,7 +99,7 @@ object CutterForm: TCutterForm
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&['
-    TabOrder = 7
+    TabOrder = 5
     OnClick = CutStartButtonClick
   end
   object CutEndButton: TButton
@@ -109,7 +109,7 @@ object CutterForm: TCutterForm
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&]'
-    TabOrder = 8
+    TabOrder = 6
     OnClick = CutEndButtonClick
   end
   object CutStartEdit: TEdit
@@ -118,7 +118,7 @@ object CutterForm: TCutterForm
     Width = 49
     Height = 21
     Anchors = [akLeft, akBottom]
-    TabOrder = 9
+    TabOrder = 7
     OnExit = CutStartEditExit
   end
   object CutEndEdit: TEdit
@@ -127,7 +127,7 @@ object CutterForm: TCutterForm
     Width = 49
     Height = 21
     Anchors = [akLeft, akBottom]
-    TabOrder = 10
+    TabOrder = 8
     OnExit = CutEndEditExit
   end
   object Plus50FramesButton: TButton

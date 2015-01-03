@@ -21,12 +21,15 @@ uses
   Asif in '..\Asif.pas',
   AsifAdditions in '..\AsifAdditions.pas',
   keydefaults in 'keydefaults.pas',
-  keymap in 'KeyMap.pas';
+  KeyMap in 'KeyMap.pas',
+  Vcl.Themes,
+  Vcl.Styles;
 
 {$R *.res}
 
 begin
   Application.Initialize;
+  TStyleManager.TrySetStyle('Silver');
   Application.Title := 'YATTA';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
