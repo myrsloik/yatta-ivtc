@@ -240,6 +240,7 @@ object Form1: TForm1
     VertScrollBar.Smooth = True
     VertScrollBar.Tracking = True
     Align = alClient
+    AutoScroll = False
     BorderStyle = bsNone
     TabOrder = 3
     object Image1: TImage32

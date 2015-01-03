@@ -3193,6 +3193,7 @@ begin
     raise;
   end;
 
+  ImageBox.AutoScroll := True;
   FreeAndNil(Image2);
 end;
 
