@@ -797,9 +797,7 @@ begin
     TempExt := AnsiLowerCase(ExtractFileExt(Form1.SourceFile));
     if (TempExt = '.d2v') then
     begin
-      SL.Append(MPEG2DecName + '_Mpeg2Source("' + Form1.SourceFile + '")');
-      if not AnsiSameText('DGDecode', MPEG2DecName) and se.FunctionExists('SetPlanarLegacyAlignment') then
-        SL.Append('SetPlanarLegacyAlignment(true)');
+      SL.Append('DGDecode_Mpeg2Source("' + Form1.SourceFile + '")');
     end
     else if TempExt = '.dga' then
       SL.Append('AVCSource("' + Form1.SourceFile + '")')
@@ -1525,9 +1523,7 @@ begin
     try
       if TempExt = '.d2v' then
       begin
-        SL.Append(MPEG2DecName + '_Mpeg2Source("' + Form1.SourceFile + '")');
-        if not AnsiSameText('DGDecode', MPEG2DecName) and SE.FunctionExists('SetPlanarLegacyAlignment') then
-          SL.Append('SetPlanarLegacyAlignment(true)');
+        SL.Append('DGDecode_Mpeg2Source("' + Form1.SourceFile + '")');
       end
       else if TempExt = '.dga' then
         SL.Append('AVCSource("' + Form1.SourceFile + '")')

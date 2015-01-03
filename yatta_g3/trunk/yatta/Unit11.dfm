@@ -48,19 +48,6 @@ object Form11: TForm11
         TabOrder = 1
         OnClick = RadioGroup1Click
       end
-      object RadioGroup2: TRadioGroup
-        Left = 256
-        Top = 55
-        Width = 121
-        Height = 73
-        Anchors = [akLeft, akTop, akBottom]
-        Caption = 'Mpeg2Dec'
-        ItemIndex = 1
-        Items.Strings = (
-          'Mpeg2Dec3'
-          'DGDecode')
-        TabOrder = 3
-      end
       object RadioGroup3: TRadioGroup
         Left = 0
         Top = 54
@@ -112,7 +99,7 @@ object Form11: TForm11
         Width = 377
         Height = 71
         Caption = 'Audio'
-        TabOrder = 4
+        TabOrder = 3
         object AudioFileEdit: TEdit
           Left = 8
           Top = 16

@@ -21,7 +21,6 @@ type
     TabSheet1: TTabSheet;
     TabSheet3: TTabSheet;
     CheckBox10: TCheckBox;
-    RadioGroup2: TRadioGroup;
     RadioGroup3: TRadioGroup;
     Decimation: TCheckBox;
     CheckBox15: TCheckBox;
@@ -159,7 +158,6 @@ begin
   ShowCLInfo.Checked := settings.ReadBool('MAIN', 'ShowCLInfo', true);
 
 
-  RadioGroup2.ItemIndex := settings.readInteger('MAIN', 'Mpeg2Decoder', 2);
   RadioGroup3.ItemIndex := settings.readInteger('MAIN', 'DefaultProjectType', 0);
 
   InitKeyMap;
@@ -178,7 +176,6 @@ procedure TForm11.FormDestroy(Sender: TObject);
 begin
   with Settings do
   begin
-    WriteInteger('MAIN', 'MPEG2DECODER', form11.RadioGroup2.ItemIndex);
     WriteInteger('MAIN', 'DEFAULTPROJECTTYPE', form11.RadioGroup3.ItemIndex);
     WriteBool('MAIN', 'PreviewCurrentFrame', form11.CheckBox10.Checked);
     WriteString('MAIN', 'PluginDir', form11.LabeledEdit1.Text);
