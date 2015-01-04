@@ -4,7 +4,7 @@ object Form1: TForm1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'YATTA - Version 8 -133'
-  ClientHeight = 613
+  ClientHeight = 615
   ClientWidth = 720
   Color = clBtnFace
   DefaultMonitor = dmDesktop
@@ -37,7 +37,7 @@ object Form1: TForm1
     Left = 0
     Top = 594
     Width = 720
-    Height = 19
+    Height = 21
     Panels = <>
     SimplePanel = True
   end
