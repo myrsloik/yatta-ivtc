@@ -1,5 +1,5 @@
 Tested Delphi Versions:
-Delphi XE2
+Delphi XE7
 
 Dependencies:
 Graphics32 - http://www.graphics32.org/
