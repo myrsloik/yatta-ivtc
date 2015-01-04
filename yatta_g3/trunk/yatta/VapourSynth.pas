@@ -20,6 +20,8 @@
 
 unit VapourSynth;
 
+//{$DEFINE VAPOURSYNTHDLLIMPORT}
+
 {$IFDEF WIN32}
 {$DEFINE STDCALL}
 {$ENDIF}
@@ -30,13 +32,19 @@ unit VapourSynth;
 interface
 
 const
+  VapourSynthLib = 'VapourSynth.dll';
+
   VAPOURSYNTH_API_MAJOR = 3;
   VAPOURSYNTH_API_MINOR = 1;
   VAPOURSYNTH_API_VERSION = (VAPOURSYNTH_API_MAJOR shl 16) or VAPOURSYNTH_API_MINOR;
 
 type
-  PPointer = ^Pointer;
+  DoubleArray  = array[0..$0ffffffe] of Double;
+  PDoubleArray = ^DoubleArray;
+
   PVSFrameRef = Pointer;
+  PVSFrameRefArray  = array[0..$0ffffffe] of PVSFrameRef;
+  PPVSFrameRefArray = ^PVSFrameRefArray;
   PVSNodeRef = Pointer;
   PVSCore = Pointer;
   PVSPlugin = Pointer;
@@ -44,6 +52,10 @@ type
   PVSFuncRef = Pointer;
   PVSMap = Pointer;
   PVSFrameContext = Pointer;
+  PVSFormat = ^VSFormat;
+  PVSCoreInfo = ^VSCoreInfo;
+  PVSVideoInfo = ^VSVideoInfo;
+  PVSAPI = ^VSAPI;
 
   VSColorFamily = (
     cmGray   = 1000000,
@@ -118,11 +130,10 @@ type
     numPlanes: Integer;
   end;
 
-  PVSFormat = ^VSFormat;
-
   VSNodeFlags = (
+    nfNoFlags = 0,
     nfNoCache = 1,
-    nfIsCache = 2);
+    nfIsCache = 3); // works because nfIsCache also requires nfNoCache to be set
 
   VSPropTypes = (
     ptUnset = Integer('u'),
@@ -152,8 +163,6 @@ type
     usedFramebufferSize: Int64;
   end;
 
-  PVSCoreInfo = ^VSCoreInfo;
-
   VSVideoInfo = record
     format: PVSFormat;
     fpsNum: Int64;
@@ -161,7 +170,7 @@ type
     width: Integer;
     height: Integer;
     numFrames: Integer;
-    flags: Integer;
+    flags: VSNodeFlags;
   end;
 
   VSActivationReason = (
@@ -176,12 +185,14 @@ type
     mtCritical = 2,
     mtFatal = 3);
 
-  PVSAPI = ^VSAPI;
-
-  VSPublicFunction = procedure(inm: PVSMap; outm: PVSMap; userData: Pointer; core: PVSCore = nil; vsapi: PVSAPI = nil);
-  VSFilterInit = procedure(inm: PVSMap; outm: PVSMap; instanceData: PPointer; node: PVSNode; core: PVSCore; vsapi: PVSAPI);
-  VSFilterGetFrame = function(n: Integer; activationReason: Integer; instanceData: PPointer; frameData: PPointer; frameCtx: PVSFrameContext; core: PVSCore; vsapi: PVSAPI): PVSFrameRef;
-  VSFilterFree = procedure(instanceData: Pointer; core: PVSCore; vsapi: PVSAPI);
+  VSGetVapourSynthAPI = function(version: Integer): PVSAPI; {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSPublicFunction = procedure(inm: PVSMap; outm: PVSMap; userData: Pointer; core: PVSCore; vsapi: PVSAPI); {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSFreeFuncData = procedure(userData: Pointer); {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSFrameDoneCallback = procedure(userData: Pointer; f: PVSFrameRef; n: Integer; node: PVSNodeRef; errorMsg: PAnsiChar); {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSMessageHandler = procedure(msgType: VSMessageType; msg: PAnsiChar; userData: Pointer); {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSFilterInit = procedure(inm: PVSMap; outm: PVSMap; var instanceData: Pointer; node: PVSNode; core: PVSCore; vsapi: PVSAPI); {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSFilterGetFrame = function(n: Integer; activationReason: Integer; var instanceData: Pointer; var frameData: Pointer; frameCtx: PVSFrameContext; core: PVSCore; vsapi: PVSAPI): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+  VSFilterFree = procedure(instanceData: Pointer; core: PVSCore; vsapi: PVSAPI); {$IFDEF STDCALL}stdcall;{$ENDIF}
 
   VSAPI = record
     createCore: function(threads: Integer): PVSCore; {$IFDEF STDCALL}stdcall;{$ENDIF}
@@ -200,210 +211,83 @@ type
     copyFrame: function(f: PVSFrameRef; core: PVSCore): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
     copyFrameProps: procedure(src: PVSFrameRef; dst: PVSFrameRef; core: PVSCore); {$IFDEF STDCALL}stdcall;{$ENDIF}
 
-    registerFunction: procedure(name: PAnsiChar; args: PAnsiChar; argsFunc: VSPublicFunction; functionData: Pointer; plugin: PVSPlugin);
-    getPluginById: function(identifier: PAnsiChar; core: PVSCore): PVSPlugin;
-    getPluginByNs: function(ns: PAnsiChar; core: PVSCore): PVSPlugin;
-    getPlugins: function(core: PVSCore): PVSMap;
-    getFunctions: function(plugin: PVSPlugin): PVSMap;
-    createFilter: procedure(inm: PVSMap; outm: PVSMap; name: PAnsiChar; init: VSFilterInit; getFrame: VSFilterGetFrame; free: VSFilterFree; fitlerMode: Integer; flags:Integer; instanceData: Pointer; core: PVSCore);
-    setError: procedure(map: PVSMap; errorMessage: PAnsiChar);
-    getError: function(map: PVSMap): PAnsiChar;
-    setFilterError: procedure(errorMessage: PAnsiChar; frameCtx: PVSFrameContext);
-    invoke: function(plugin: PVSPlugin; name: PAnsiChar; args: PVSMap): PVSMap;
-    getFormatPreset: function(id: Integer; core: PVSCore): PVSFormat;
-    registerFormat: function(colorFamily: VSColorFamily; sampleType: VSSampleType; bitsPerSample: Integer; subSamplingW: Integer; subSamplingH: Integer; core: PVSCore): PVSFormat;
+    registerFunction: procedure(name: PAnsiChar; args: PAnsiChar; argsFunc: VSPublicFunction; functionData: Pointer; plugin: PVSPlugin); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getPluginById: function(identifier: PAnsiChar; core: PVSCore): PVSPlugin; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getPluginByNs: function(ns: PAnsiChar; core: PVSCore): PVSPlugin; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getPlugins: function(core: PVSCore): PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFunctions: function(plugin: PVSPlugin): PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    createFilter: procedure(inm: PVSMap; outm: PVSMap; name: PAnsiChar; init: VSFilterInit; getFrame: VSFilterGetFrame; free: VSFilterFree; filterMode: Integer; flags:Integer; instanceData: Pointer; core: PVSCore); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    setError: procedure(map: PVSMap; errorMessage: PAnsiChar); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getError: function(map: PVSMap): PAnsiChar; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    setFilterError: procedure(errorMessage: PAnsiChar; frameCtx: PVSFrameContext); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    invoke: function(plugin: PVSPlugin; name: PAnsiChar; args: PVSMap): PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFormatPreset: function(id: Integer; core: PVSCore): PVSFormat; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    registerFormat: function(colorFamily: VSColorFamily; sampleType: VSSampleType; bitsPerSample: Integer; subSamplingW: Integer; subSamplingH: Integer; core: PVSCore): PVSFormat; {$IFDEF STDCALL}stdcall;{$ENDIF}
 
-    getFrame;
-    getFrameAsync;
-    getFrameFilter;
-    requestFrameFilter;
-    queryCompletedFrame;
-    releaseFrameEarly;
+    getFrame: function(n: Integer; node: PVSNodeRef; errorMsg: PAnsiChar; bufSize: Integer): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFrameAsync: procedure(n: Integer; node: PVSNodeRef; callback: VSFrameDoneCallback; userData: Pointer); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFrameFilter: function(n: Integer; node: PVSNodeRef; frameCtx: PVSFrameContext): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    requestFrameFilter: procedure(n: Integer; node: PVSNodeRef; frameCtx: PVSFrameContext); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    queryCompletedFrame: procedure(var node: PVSNodeRef; n: Integer; frameCtx: PVSFrameContext); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    releaseFrameEarly: procedure(node: PVSNodeRef; n: Integer; frameCtx: PVSFrameContext); {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    getStride: function(f: PVSFrameRef; plane: Integer): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getReadPtr: function(f: PVSFrameRef; plane: Integer): PByte; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getWritePtr: function(f: PVSFrameRef; plane: Integer): PByte; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    createFunc: function(func: VSPublicFunction; userData: Pointer; free: VSFreeFuncData; core: PVSCore; vsapi: PVSAPI): PVSFuncRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    callFunc: procedure(func: PVSFuncRef; inm: PVSMap; outm: PVSMap; core: PVSCore = nil; vsapi: PVSAPI = nil); {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    createMap: function: PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    freeMap: procedure(map: PVSMap); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    clearMap: procedure(map: PVSMap); {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    getVideoInfo: function(node: PVSNodeRef): PVSVideoInfo; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    setVideoInfo: procedure(vi: PVSVideoInfo; numOutputs: Integer; node: PVSNode); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFrameFormat: function(f: PVSFrameRef): PVSFormat; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFrameWidth: function(f: PVSFrameRef): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFrameHeight: function(f: PVSFrameRef): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFramePropsRO: function(f: PVSFrameRef): PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getFramePropsRW: function(f: PVSFrameRef): PVSMap; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    propNumKeys: function(map: PVSMap): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetKey: function(map: PVSMap; index: Integer): PAnsiChar; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propNumElements: function(map: PVSMap; key: PAnsiChar): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetType: function(map: PVSMap; key: PAnsiChar): AnsiChar; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetInt: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): Int64; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetFloat: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): Double; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetData: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): PAnsiChar; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetDataSize: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetNode: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): PVSNodeRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetFrame: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetFunc: function(map: PVSMap; key: PAnsiChar; index: Integer; error: PInteger = nil): PVSFuncRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    propDeleteKey: function(map: PVSMap; key: PAnsiChar): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetInt: function(map: PVSMap; key: PAnsiChar; i: Int64; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetFloat: function(map: PVSMap; key: PAnsiChar; d: double; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetData: function(map: PVSMap; key: PAnsiChar; data: PAnsiChar; size: Integer; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetNode: function(map: PVSMap; key: PAnsiChar; node: PVSNodeRef; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetFrame: function(map: PVSMap; key: PAnsiChar; f: PVSFrameRef; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetFunc: function(map: PVSMap; key: PAnsiChar; func: PVSFuncRef; append: VSPropAppendMode = paReplace): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    setMaxCacheSize: function(bytes: Int64; core: PVSCore): Int64; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    getOutputIndex: function(frameCtx: PVSFrameContext): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    newVideoFrame2: function(format: PVSFormat; width: Integer; height: Integer; planeSrc: PPVSFrameRefArray; planes: PIntegerArray; propSrc: PVSFrameRef; core: PVSCore): PVSFrameRef; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    setMessageHandler: procedure(handler: VSMessageHandler; userData: Pointer); {$IFDEF STDCALL}stdcall;{$ENDIF}
+    setThreadCount: function(threads: Integer; core: PVSCore): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    getPluginPath: function(plugin: PVSPlugin): PAnsiChar; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    propGetIntArray: function(map: PVSMap; key: PAnsiChar; error: PInteger = nil): PInt64Array; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propGetFloatArray: function(map: PVSMap; key: PAnsiChar; error: PInteger = nil): PDoubleArray; {$IFDEF STDCALL}stdcall;{$ENDIF}
+
+    propSetIntArray: function(map: PVSMap; key: PAnsiChar; i: PInt64Array; size: Integer): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
+    propSetFloatArray: function(map: PVSMap; key: PAnsiChar; const d: PDoubleArray; size: Integer): Integer; {$IFDEF STDCALL}stdcall;{$ENDIF}
   end;
-
-
-
+{$IFDEF VAPOURSYNTHDLLIMPORT}
+  function getVapourSynthAPI(version: Integer = VAPOURSYNTH_API_VERSION): PVSAPI; {$IFDEF STDCALL}stdcall;{$ENDIF} external VapourSynthLib;
+{$ENDIF}
 implementation
 
 end.
-
-
-#if defined(_WIN32) && !defined(_WIN64)
-#    define VS_CC __stdcall
-#else
-#    define VS_CC
-#endif
-
-
-/* core function typedefs */
-typedef const VSAPI *(VS_CC *VSGetVapourSynthAPI)(int version);
-
-
-
-/* function/filter typedefs */
-typedef void (VS_CC *VSPublicFunction)(const VSMap *in, VSMap *out, void *userData, VSCore *core, const VSAPI *vsapi);
-typedef void (VS_CC *VSFreeFuncData)(void *userData);
-typedef void (VS_CC *VSFilterInit)(VSMap *in, VSMap *out, void **instanceData, VSNode *node, VSCore *core, const VSAPI *vsapi);
-typedef const VSFrameRef *(VS_CC *VSFilterGetFrame)(int n, int activationReason, void **instanceData, void **frameData, VSFrameContext *frameCtx, VSCore *core, const VSAPI *vsapi);
-typedef int (VS_CC *VSGetOutputIndex)(VSFrameContext *frameCtx);
-typedef void (VS_CC *VSFilterFree)(void *instanceData, VSCore *core, const VSAPI *vsapi);
-typedef void (VS_CC *VSRegisterFunction)(const char *name, const char *args, VSPublicFunction argsFunc, void *functionData, VSPlugin *plugin);
-typedef void (VS_CC *VSCreateFilter)(const VSMap *in, VSMap *out, const char *name, VSFilterInit init, VSFilterGetFrame getFrame, VSFilterFree free, int filterMode, int flags, void *instanceData, VSCore *core);
-typedef VSMap *(VS_CC *VSInvoke)(VSPlugin *plugin, const char *name, const VSMap *args);
-typedef void (VS_CC *VSSetError)(VSMap *map, const char *errorMessage);
-typedef const char *(VS_CC *VSGetError)(const VSMap *map);
-typedef void (VS_CC *VSSetFilterError)(const char *errorMessage, VSFrameContext *frameCtx);
-
-typedef const VSFormat *(VS_CC *VSGetFormatPreset)(int id, VSCore *core);
-typedef const VSFormat *(VS_CC *VSRegisterFormat)(int colorFamily, int sampleType, int bitsPerSample, int subSamplingW, int subSamplingH, VSCore *core);
-
-/* frame and clip handling */
-typedef void (VS_CC *VSFrameDoneCallback)(void *userData, const VSFrameRef *f, int n, VSNodeRef *, const char *errorMsg);
-typedef void (VS_CC *VSGetFrameAsync)(int n, VSNodeRef *node, VSFrameDoneCallback callback, void *userData);
-typedef const VSFrameRef *(VS_CC *VSGetFrame)(int n, VSNodeRef *node, char *errorMsg, int bufSize);
-typedef void (VS_CC *VSRequestFrameFilter)(int n, VSNodeRef *node, VSFrameContext *frameCtx);
-typedef const VSFrameRef *(VS_CC *VSGetFrameFilter)(int n, VSNodeRef *node, VSFrameContext *frameCtx);
-typedef const VSFrameRef *(VS_CC *VSCloneFrameRef)(const VSFrameRef *f);
-typedef VSNodeRef *(VS_CC *VSCloneNodeRef)(VSNodeRef *node);
-typedef VSFuncRef *(VS_CC *VSCloneFuncRef)(VSFuncRef *f);
-typedef void (VS_CC *VSFreeFrame)(const VSFrameRef *f);
-typedef void (VS_CC *VSFreeNode)(VSNodeRef *node);
-typedef void (VS_CC *VSFreeFunc)(VSFuncRef *f);
-typedef VSFrameRef *(VS_CC *VSNewVideoFrame)(const VSFormat *format, int width, int height, const VSFrameRef *propSrc, VSCore *core);
-typedef VSFrameRef *(VS_CC *VSNewVideoFrame2)(const VSFormat *format, int width, int height, const VSFrameRef **planeSrc, const int *planes, const VSFrameRef *propSrc, VSCore *core);
-typedef VSFrameRef *(VS_CC *VSCopyFrame)(const VSFrameRef *f, VSCore *core);
-typedef void (VS_CC *VSCopyFrameProps)(const VSFrameRef *src, VSFrameRef *dst, VSCore *core);
-typedef int (VS_CC *VSGetStride)(const VSFrameRef *f, int plane);
-typedef const uint8_t *(VS_CC *VSGetReadPtr)(const VSFrameRef *f, int plane);
-typedef uint8_t *(VS_CC *VSGetWritePtr)(VSFrameRef *f, int plane);
-
-/* property access */
-typedef const VSVideoInfo *(VS_CC *VSGetVideoInfo)(VSNodeRef *node);
-typedef void (VS_CC *VSSetVideoInfo)(const VSVideoInfo *vi, int numOutputs, VSNode *node);
-typedef const VSFormat *(VS_CC *VSGetFrameFormat)(const VSFrameRef *f);
-typedef int (VS_CC *VSGetFrameWidth)(const VSFrameRef *f, int plane);
-typedef int (VS_CC *VSGetFrameHeight)(const VSFrameRef *f, int plane);
-typedef const VSMap *(VS_CC *VSGetFramePropsRO)(const VSFrameRef *f);
-typedef VSMap *(VS_CC *VSGetFramePropsRW)(VSFrameRef *f);
-typedef int (VS_CC *VSPropNumKeys)(const VSMap *map);
-typedef const char *(VS_CC *VSPropGetKey)(const VSMap *map, int index);
-typedef int (VS_CC *VSPropNumElements)(const VSMap *map, const char *key);
-typedef char(VS_CC *VSPropGetType)(const VSMap *map, const char *key);
-
-typedef VSMap *(VS_CC *VSCreateMap)(void);
-typedef void (VS_CC *VSFreeMap)(VSMap *map);
-typedef void (VS_CC *VSClearMap)(VSMap *map);
-
-typedef int64_t (VS_CC *VSPropGetInt)(const VSMap *map, const char *key, int index, int *error);
-typedef double(VS_CC *VSPropGetFloat)(const VSMap *map, const char *key, int index, int *error);
-typedef const char *(VS_CC *VSPropGetData)(const VSMap *map, const char *key, int index, int *error);
-typedef int (VS_CC *VSPropGetDataSize)(const VSMap *map, const char *key, int index, int *error);
-typedef VSNodeRef *(VS_CC *VSPropGetNode)(const VSMap *map, const char *key, int index, int *error);
-typedef const VSFrameRef *(VS_CC *VSPropGetFrame)(const VSMap *map, const char *key, int index, int *error);
-typedef VSFuncRef *(VS_CC *VSPropGetFunc)(const VSMap *map, const char *key, int index, int *error);
-
-typedef int (VS_CC *VSPropDeleteKey)(VSMap *map, const char *key);
-typedef int (VS_CC *VSPropSetInt)(VSMap *map, const char *key, int64_t i, int append);
-typedef int (VS_CC *VSPropSetFloat)(VSMap *map, const char *key, double d, int append);
-typedef int (VS_CC *VSPropSetData)(VSMap *map, const char *key, const char *data, int size, int append);
-typedef int (VS_CC *VSPropSetNode)(VSMap *map, const char *key, VSNodeRef *node, int append);
-typedef int (VS_CC *VSPropSetFrame)(VSMap *map, const char *key, const VSFrameRef *f, int append);
-typedef int (VS_CC *VSPropSetFunc)(VSMap *map, const char *key, VSFuncRef *func, int append);
-
-/* mixed */
-typedef void (VS_CC *VSConfigPlugin)(const char *identifier, const char *defaultNamespace, const char *name, int apiVersion, int readonly, VSPlugin *plugin);
-typedef void (VS_CC *VSInitPlugin)(VSConfigPlugin configFunc, VSRegisterFunction registerFunc, VSPlugin *plugin);
-
-typedef VSPlugin *(VS_CC *VSGetPluginById)(const char *identifier, VSCore *core);
-typedef VSPlugin *(VS_CC *VSGetPluginByNs)(const char *ns, VSCore *core);
-
-typedef VSMap *(VS_CC *VSGetPlugins)(VSCore *core);
-typedef VSMap *(VS_CC *VSGetFunctions)(VSPlugin *plugin);
-
-typedef void (VS_CC *VSCallFunc)(VSFuncRef *func, const VSMap *in, VSMap *out, VSCore *core, const VSAPI *vsapi); /* core and vsapi arguments are completely ignored, they only remain to preserve ABI */
-typedef VSFuncRef *(VS_CC *VSCreateFunc)(VSPublicFunction func, void *userData, VSFreeFuncData free, VSCore *core, const VSAPI *vsapi);
-
-typedef void (VS_CC *VSQueryCompletedFrame)(VSNodeRef **node, int *n, VSFrameContext *frameCtx);
-typedef void (VS_CC *VSReleaseFrameEarly)(VSNodeRef *node, int n, VSFrameContext *frameCtx);
-
-typedef int64_t (VS_CC *VSSetMaxCacheSize)(int64_t bytes, VSCore *core);
-typedef int (VS_CC *VSSetThreadCount)(int threads, VSCore *core);
-
-typedef void (VS_CC *VSMessageHandler)(int msgType, const char *msg, void *userData);
-typedef void (VS_CC *VSSetMessageHandler)(VSMessageHandler handler, void *userData);
-
-typedef const char *(VS_CC *VSGetPluginPath)(const VSPlugin *plugin);
-
-typedef const int64_t *(VS_CC *VSPropGetIntArray)(const VSMap *map, const char *key, int *error);
-typedef const double *(VS_CC *VSPropGetFloatArray)(const VSMap *map, const char *key, int *error);
-
-typedef int (VS_CC *VSPropSetIntArray)(VSMap *map, const char *key, const int64_t *i, int size);
-typedef int (VS_CC *VSPropSetFloatArray)(VSMap *map, const char *key, const double *d, int size);
-
-
-struct VSAPI {
-    VSGetFrame getFrame; /* do never use inside a filter's getframe function, for external applications using the core as a library or for requesting frames in a filter constructor */
-    VSGetFrameAsync getFrameAsync; /* do never use inside a filter's getframe function, for external applications using the core as a library or for requesting frames in a filter constructor */
-    VSGetFrameFilter getFrameFilter; /* only use inside a filter's getframe function */
-    VSRequestFrameFilter requestFrameFilter; /* only use inside a filter's getframe function */
-    VSQueryCompletedFrame queryCompletedFrame; /* only use inside a filter's getframe function */
-    VSReleaseFrameEarly releaseFrameEarly; /* only use inside a filter's getframe function */
-
-    VSGetStride getStride;
-    VSGetReadPtr getReadPtr;
-    VSGetWritePtr getWritePtr;
-
-    VSCreateFunc createFunc;
-    VSCallFunc callFunc;
-
-    /* property access functions */
-    VSCreateMap createMap;
-    VSFreeMap freeMap;
-    VSClearMap clearMap;
-
-    VSGetVideoInfo getVideoInfo;
-    VSSetVideoInfo setVideoInfo;
-    VSGetFrameFormat getFrameFormat;
-    VSGetFrameWidth getFrameWidth;
-    VSGetFrameHeight getFrameHeight;
-    VSGetFramePropsRO getFramePropsRO;
-    VSGetFramePropsRW getFramePropsRW;
-
-    VSPropNumKeys propNumKeys;
-    VSPropGetKey propGetKey;
-    VSPropNumElements propNumElements;
-    VSPropGetType propGetType;
-    VSPropGetInt propGetInt;
-    VSPropGetFloat propGetFloat;
-    VSPropGetData propGetData;
-    VSPropGetDataSize propGetDataSize;
-    VSPropGetNode propGetNode;
-    VSPropGetFrame propGetFrame;
-    VSPropGetFunc propGetFunc;
-
-    VSPropDeleteKey propDeleteKey;
-    VSPropSetInt propSetInt;
-    VSPropSetFloat propSetFloat;
-    VSPropSetData propSetData;
-    VSPropSetNode propSetNode;
-    VSPropSetFrame propSetFrame;
-    VSPropSetFunc propSetFunc;
-
-    VSSetMaxCacheSize setMaxCacheSize;
-    VSGetOutputIndex getOutputIndex;
-    VSNewVideoFrame2 newVideoFrame2;
-
-    VSSetMessageHandler setMessageHandler;
-    VSSetThreadCount setThreadCount;
-
-    VSGetPluginPath getPluginPath;
-
-    VSPropGetIntArray propGetIntArray;
-    VSPropGetFloatArray propGetFloatArray;
-
-    VSPropSetIntArray propSetIntArray;
-    VSPropSetFloatArray propSetFloatArray;
-};
-
-VS_API(const VSAPI *) getVapourSynthAPI(int version);
-

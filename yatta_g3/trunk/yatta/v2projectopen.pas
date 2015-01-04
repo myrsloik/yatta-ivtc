@@ -130,7 +130,6 @@ end;
 procedure OpenProject(IniFile: TMemIniFile);
 var
   SV: AVSValueStruct;
-  TempName: string;
   SearchPath, SearchString: string;
   FR: TSearchRec;
   AudioDelay: Integer;

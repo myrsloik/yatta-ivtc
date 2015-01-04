@@ -23,7 +23,9 @@ uses
   keydefaults in 'keydefaults.pas',
   KeyMap in 'KeyMap.pas',
   Vcl.Themes,
-  Vcl.Styles;
+  Vcl.Styles,
+  VapourSynth in 'VapourSynth.pas',
+  VSScript in 'VSScript.pas';
 
 {$R *.res}
 
