@@ -95,37 +95,41 @@ object CropForm: TCropForm
     TabOrder = 9
   end
   object CropBottomUpDown: TUpDown
-    Left = 32
+    Left = 79
     Top = 246
-    Width = 13
+    Width = 16
     Height = 21
+    Associate = CropBottomEdit
     Max = 4096
     TabOrder = 7
     OnClick = CropUpDownClick
   end
   object CropRightUpDown: TUpDown
-    Left = 109
+    Left = 108
     Top = 222
-    Width = 13
+    Width = 16
     Height = 21
+    Associate = CropRightEdit
     Max = 4096
     TabOrder = 6
     OnClick = CropUpDownClick
   end
   object CropTopUpDown: TUpDown
-    Left = 32
+    Left = 79
     Top = 198
-    Width = 13
+    Width = 16
     Height = 21
+    Associate = CropTopEdit
     Max = 4096
     TabOrder = 1
     OnClick = CropUpDownClick
   end
   object CropLeftUpDown: TUpDown
-    Left = 3
+    Left = 50
     Top = 222
-    Width = 13
+    Width = 16
     Height = 21
+    Associate = CropLeftEdit
     Max = 4096
     TabOrder = 3
     OnClick = CropUpDownClick
