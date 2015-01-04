@@ -1,9 +1,9 @@
 object Logwindow: TLogwindow
   Left = 360
   Top = 205
-  Width = 566
-  Height = 406
   Caption = 'Log'
+  ClientHeight = 367
+  ClientWidth = 550
   Color = clBtnFace
   DefaultMonitor = dmMainForm
   Font.Charset = DEFAULT_CHARSET
@@ -14,14 +14,13 @@ object Logwindow: TLogwindow
   OldCreateOrder = False
   Position = poDefault
   PrintScale = poNone
-  Scaled = False
   PixelsPerInch = 96
   TextHeight = 13
   object LogList: TListBox
     Left = 0
     Top = 0
     Width = 550
-    Height = 368
+    Height = 367
     Align = alClient
     ItemHeight = 13
     MultiSelect = True

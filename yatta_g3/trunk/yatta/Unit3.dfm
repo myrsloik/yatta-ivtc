@@ -1,9 +1,9 @@
 object Form3: TForm3
   Left = 329
   Top = 131
-  Width = 426
-  Height = 377
   Caption = 'Script Preview'
+  ClientHeight = 338
+  ClientWidth = 410
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -12,14 +12,13 @@ object Form3: TForm3
   Font.Style = []
   OldCreateOrder = False
   Position = poDefault
-  Scaled = False
   PixelsPerInch = 96
   TextHeight = 13
   object Memo1: TMemo
     Left = 0
     Top = 0
-    Width = 418
-    Height = 350
+    Width = 410
+    Height = 338
     Align = alClient
     ReadOnly = True
     ScrollBars = ssBoth

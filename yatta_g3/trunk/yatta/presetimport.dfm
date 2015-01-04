@@ -1,9 +1,9 @@
 object PresetImportForm: TPresetImportForm
   Left = 289
   Top = 224
-  Width = 684
-  Height = 442
   Caption = 'Project Settings Import'
+  ClientHeight = 403
+  ClientWidth = 668
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,19 +11,18 @@ object PresetImportForm: TPresetImportForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  Position = poDefaultPosOnly
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
     Left = 0
     Top = 0
-    Width = 676
+    Width = 668
     Height = 153
     Align = alTop
     Caption = 'Presets'
     TabOrder = 0
     DesignSize = (
-      676
+      668
       153)
     object Presets: TListBox
       Left = 8
@@ -40,14 +39,14 @@ object PresetImportForm: TPresetImportForm
   object GroupBox2: TGroupBox
     Left = 0
     Top = 153
-    Width = 676
-    Height = 220
+    Width = 668
+    Height = 208
     Align = alClient
     Caption = 'Contents'
     TabOrder = 1
     DesignSize = (
-      676
-      220)
+      668
+      208)
     object PresetContent: TMemo
       Left = 8
       Top = 16
@@ -60,13 +59,13 @@ object PresetImportForm: TPresetImportForm
   end
   object GroupBox3: TGroupBox
     Left = 0
-    Top = 373
-    Width = 676
+    Top = 361
+    Width = 668
     Height = 42
     Align = alBottom
     TabOrder = 2
     DesignSize = (
-      676
+      668
       42)
     object ImportAllButton: TButton
       Left = 580
