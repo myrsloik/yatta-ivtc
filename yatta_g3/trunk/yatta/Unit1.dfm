@@ -50,7 +50,7 @@ object Form1: TForm1
     BevelOuter = bvNone
     TabOrder = 1
     object Button9: TButton
-      Left = 84
+      Left = 79
       Top = 21
       Width = 79
       Height = 19
@@ -60,7 +60,7 @@ object Form1: TForm1
       OnClick = Button9Click
     end
     object Button8: TButton
-      Left = 321
+      Left = 316
       Top = 2
       Width = 79
       Height = 19
@@ -70,7 +70,7 @@ object Form1: TForm1
       OnClick = Button8Click
     end
     object Button7: TButton
-      Left = 400
+      Left = 395
       Top = 2
       Width = 79
       Height = 19
@@ -80,7 +80,7 @@ object Form1: TForm1
       OnClick = Button7Click
     end
     object Button6: TButton
-      Left = 479
+      Left = 474
       Top = 2
       Width = 79
       Height = 19
@@ -90,7 +90,7 @@ object Form1: TForm1
       OnClick = Button6Click
     end
     object Button5: TButton
-      Left = 84
+      Left = 79
       Top = 2
       Width = 79
       Height = 19
@@ -100,7 +100,7 @@ object Form1: TForm1
       OnClick = Button5Click
     end
     object Button4: TButton
-      Left = 479
+      Left = 474
       Top = 21
       Width = 79
       Height = 19
@@ -110,7 +110,7 @@ object Form1: TForm1
       OnClick = Button4Click
     end
     object Button3: TButton
-      Left = 558
+      Left = 553
       Top = 21
       Width = 79
       Height = 19
@@ -121,7 +121,7 @@ object Form1: TForm1
       OnMouseDown = Button10MouseDown
     end
     object Button20: TButton
-      Left = 242
+      Left = 237
       Top = 2
       Width = 79
       Height = 19
@@ -131,7 +131,7 @@ object Form1: TForm1
       OnClick = Button20Click
     end
     object Button2: TButton
-      Left = 163
+      Left = 158
       Top = 2
       Width = 79
       Height = 19
@@ -141,7 +141,7 @@ object Form1: TForm1
       OnClick = Button2Click
     end
     object OpenCloseButton: TButton
-      Left = 5
+      Left = 0
       Top = 2
       Width = 79
       Height = 19
@@ -150,7 +150,7 @@ object Form1: TForm1
       OnClick = OpenCloseButtonClick
     end
     object Button18: TButton
-      Left = 400
+      Left = 395
       Top = 21
       Width = 79
       Height = 19
@@ -160,7 +160,7 @@ object Form1: TForm1
       OnClick = Button18Click
     end
     object Button16: TButton
-      Left = 242
+      Left = 237
       Top = 21
       Width = 79
       Height = 19
@@ -169,7 +169,7 @@ object Form1: TForm1
       OnClick = Button16Click
     end
     object Button15: TButton
-      Left = 163
+      Left = 158
       Top = 21
       Width = 79
       Height = 19
@@ -179,7 +179,7 @@ object Form1: TForm1
       OnClick = Button15Click
     end
     object Button14: TButton
-      Left = 637
+      Left = 632
       Top = 21
       Width = 79
       Height = 19
@@ -189,7 +189,7 @@ object Form1: TForm1
       OnClick = Button14Click
     end
     object Button13: TButton
-      Left = 5
+      Left = 0
       Top = 21
       Width = 79
       Height = 19
@@ -199,7 +199,7 @@ object Form1: TForm1
       OnClick = Button13Click
     end
     object Button12: TButton
-      Left = 321
+      Left = 316
       Top = 21
       Width = 79
       Height = 19
@@ -209,7 +209,7 @@ object Form1: TForm1
       OnClick = Button12Click
     end
     object Button10: TButton
-      Left = 637
+      Left = 632
       Top = 2
       Width = 79
       Height = 19
@@ -219,7 +219,7 @@ object Form1: TForm1
       OnClick = Button10Click
     end
     object Button1: TButton
-      Left = 558
+      Left = 553
       Top = 2
       Width = 79
       Height = 19

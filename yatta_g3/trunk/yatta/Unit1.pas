@@ -229,6 +229,8 @@ type
     FMouseDrag: Boolean;
     FLastX: Integer;
     FLastY: Integer;
+    FOriginalWidth: Integer;
+    FOriginalHeight: Integer;
 
     procedure GetNext(Frame: Integer);
     procedure GetCurrent(Frame: Integer);
@@ -1985,6 +1987,9 @@ begin
   FormatSettings.LongTimeFormat := 'hh:nn:ss.zzz';
   FormatSettings.ShortTimeFormat := 'hh:nn:ss.zzz';
 
+  FOriginalWidth := ClientWidth;
+  FOriginalHeight := ClientHeight - ImageBox.ClientHeight;
+
   OriginalCaption := Caption;
 
   FTextLayer := TBitmapLayer.Create(Image1.Layers);
@@ -3110,13 +3115,13 @@ begin
 
         if M > 0 then
         begin
-          CW := Max(720, Multiple * Width);
+          CW := Max(FOriginalWidth, Multiple * Width);
           Image1.Width := Multiple * Width;
           ImageBox.HorzScrollBar.Range := Multiple * Width;
         end
         else
         begin
-          CW := Max(720, Width div -Multiple);
+          CW := Max(FOriginalWidth, Width div -Multiple);
           Image1.Width := Width div -Multiple;
           ImageBox.HorzScrollBar.Range := Width div -Multiple;
         end;
