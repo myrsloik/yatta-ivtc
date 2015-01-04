@@ -16,7 +16,6 @@ object CropForm: TCropForm
   OldCreateOrder = False
   Position = poScreenCenter
   PrintScale = poNone
-  Scaled = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow

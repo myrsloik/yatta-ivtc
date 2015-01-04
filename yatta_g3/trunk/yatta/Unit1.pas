@@ -132,7 +132,6 @@ type
     Setminimallength1: TMenuItem;
     UseExperimentalAlgorithm1: TMenuItem;
     Image1: TImage32;
-    Image2: TImage;
     SelectLowestVmetricatSectionbounds1: TMenuItem;
     SaveAudioAvs1: TMenuItem;
     SaveDialog4: TSaveDialog;
@@ -3192,8 +3191,8 @@ begin
     raise;
   end;
 
+  Image1.ScaleMode := smScale;
   ImageBox.AutoScroll := True;
-  FreeAndNil(Image2);
 end;
 
 procedure TForm1.Setcpenalty1Click(Sender: TObject);
