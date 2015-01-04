@@ -30,6 +30,7 @@ uses
 {$R *.res}
 
 begin
+  SetProcessDPIAware;
   Application.Initialize;
   TStyleManager.TrySetStyle('Silver');
   Application.Title := 'YATTA';
