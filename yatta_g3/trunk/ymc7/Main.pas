@@ -9,8 +9,8 @@ uses
   System.Actions;
 
 const
-  INIVersion = 21;
-  MainIniKey = 'YMC7';
+  INIVersion = 22;
+  MainIniKey = 'YMC8';
 
 type
   TMainForm = class(TForm)
@@ -155,7 +155,7 @@ begin
 
   YMCPluginInit(@AddPlugin);
 
-  FTaskList := TYMCTaskList.Create(PluginPath, TMpeg2Decoder(INI.ReadInteger(MainIniKey, 'Mpeg2Decoder', Integer(mdMpeg2Dec3))), INI);
+  FTaskList := TYMCTaskList.Create(PluginPath, INI);
   FTaskList.SavedBy := Caption;
   FTaskList.DefaultPriority := TThreadPriority(INI.ReadInteger(MainIniKey, 'DefaultPriority', Integer(tpLowest)));
 

@@ -213,7 +213,6 @@ object MainForm: TMainForm
       Action = ConfigureAction
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 1
-      ExplicitTop = 246
     end
     object StartButton: TButton
       Left = 7
@@ -223,7 +222,6 @@ object MainForm: TMainForm
       Action = StartAction
       Anchors = [akLeft, akRight, akBottom]
       TabOrder = 2
-      ExplicitTop = 275
     end
     object MetricFilterList: TCheckListBox
       Left = 7
@@ -235,7 +233,6 @@ object MainForm: TMainForm
       ItemHeight = 13
       TabOrder = 0
       OnDblClick = MetricFilterListDblClick
-      ExplicitHeight = 227
     end
   end
   object OpenDialog: TOpenDialog

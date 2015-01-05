@@ -11,15 +11,12 @@ type
 
   TYMCPluginClass = class of TYMCPlugin;
   TYMCPluginClassDynArray = array of TYMCPluginClass;
-
-  TMpeg2Decoder = (mdMpeg2Dec3 = 0, mdDGDecode = 1);
   TPostProcessor = (ppDecombBlend = 0, ppDecombInterpolate = 1, ppKernelDeint = 2, ppLeakKernelDeint = 3, ppSangnom = 4, ppTDeint = 5);
 
   TYMCProjectHeader = record
     ProjectType: 0..1;
     Order: 0..1;
     FrameCount: Integer;
-    Decoder: TMpeg2Decoder;
     PostProcessor: TPostProcessor;
     CutList: string;
   end;
