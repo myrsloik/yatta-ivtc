@@ -87,7 +87,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <Debugger_CWD>C:\Users\Myrsloik\Desktop\ypr</Debugger_CWD>
-        <Debugger_RunParams>VTS_01_5.d2v.yap</Debugger_RunParams>
         <Manifest_File>..\hidpi.manifest</Manifest_File>
         <VerInfo_MajorVer>8</VerInfo_MajorVer>
         <VerInfo_MinorVer>133</VerInfo_MinorVer>

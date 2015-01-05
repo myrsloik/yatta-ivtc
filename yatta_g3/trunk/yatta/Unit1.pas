@@ -2049,6 +2049,8 @@ begin
   FInfoText := TStringList.Create;
   FBuffer := TBitmap32.Create;
 
+  Image1.Bitmap.ResamplerClassName := 'TLinearResampler';
+
   try
     InitializeAvisynth;
   except on E: EAsifException do

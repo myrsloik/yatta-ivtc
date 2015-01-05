@@ -4,11 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms,
-  Dialogs, jpeg, ExtCtrls, StdCtrls;
+  Dialogs, jpeg, ExtCtrls, StdCtrls, GR32_Image;
 
 type
   TForm7 = class(TForm)
-    Image1: TImage;
     Button1: TButton;
     Label1: TLabel;
     Label2: TLabel;
@@ -19,6 +18,8 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    Image: TImage32;
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,5 +32,10 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TForm7.FormCreate(Sender: TObject);
+begin
+  Image.Bitmap.ResamplerClassName := 'TLinearResampler';
+end;
 
 end.

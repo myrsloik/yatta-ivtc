@@ -1,7 +1,4 @@
 yellow color not set properly in cropping window?
-don't jump arbitrary amounts when trackbar clicked
-
-
 
 save decimate/tdecimate decisions and add a config dialog
 
