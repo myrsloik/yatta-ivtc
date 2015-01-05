@@ -1,3 +1,9 @@
+8-133
+Fixed tab order in ymc cutter
+Made yatta and ymc system dpi aware and fixed most scaling issues
+Fixed info text color so it's always black and no system color
+Migrated to delphi xe7 and fixed several breaking unicode bugs introduced in 7-132
+
 7-132
 Migrated to unicode (avisynth is still not though), delphi xe2 is now the recommended compiler.
 
