@@ -1039,6 +1039,8 @@ begin
 
   FTextLayer.Bitmap.Clear(clBlue32);
 
+  FTextLayer.Bitmap.Canvas.Font.Color := clBlack;
+
   FromFrame := GetFrozenFrameNumber(TrackBar1.Position);
 
   if ShowFrozen1.Checked then
