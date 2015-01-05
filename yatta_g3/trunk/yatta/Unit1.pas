@@ -1043,8 +1043,6 @@ begin
 
   FTextLayer.Bitmap.Clear(clBlue32);
 
-  FTextLayer.Bitmap.Canvas.Font.Color := clBlack;
-
   FromFrame := GetFrozenFrameNumber(TrackBar1.Position);
 
   if ShowFrozen1.Checked then
@@ -1082,6 +1080,7 @@ begin
   if ShowText1.Checked then
   begin
     FTextLayer.Bitmap.Canvas.Font := Font;
+    FTextLayer.Bitmap.Canvas.Font.Color := clBlack;
 
     if form11.CheckBox3.Checked then
       FInfoText.Insert(0, form2.GetPresetName(Sif.Preset) + '; Start: ' + IntToStr(sif.startframe) + '; End: ' + IntToStr(sif.endframe));
