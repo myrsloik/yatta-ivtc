@@ -92,8 +92,8 @@ begin
     begin
       TrackBar.Max := NumFrames - 1;
 
-      ClientWidth := Max(720, Width);
-      ClientHeight := Height + 110;
+      ClientWidth := Max(ClientWidth, Width);
+      ClientHeight := (ClientHeight - Image.Height) + Height;
     end;
 
     TrackBarChange(nil);

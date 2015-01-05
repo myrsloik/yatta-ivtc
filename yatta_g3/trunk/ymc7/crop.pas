@@ -125,7 +125,7 @@ var
   Val: Integer;
 begin
   try
-    Val := StrToInt(TEdit(Sender).Text);
+    Val := StrToInt((Sender as TEdit).Text);
     if Val < 0 then
       Abort;
     (Sender as TEdit).Color := clWindow;

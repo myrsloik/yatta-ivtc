@@ -97,8 +97,8 @@ begin
     with FOriginalVideo.GetVideoInfo do
     begin
       TrackBar.Max := NumFrames - 1;
-      ClientWidth := Max(720, Width);
-      ClientHeight := Height + 90;
+      ClientWidth := Max(ClientWidth, Width);
+      ClientHeight := (ClientHeight - Image.Height) + Height;
     end;
 
     TrackBarChange(Self);

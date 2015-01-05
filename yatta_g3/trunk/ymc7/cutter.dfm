@@ -26,7 +26,6 @@ object CutterForm: TCutterForm
     Caption = '&Goto'
     TabOrder = 9
     OnClick = GotoButtonClick
-    ExplicitTop = 512
   end
   object OKButton: TButton
     Left = 412
@@ -38,7 +37,6 @@ object CutterForm: TCutterForm
     Default = True
     ModalResult = 1
     TabOrder = 10
-    ExplicitTop = 512
   end
   object FrameTrackbar: TTrackBar
     Left = 0
@@ -50,8 +48,6 @@ object CutterForm: TCutterForm
     TabOrder = 2
     TickStyle = tsNone
     OnChange = FrameTrackbarChange
-    ExplicitTop = 483
-    ExplicitWidth = 656
   end
   object Image: TImage32
     Left = 128
@@ -62,10 +58,8 @@ object CutterForm: TCutterForm
     Bitmap.ResamplerClassName = 'TNearestResampler'
     BitmapAlign = baTopLeft
     Scale = 1.000000000000000000
-    ScaleMode = smResize
+    ScaleMode = smStretch
     TabOrder = 1
-    ExplicitWidth = 527
-    ExplicitHeight = 480
   end
   object CutListBox: TListBox
     Left = 0
@@ -77,7 +71,6 @@ object CutterForm: TCutterForm
     MultiSelect = True
     TabOrder = 0
     OnDblClick = CutListBoxDblClick
-    ExplicitHeight = 480
   end
   object AddCutButton: TButton
     Left = 6
@@ -88,7 +81,6 @@ object CutterForm: TCutterForm
     Caption = '&Add Cut'
     TabOrder = 3
     OnClick = AddCutButtonClick
-    ExplicitTop = 512
   end
   object DeleteCutButton: TButton
     Left = 82
@@ -99,7 +91,6 @@ object CutterForm: TCutterForm
     Caption = '&Delete Cut'
     TabOrder = 4
     OnClick = DeleteCutButtonClick
-    ExplicitTop = 512
   end
   object CutStartButton: TButton
     Left = 158
@@ -110,7 +101,6 @@ object CutterForm: TCutterForm
     Caption = '&['
     TabOrder = 5
     OnClick = CutStartButtonClick
-    ExplicitTop = 512
   end
   object CutEndButton: TButton
     Left = 191
@@ -121,7 +111,6 @@ object CutterForm: TCutterForm
     Caption = '&]'
     TabOrder = 6
     OnClick = CutEndButtonClick
-    ExplicitTop = 512
   end
   object CutStartEdit: TEdit
     Left = 224
@@ -131,7 +120,6 @@ object CutterForm: TCutterForm
     Anchors = [akLeft, akBottom]
     TabOrder = 7
     OnExit = CutStartEditExit
-    ExplicitTop = 512
   end
   object CutEndEdit: TEdit
     Left = 280
@@ -141,7 +129,6 @@ object CutterForm: TCutterForm
     Anchors = [akLeft, akBottom]
     TabOrder = 8
     OnExit = CutEndEditExit
-    ExplicitTop = 512
   end
   object Plus50FramesButton: TButton
     Left = 488
@@ -152,7 +139,6 @@ object CutterForm: TCutterForm
     Caption = '&Jump +50'
     TabOrder = 11
     OnClick = Plus50FramesButtonClick
-    ExplicitTop = 512
   end
   object Minus50FramesButton: TButton
     Left = 568
@@ -163,6 +149,5 @@ object CutterForm: TCutterForm
     Caption = 'J&ump -50'
     TabOrder = 12
     OnClick = Minus50FramesButtonClick
-    ExplicitTop = 512
   end
 end

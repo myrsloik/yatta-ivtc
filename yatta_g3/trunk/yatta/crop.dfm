@@ -100,7 +100,7 @@ object CropForm: TCropForm
     Width = 16
     Height = 21
     Associate = CropBottomEdit
-    Max = 4096
+    Max = 20000
     TabOrder = 7
     OnClick = CropUpDownClick
   end
@@ -110,7 +110,7 @@ object CropForm: TCropForm
     Width = 16
     Height = 21
     Associate = CropRightEdit
-    Max = 4096
+    Max = 20000
     TabOrder = 6
     OnClick = CropUpDownClick
   end
@@ -120,7 +120,7 @@ object CropForm: TCropForm
     Width = 16
     Height = 21
     Associate = CropTopEdit
-    Max = 4096
+    Max = 20000
     TabOrder = 1
     OnClick = CropUpDownClick
   end
@@ -130,7 +130,7 @@ object CropForm: TCropForm
     Width = 16
     Height = 21
     Associate = CropLeftEdit
-    Max = 4096
+    Max = 20000
     TabOrder = 3
     OnClick = CropUpDownClick
   end

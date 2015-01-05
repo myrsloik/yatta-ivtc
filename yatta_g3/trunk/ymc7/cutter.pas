@@ -85,8 +85,8 @@ begin
   with FVideo.GetVideoInfo do
   begin
     FrameTrackbar.Max := NumFrames - 1;
-    ClientWidth := Max(Width + 128, 720);
-    ClientHeight := Height + 62;
+    ClientWidth := Max(ClientWidth, Image.Left + Width);
+    ClientHeight := (ClientHeight - Image.Height) + Height;
   end;
 end;
 
