@@ -15,7 +15,6 @@ object TelecideForm: TTelecideForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  Scaled = False
   DesignSize = (
     720
     570)

@@ -1118,18 +1118,18 @@ begin
     if Form11.CheckBox8.Checked and form11.CheckBox2.Checked and (OpenMode in MatchingProjects) then
     begin
       FTextLayer.Bitmap.Canvas.TextOut(MulDiv(15, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'Frame: ' + inttostr(TrackBar1.Position));
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(90, FOriginalWidth, 720), 10, 'MMetric: ' + inttostr(FrameArray[TrackBar1.Position].mmetric[FrameArray[TrackBar1.Position].Match]));
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(185, FOriginalWidth, 720), 10, 'DMetric: ' + IntToStr(FrameArray[TrackBar1.Position].DMetric));
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(275, FOriginalWidth, 720), 10, 'VMetric: ' + inttostr(FrameArray[TrackBar1.Position].vmetric[FrameArray[TrackBar1.Position].Match]));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(90, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'MMetric: ' + inttostr(FrameArray[TrackBar1.Position].mmetric[FrameArray[TrackBar1.Position].Match]));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(185, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'DMetric: ' + IntToStr(FrameArray[TrackBar1.Position].DMetric));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(275, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'VMetric: ' + inttostr(FrameArray[TrackBar1.Position].vmetric[FrameArray[TrackBar1.Position].Match]));
     end
     else if Form11.CheckBox2.Checked and (OpenMode in MatchingProjects) then
     begin
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(15, FOriginalWidth, 720), 10, 'MMetric: ' + IntToStr(FrameArray[TrackBar1.Position].mmetric[FrameArray[TrackBar1.Position].Match]));
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(105, FOriginalWidth, 720), 10, 'DMetric: ' + IntToStr(FrameArray[TrackBar1.Position].DMetric));
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(195, FOriginalWidth, 720), 10, 'VMetric: ' + IntToStr(FrameArray[TrackBar1.Position].vmetric[FrameArray[TrackBar1.Position].Match]));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(15, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'MMetric: ' + IntToStr(FrameArray[TrackBar1.Position].mmetric[FrameArray[TrackBar1.Position].Match]));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(105, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'DMetric: ' + IntToStr(FrameArray[TrackBar1.Position].DMetric));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(195, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'VMetric: ' + IntToStr(FrameArray[TrackBar1.Position].vmetric[FrameArray[TrackBar1.Position].Match]));
     end
     else if Form11.CheckBox8.Checked then
-      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(15, FOriginalWidth, 720), 10, 'Frame: ' + IntToStr(TrackBar1.Position));
+      FTextLayer.Bitmap.Canvas.TextOut(MulDiv(15, FOriginalWidth, 720), MulDiv(10, FOriginalWidth, 720), 'Frame: ' + IntToStr(TrackBar1.Position));
 
     FTextLayer.Bitmap.Canvas.Unlock;
 

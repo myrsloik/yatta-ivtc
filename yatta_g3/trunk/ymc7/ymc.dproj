@@ -46,6 +46,8 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <Icon_MainIcon>ymc_Icon.ico</Icon_MainIcon>
+        <Manifest_File>..\hidpi.manifest</Manifest_File>
         <SanitizedProjectName>ymc</SanitizedProjectName>
         <VCL_Custom_Styles>Silver|VCLSTYLE|$(PUBLIC)\Documents\Embarcadero\Studio\15.0\Styles\Silver.vsf</VCL_Custom_Styles>
         <DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
@@ -69,12 +71,10 @@
         <DCC_DcuOutput>..\obj</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <Icon_MainIcon>ymc_Icon.ico</Icon_MainIcon>
+        <VerInfo_MajorVer>8</VerInfo_MajorVer>
+        <VerInfo_MinorVer>10</VerInfo_MinorVer>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=8.10.0.272;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <Icon_MainIcon>ymc_Icon.ico</Icon_MainIcon>
@@ -97,6 +97,7 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <Manifest_File>..\hidpi.manifest</Manifest_File>
         <VerInfo_MajorVer>8</VerInfo_MajorVer>
         <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=8.10.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>

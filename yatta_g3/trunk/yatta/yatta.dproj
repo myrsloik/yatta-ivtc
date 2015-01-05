@@ -63,11 +63,12 @@
         <DCC_DcuOutput>..\obj</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_MinorVer>0</VerInfo_MinorVer>
+        <VerInfo_MajorVer>1</VerInfo_MajorVer>
+        <VerInfo_Build>0</VerInfo_Build>
         <Icon_MainIcon>yatta_Icon.ico</Icon_MainIcon>
         <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <Manifest_File>..\hidpi.manifest</Manifest_File>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -85,6 +86,8 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <Debugger_CWD>C:\Users\Myrsloik\Desktop\ypr</Debugger_CWD>
+        <Debugger_RunParams>VTS_01_5.d2v.yap</Debugger_RunParams>
         <Manifest_File>..\hidpi.manifest</Manifest_File>
         <VerInfo_MajorVer>8</VerInfo_MajorVer>
         <VerInfo_MinorVer>133</VerInfo_MinorVer>

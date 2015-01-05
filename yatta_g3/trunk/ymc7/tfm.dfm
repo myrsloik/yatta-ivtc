@@ -15,7 +15,6 @@ object TFMForm: TTFMForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  Scaled = False
   DesignSize = (
     720
     590)

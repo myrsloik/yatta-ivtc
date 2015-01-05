@@ -17,7 +17,6 @@ object CropForm: TCropForm
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
-  Scaled = False
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   PixelsPerInch = 96
@@ -70,40 +69,44 @@ object CropForm: TCropForm
     OnChange = Edit3Change
   end
   object UpDown1: TUpDown
-    Left = 27
+    Left = 66
     Top = 274
-    Width = 11
-    Height = 22
+    Width = 16
+    Height = 21
+    Associate = Edit5
     Max = 2000
     Increment = 4
     TabOrder = 7
     OnClick = UpDown1Click
   end
   object UpDown2: TUpDown
-    Left = 92
-    Top = 251
-    Width = 11
-    Height = 22
+    Left = 91
+    Top = 252
+    Width = 16
+    Height = 21
+    Associate = Edit4
     Max = 2000
     Increment = 2
     TabOrder = 6
     OnClick = UpDown2Click
   end
   object UpDown3: TUpDown
-    Left = 27
-    Top = 229
-    Width = 11
-    Height = 22
+    Left = 66
+    Top = 230
+    Width = 16
+    Height = 21
+    Associate = Edit3
     Max = 2000
     Increment = 4
     TabOrder = 1
     OnClick = UpDown3Click
   end
   object UpDown4: TUpDown
-    Left = 2
-    Top = 251
-    Width = 11
-    Height = 22
+    Left = 41
+    Top = 252
+    Width = 16
+    Height = 21
+    Associate = Edit2
     Max = 2000
     Increment = 2
     TabOrder = 3
