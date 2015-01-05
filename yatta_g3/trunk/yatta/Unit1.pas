@@ -982,8 +982,10 @@ procedure TForm1.MakePattern;
 var
   TempPattern: Char;
   Counter: Integer;
+  XPos, YPos: Integer;
 begin
-  FTextLayer.Bitmap.Canvas.MoveTo(MulDiv(15, FOriginalWidth, 720), MulDiv(25, FOriginalWidth, 720));
+  XPos := MulDiv(15, FOriginalWidth, 720);
+  YPos := MulDiv(25, FOriginalWidth, 720);
   TempPattern := 'A';
 
   for Counter := IfThen(TrackBar1.Position - 10 >= 0, TrackBar1.Position - 10, 0) to IfThen(TrackBar1.Position + 10 < TrackBar1.Max, TrackBar1.Position + 10, TrackBar1.Max) do
@@ -1005,7 +1007,9 @@ begin
     if TrackBar1.Position = Counter then
       TempPattern := UpCase(TempPattern);
 
-    FTextLayer.Bitmap.Canvas.TextOut(FTextLayer.Bitmap.Canvas.PenPos.X, FTextLayer.Bitmap.Canvas.PenPos.Y, TempPattern);
+    FTextLayer.Bitmap.Canvas.TextOut(XPos, YPos, TempPattern);
+
+    Inc(XPos, FTextLayer.Bitmap.Canvas.TextExtent(TempPattern).cx);
   end;
 
   FTextLayer.Bitmap.Canvas.Font.Style := [];
@@ -1077,6 +1081,7 @@ begin
 
   if ShowText1.Checked then
   begin
+    FTextLayer.Bitmap.Canvas.Font := Font;
 
     if form11.CheckBox3.Checked then
       FInfoText.Insert(0, form2.GetPresetName(Sif.Preset) + '; Start: ' + IntToStr(sif.startframe) + '; End: ' + IntToStr(sif.endframe));

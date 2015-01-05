@@ -25,7 +25,6 @@ uses
 
 begin
   Application.Initialize;
-  TStyleManager.TrySetStyle('Silver');
   Application.Title := 'Yatta Metrics Collector';
   Application.CreateForm(TMainForm, MainForm);
   Application.Run;

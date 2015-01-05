@@ -49,7 +49,6 @@
         <Icon_MainIcon>ymc_Icon.ico</Icon_MainIcon>
         <Manifest_File>..\hidpi.manifest</Manifest_File>
         <SanitizedProjectName>ymc</SanitizedProjectName>
-        <VCL_Custom_Styles>Silver|VCLSTYLE|$(PUBLIC)\Documents\Embarcadero\Studio\15.0\Styles\Silver.vsf</VCL_Custom_Styles>
         <DCC_IntegerOverflowCheck>true</DCC_IntegerOverflowCheck>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
         <VerInfo_Build>272</VerInfo_Build>
@@ -97,7 +96,6 @@
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <Manifest_File>..\hidpi.manifest</Manifest_File>
         <VerInfo_MajorVer>8</VerInfo_MajorVer>
         <VerInfo_Build>0</VerInfo_Build>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=8.10.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>

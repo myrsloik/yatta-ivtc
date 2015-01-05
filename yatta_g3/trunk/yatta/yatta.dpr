@@ -31,7 +31,6 @@ uses
 
 begin
   Application.Initialize;
-  TStyleManager.TrySetStyle('Silver');
   Application.Title := 'YATTA';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
