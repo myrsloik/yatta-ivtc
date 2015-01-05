@@ -3,8 +3,8 @@ object CutterForm: TCutterForm
   Top = 111
   BorderIcons = [biSystemMenu, biMinimize]
   Caption = 'Cutter'
-  ClientHeight = 541
-  ClientWidth = 655
+  ClientHeight = 362
+  ClientWidth = 660
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,23 +13,24 @@ object CutterForm: TCutterForm
   Font.Style = []
   OldCreateOrder = False
   DesignSize = (
-    655
-    541)
+    660
+    362)
   PixelsPerInch = 96
   TextHeight = 13
   object GotoButton: TButton
     Left = 336
-    Top = 512
+    Top = 333
     Width = 70
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Goto'
     TabOrder = 9
     OnClick = GotoButtonClick
+    ExplicitTop = 512
   end
   object OKButton: TButton
     Left = 412
-    Top = 512
+    Top = 333
     Width = 70
     Height = 26
     Anchors = [akLeft, akBottom]
@@ -37,117 +38,131 @@ object CutterForm: TCutterForm
     Default = True
     ModalResult = 1
     TabOrder = 10
+    ExplicitTop = 512
   end
   object FrameTrackbar: TTrackBar
     Left = 0
-    Top = 483
-    Width = 656
+    Top = 304
+    Width = 661
     Height = 27
     Anchors = [akLeft, akRight, akBottom]
     PageSize = 50
     TabOrder = 2
     TickStyle = tsNone
     OnChange = FrameTrackbarChange
+    ExplicitTop = 483
+    ExplicitWidth = 656
   end
   object Image: TImage32
     Left = 128
     Top = 0
-    Width = 527
-    Height = 480
+    Width = 532
+    Height = 301
     Anchors = [akLeft, akTop, akRight, akBottom]
     Bitmap.ResamplerClassName = 'TNearestResampler'
     BitmapAlign = baTopLeft
     Scale = 1.000000000000000000
     ScaleMode = smResize
     TabOrder = 1
+    ExplicitWidth = 527
+    ExplicitHeight = 480
   end
   object CutListBox: TListBox
     Left = 0
     Top = 0
     Width = 124
-    Height = 480
+    Height = 301
     Anchors = [akLeft, akTop, akBottom]
     ItemHeight = 13
     MultiSelect = True
     TabOrder = 0
     OnDblClick = CutListBoxDblClick
+    ExplicitHeight = 480
   end
   object AddCutButton: TButton
     Left = 6
-    Top = 512
+    Top = 333
     Width = 70
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Add Cut'
     TabOrder = 3
     OnClick = AddCutButtonClick
+    ExplicitTop = 512
   end
   object DeleteCutButton: TButton
     Left = 82
-    Top = 512
+    Top = 333
     Width = 70
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&Delete Cut'
     TabOrder = 4
     OnClick = DeleteCutButtonClick
+    ExplicitTop = 512
   end
   object CutStartButton: TButton
     Left = 158
-    Top = 512
+    Top = 333
     Width = 27
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&['
     TabOrder = 5
     OnClick = CutStartButtonClick
+    ExplicitTop = 512
   end
   object CutEndButton: TButton
     Left = 191
-    Top = 512
+    Top = 333
     Width = 27
     Height = 26
     Anchors = [akLeft, akBottom]
     Caption = '&]'
     TabOrder = 6
     OnClick = CutEndButtonClick
+    ExplicitTop = 512
   end
   object CutStartEdit: TEdit
     Left = 224
-    Top = 512
+    Top = 333
     Width = 49
     Height = 21
     Anchors = [akLeft, akBottom]
     TabOrder = 7
     OnExit = CutStartEditExit
+    ExplicitTop = 512
   end
   object CutEndEdit: TEdit
     Left = 280
-    Top = 512
+    Top = 333
     Width = 49
     Height = 21
     Anchors = [akLeft, akBottom]
     TabOrder = 8
     OnExit = CutEndEditExit
+    ExplicitTop = 512
   end
   object Plus50FramesButton: TButton
     Left = 488
-    Top = 512
+    Top = 333
     Width = 75
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = '&Jump +50'
     TabOrder = 11
     OnClick = Plus50FramesButtonClick
+    ExplicitTop = 512
   end
   object Minus50FramesButton: TButton
     Left = 568
-    Top = 512
+    Top = 333
     Width = 75
     Height = 25
     Anchors = [akLeft, akBottom]
     Caption = 'J&ump -50'
     TabOrder = 12
     OnClick = Minus50FramesButtonClick
+    ExplicitTop = 512
   end
 end

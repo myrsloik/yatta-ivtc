@@ -159,7 +159,7 @@ begin
       Image.Height := ResizeHeightUpDown.Position;
     end;
 
-    ClientWidth := Image.Width + 132;
+    ClientWidth := Image.Width + Image.Left;
     ClientHeight := Max(Image.Height + TrackBar.Height, MPlayerPAR.Top + MPlayerPAR.Height + 2);
     TrackBar.Width := Image.Width;
     TrackBar.Top := Image.Height;
@@ -170,10 +170,10 @@ begin
 
 //show cropping
 
-    Image.Width := CFP.width;
-    Image.Height := CFP.height;
+    Image.Width := CFP.Width;
+    Image.Height := CFP.Height;
     Image.ScaleMode := smNormal;
-    ClientWidth := CFP.Width + 132;
+    ClientWidth := CFP.Width + Image.Left;
     ClientHeight := Max(CFP.Height + TrackBar.Height, MPlayerPAR.Top + MPlayerPAR.Height + 2);
 
     with Image.Bitmap.Canvas do
