@@ -138,10 +138,7 @@ var
 begin
   Output := AOutput;
 
-  //fixme, no normal offset available?
-  asm
-    mov IOHDDOffset, OFFSET IMAGE_OPTIONAL_HEADER.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT+1]
-  end;
+  IOHDDOffset := Integer(@IMAGE_OPTIONAL_HEADER(nil^).DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT+1]);
 
   Base := PAnsiChar(GetModuleHandle('kernel32.dll'));
   if Base = nil then

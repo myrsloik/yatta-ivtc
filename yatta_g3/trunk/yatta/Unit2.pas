@@ -732,7 +732,7 @@ function TForm2.MakeOverrideList(FunctionList: TStringList; PreviewScript: Boole
 var
   SL: TStringList;
   TempTrims: TStringList;
-  Counter, InCounter, DropCounter: Integer;
+  Counter, InCounter: Integer;
   Pixels: array of Smallint;
   LastStart: Integer;
   FCounter: Integer;
