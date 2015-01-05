@@ -1,4 +1,6 @@
 8-133
+Applied mirkosp's custom range patch
+Fixed info text font issue
 Fixed tab order in ymc cutter
 Made yatta and ymc system dpi aware and fixed most scaling issues
 Fixed info text color so it's always black and no system color
