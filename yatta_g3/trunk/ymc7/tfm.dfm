@@ -81,7 +81,7 @@ object TFMForm: TTFMForm
     Height = 71
     Anchors = [akLeft, akBottom]
     Caption = 'Field'
-    ItemIndex = 0
+    ItemIndex = 1
     Items.Strings = (
       'Auto'
       'B'

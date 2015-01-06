@@ -698,7 +698,7 @@ begin
     Order := 1;
     Mode := 0;
     PP := 6;
-    Field := -1;
+    Field := 0;
     Slow := 1;
     MChroma := True;
     Y0 := 0;
