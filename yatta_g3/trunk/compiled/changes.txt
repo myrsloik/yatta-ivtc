@@ -1,4 +1,7 @@
 8-133
+Added .dgi support, edit filterlist.txt if you don't want to use DGDecNV
+Removed .dga support since no one should be using it
+Made bottom field the default for TFM in ymc
 Applied mirkosp's custom range patch
 Fixed info text font issue
 Fixed tab order in ymc cutter

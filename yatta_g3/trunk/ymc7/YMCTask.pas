@@ -350,11 +350,11 @@ begin
     FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
     Result := FScriptEnvironment.InvokeWithClipResult(PAnsiChar(AnsiString('DGDecode_Mpeg2Source')));
   end
-  else if FileExt = '.dga' then
+  else if FileExt = '.dgi' then
   begin
-    LoadPlugins('AVCSource', FOwner.PluginPath, FScriptEnvironment);
+    LoadPlugins('DGSource', FOwner.PluginPath, FScriptEnvironment);
     FScriptEnvironment.CharArg(PAnsiChar(AnsiFilename));
-    Result := FScriptEnvironment.InvokeWithClipResult('AVCSource');
+    Result := FScriptEnvironment.InvokeWithClipResult('DGSource');
   end
   else if FileExt = '.avs' then
   begin

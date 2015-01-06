@@ -320,11 +320,11 @@ begin
       Result := SE.InvokeWithClipResult('SetPlanarLegacyAlignment');
     end;
   end
-  else if FileExt = '.dga' then
+  else if FileExt = '.dgi' then
   begin
-    LoadPlugins('AVCSource', PluginPath, SE);
+    LoadPlugins('DGSource', PluginPath, SE);
     SE.CharArg(PAnsiChar(UTF8Filename));
-    Result := SE.InvokeWithClipResult('AVCSource');
+    Result := SE.InvokeWithClipResult('DGSource');
   end
   else if FileExt = '.avs' then
   begin

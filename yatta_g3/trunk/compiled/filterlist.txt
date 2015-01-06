@@ -1,3 +1,4 @@
+25 dgdecodenv.dll dgsource
 25 decomb.dll telecide
 25 decomb.dll decimate
 25 decomb.dll iscombed
