@@ -678,7 +678,7 @@ begin
 
       ReadSectionValues('METRICS', SL);
 
-      for Counter := 0 to IfThen(FCount > SL.Count, SL.Count - 1, FCount - 1) do
+      for Counter := 0 to Min(SL.Count - 1, FCount - 1) do
       begin
         Line := SL[Counter];
         if Line <> '' then
