@@ -1,6 +1,4 @@
 test custom list 0,0 behavior
-add patchy thingy once the missing line are known: http://pastebin.com/aj48iLbc
-yellow color not set properly in cropping window?
 
 save decimate/tdecimate decisions and add a config dialog
 
