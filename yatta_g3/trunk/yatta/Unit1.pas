@@ -316,6 +316,8 @@ implementation
 
 {$R *.dfm}
 
+{$SetPEFlags IMAGE_FILE_LARGE_ADDRESS_AWARE}
+
 uses Unit6, Unit11, Unit2, crop, Unit7, Unit4, v2projectopen, logbox, GR32_Backends;
 
 procedure TForm1.WMDROPFILES(var Msg: TWMDROPFILES);

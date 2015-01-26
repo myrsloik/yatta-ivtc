@@ -103,6 +103,8 @@ implementation
 
 {$R *.dfm}
 
+{$SetPEFlags IMAGE_FILE_LARGE_ADDRESS_AWARE}
+
 uses
   Progress;
 
