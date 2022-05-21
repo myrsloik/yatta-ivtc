@@ -81,7 +81,6 @@ public:
     void BitBlt(BYTE* dstp, int dstp_pitch, const BYTE* srcp, int src_pitch, int row_size, int height);
     void PopContext();
     void PushContext(int level);
-    void VSprintf(const char* fmt, void* val);
     CAsifVideoFrame* Subframe(CAsifVideoFrame* src, int rel_offset, int new_pitch, int new_row_size, int new_height);
     void SaveString(const char* s, int length);
 };

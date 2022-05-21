@@ -1,106 +1,104 @@
 #include <windows.h>
 #include "asif.h"
 
+const AVS_Linkage *AVS_linkage = nullptr;
+
 extern "C" {
 
-    __declspec(dllexport) void BitBltExp(BYTE* dstp, int dstp_pitch, const BYTE* srcp, int src_pitch, int row_size, int height, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void BitBltExp(BYTE* dstp, int dstp_pitch, const BYTE* srcp, int src_pitch, int row_size, int height, CAsifScriptEnvironment* env) noexcept {
         env->BitBlt(dstp, dstp_pitch, srcp, src_pitch, row_size, height);
     }
 
-    __declspec(dllexport) void AddFunction(const char* name, const char* params, IScriptEnvironment::ApplyFunc apply, void* user_data, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void AddFunction(const char* name, const char* params, IScriptEnvironment::ApplyFunc apply, void* user_data, CAsifScriptEnvironment* env) noexcept {
         env->AddFunction(name, params, apply, user_data);
     }
 
-    __declspec(dllexport) long GetCPUFlags(CAsifScriptEnvironment* env) {
+    __declspec(dllexport) long GetCPUFlags(CAsifScriptEnvironment* env) noexcept {
         return env->GetCPUFlags();
     }
 
-    __declspec(dllexport) void SetGlobalVar(const char* varname, AVSValueStruct varvalue, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void SetGlobalVar(const char* varname, AVSValueStruct varvalue, CAsifScriptEnvironment* env) noexcept {
         env->SetGlobalVar(varname, varvalue);
     }
 
-    __declspec(dllexport) void CheckVersion(int version, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void CheckVersion(int version, CAsifScriptEnvironment* env) noexcept {
         env->CheckVersion(version);
     }
 
-    __declspec(dllexport) bool FunctionExists(const char* name, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) bool FunctionExists(const char* name, CAsifScriptEnvironment* env) noexcept {
         return env->FunctionExists(name);
     }
 
-    __declspec(dllexport) bool MakeWritable(CAsifVideoFrame* pvf, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) bool MakeWritable(CAsifVideoFrame* pvf, CAsifScriptEnvironment* env) noexcept {
         return env->MakeWritable(pvf);
     }
 
-    __declspec(dllexport) void AtExit(IScriptEnvironment::ShutdownFunc function, void* user_data, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void AtExit(IScriptEnvironment::ShutdownFunc function, void* user_data, CAsifScriptEnvironment* env) noexcept {
         env->AtExit(function, user_data);
     }
 
-    __declspec(dllexport) CAsifVideoFrame* NewVideoFrame(const VideoInfo & vi, int align, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) CAsifVideoFrame* NewVideoFrame(const VideoInfo & vi, int align, CAsifScriptEnvironment* env) noexcept {
         return env->NewVideoFrame(vi, align);
     }
 
-    __declspec(dllexport) void PopContext(CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void PopContext(CAsifScriptEnvironment* env) noexcept {
         env->PopContext();
     }
 
-    __declspec(dllexport) void PushContext(int level, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void PushContext(int level, CAsifScriptEnvironment* env) noexcept {
         env->PushContext(level);
     }
 
-    __declspec(dllexport) void VSprintf(const char* fmt, void* val, CAsifScriptEnvironment* env) {
-        env->VSprintf(fmt, val);
-    }
-
-    __declspec(dllexport) CAsifVideoFrame* Subframe(CAsifVideoFrame* src, int rel_offset, int new_pitch, int new_row_size, int new_height, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) CAsifVideoFrame* Subframe(CAsifVideoFrame* src, int rel_offset, int new_pitch, int new_row_size, int new_height, CAsifScriptEnvironment* env) noexcept {
         return env->Subframe(src, rel_offset, new_pitch, new_row_size, new_height);
     }
 
-    __declspec(dllexport) void SaveString(const char* s, int length, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void SaveString(const char* s, int length, CAsifScriptEnvironment* env) noexcept {
         env->SaveString(s, length);
     }
 
-    __declspec(dllexport) CAsifVideoFrame* GetFrame(int n, CAsifClip* clip) {
+    __declspec(dllexport) CAsifVideoFrame* GetFrame(int n, CAsifClip* clip) noexcept {
         return clip->GetFrame(n);
     }
 
-    __declspec(dllexport) void SetCacheHints(int cachehints, int frame_range, CAsifClip* clip) {
+    __declspec(dllexport) void SetCacheHints(int cachehints, int frame_range, CAsifClip* clip) noexcept {
         return clip->SetCacheHints(cachehints, frame_range);
     }
 
-    __declspec(dllexport) bool GetParity(int n, CAsifClip* clip) {
+    __declspec(dllexport) bool GetParity(int n, CAsifClip* clip) noexcept {
         return clip->GetParity(n);
     }
 
-    __declspec(dllexport) void GetAudio(void* buf, __int64 start, __int64 count, CAsifClip* clip) {
+    __declspec(dllexport) void GetAudio(void* buf, __int64 start, __int64 count, CAsifClip* clip) noexcept {
         return clip->GetAudio(buf, start, count);
     }
 
 
-    __declspec(dllexport) int GetPitch(int plane, CAsifVideoFrame* vf) {
+    __declspec(dllexport) int GetPitch(int plane, CAsifVideoFrame* vf) noexcept {
         return vf->pf->GetPitch(plane);
     }
 
-    __declspec(dllexport) int GetHeight(int plane, CAsifVideoFrame* vf) {
+    __declspec(dllexport) int GetHeight(int plane, CAsifVideoFrame* vf) noexcept {
         return vf->pf->GetHeight(plane);
     }
 
-    __declspec(dllexport) int GetRowSize(int plane, CAsifVideoFrame* vf) {
+    __declspec(dllexport) int GetRowSize(int plane, CAsifVideoFrame* vf) noexcept {
         return vf->pf->GetRowSize(plane);
     }
 
-    __declspec(dllexport) bool IsWritable(CAsifVideoFrame* vf) {
+    __declspec(dllexport) bool IsWritable(CAsifVideoFrame* vf) noexcept {
         return vf->pf->IsWritable();
     }
 
-    __declspec(dllexport) BYTE* GetWritePtr(int plane, CAsifVideoFrame* vf) {
+    __declspec(dllexport) BYTE* GetWritePtr(int plane, CAsifVideoFrame* vf) noexcept {
         return vf->pf->GetWritePtr(plane);
     }
 
-    __declspec(dllexport) const BYTE* GetReadPtr(int plane, CAsifVideoFrame* vf) {
+    __declspec(dllexport) const BYTE* GetReadPtr(int plane, CAsifVideoFrame* vf) noexcept {
         return vf->pf->GetReadPtr(plane);
     }
 
-    __declspec(dllexport) AsifData *InitializeAsif() {
+    __declspec(dllexport) AsifData *InitializeAsif() noexcept {
         AsifData *a = new AsifData();
         if (!(a->Dll = LoadLibrary(L"AVISYNTH.DLL"))) {
             delete a;
@@ -115,14 +113,19 @@ extern "C" {
         return a;
     }
 
-    __declspec(dllexport) void DeInitializeAsif(AsifData * a) {
+    __declspec(dllexport) void DeInitializeAsif(AsifData * a) noexcept {
         FreeLibrary(a->Dll);
         delete a;
     }
 
-    __declspec(dllexport) CAsifScriptEnvironment* NewAsifScriptEnvironment(AsifData *a) {
+    __declspec(dllexport) CAsifScriptEnvironment* NewAsifScriptEnvironment(AsifData *a) noexcept {
         IScriptEnvironment* se;
-        try { se = (*a->CreateScriptEnvironment)(AVISYNTH_INTERFACE_VERSION); } catch (...) { return nullptr; }
+        try {
+            se = (*a->CreateScriptEnvironment)(AVISYNTH_INTERFACE_VERSION);
+            AVS_linkage = se->GetAVSLinkage();
+        } catch (...) {
+            return nullptr;
+        }
         if (se == nullptr) {
             delete a;
             return nullptr;
@@ -131,59 +134,59 @@ extern "C" {
         return new CAsifScriptEnvironment(se);
     }
 
-    __declspec(dllexport) void SetVar(const char* varname, AVSValueStruct varvalue, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void SetVar(const char* varname, AVSValueStruct varvalue, CAsifScriptEnvironment* env) noexcept {
         return env->SetVar(varname, varvalue);
     }
 
-    __declspec(dllexport) void DeleteAsifClip(CAsifClip* clip) {
+    __declspec(dllexport) void DeleteAsifClip(CAsifClip* clip) noexcept {
         delete clip;
     }
 
-    __declspec(dllexport) void DeleteAsifVideoFrame(CAsifVideoFrame* frame) {
+    __declspec(dllexport) void DeleteAsifVideoFrame(CAsifVideoFrame* frame) noexcept {
         delete frame;
     }
 
-    __declspec(dllexport) void DeleteAsifScriptEnvironment(CAsifScriptEnvironment* env) {
+    __declspec(dllexport) void DeleteAsifScriptEnvironment(CAsifScriptEnvironment* env) noexcept {
         delete env;
     }
 
-    __declspec(dllexport) int CharArg(const char* arg, const char* argname, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int CharArg(const char* arg, const char* argname, CAsifScriptEnvironment* env) noexcept {
         return env->CharArg(arg, argname);
     }
 
-    __declspec(dllexport) int IntArg(const int arg, const char* argname, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int IntArg(const int arg, const char* argname, CAsifScriptEnvironment* env) noexcept {
         return env->IntArg(arg, argname);
     }
 
-    __declspec(dllexport) int BoolArg(const bool arg, const char* argname, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int BoolArg(const bool arg, const char* argname, CAsifScriptEnvironment* env) noexcept {
         return env->BoolArg(arg, argname);
     }
 
-    __declspec(dllexport) int FloatArg(const float arg, const char* argname, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int FloatArg(const float arg, const char* argname, CAsifScriptEnvironment* env) noexcept {
         return env->FloatArg(arg, argname);
     }
 
-    __declspec(dllexport) int ClipArg(CAsifClip* clip, const char* argname, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int ClipArg(CAsifClip* clip, const char* argname, CAsifScriptEnvironment* env) noexcept {
         return env->ClipArg(clip, argname);
     }
 
-    __declspec(dllexport) int SetWorkingDir(const char* dir, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int SetWorkingDir(const char* dir, CAsifScriptEnvironment* env) noexcept {
         return env->SetWorkingDir(dir);
     }
 
-    __declspec(dllexport) AVSValueStruct Invoke(const char* command, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) AVSValueStruct Invoke(const char* command, CAsifScriptEnvironment* env) noexcept {
         return env->Invoke(command);
     }
 
-    __declspec(dllexport) int SetMemoryMax(int MB, CAsifScriptEnvironment* env) {
+    __declspec(dllexport) int SetMemoryMax(int MB, CAsifScriptEnvironment* env) noexcept {
         return env->SetMemoryMax(MB);
     }
 
-    __declspec(dllexport) VideoInfo GetVideoInfo(CAsifClip* clip) {
+    __declspec(dllexport) VideoInfo GetVideoInfo(CAsifClip* clip) noexcept {
         return clip->GetVideoInfo();
     }
 
-    __declspec(dllexport) CAsifVideoFrame* GetVideoPointer(int n, CAsifClip* clip) {
+    __declspec(dllexport) CAsifVideoFrame* GetVideoPointer(int n, CAsifClip* clip) noexcept {
         return clip->GetFrame(n);
     }
 
@@ -314,10 +317,6 @@ CAsifVideoFrame* CAsifScriptEnvironment::Subframe(CAsifVideoFrame* src, int rel_
     return new CAsifVideoFrame(envse->Subframe(src->pf, rel_offset, new_pitch, new_row_size, new_height));
 }
 
-void CAsifScriptEnvironment::VSprintf(const char* fmt, void* val) {
-    envse->VSprintf(fmt, val);
-}
-
 void CAsifScriptEnvironment::SetVar(const char* varname, AVSValueStruct varvalue) {
     AVSValue var;
 
@@ -345,7 +344,8 @@ CAsifScriptEnvironment::CAsifScriptEnvironment(IScriptEnvironment *ienv) {
 }
 
 CAsifScriptEnvironment::~CAsifScriptEnvironment() {
-    delete envse;
+    if (envse)
+        envse->DeleteScriptEnvironment();
 }
 
 int CAsifScriptEnvironment::CharArg(const char* arg, const char* argname) {
@@ -397,7 +397,7 @@ AVSValueStruct CAsifScriptEnvironment::Invoke(const char* command) {
     std::vector<const char *> tempargnames(args.size());
 
     for (size_t i = 0; i < tempargnames.size(); i++)
-        tempargnames[i] = (argnames[i].c_str() == "" ? nullptr : argnames[i].c_str());
+        tempargnames[i] = argnames[i].empty() ? nullptr : argnames[i].c_str();
 
     try {
         AVSValue ret = envse->Invoke(command, AVSValue(args.data(), args.size()), tempargnames.data());
@@ -422,7 +422,10 @@ AVSValueStruct CAsifScriptEnvironment::Invoke(const char* command) {
             ir.arraysize = ret.ArraySize();
             ir.type = 6;
         }
-
+    } catch (IScriptEnvironment::NotFound &) {
+        ir.type = 100;
+        ir.returnvalue.sval = "Not found exception from Avisynth";
+        ir.errors = 1;
     } catch (AvisynthError &e) {
         ir.type = 100;
         ir.returnvalue.sval = e.msg;
