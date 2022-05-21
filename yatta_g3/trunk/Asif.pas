@@ -99,7 +99,6 @@ type
   IAsifScriptEnvironment = interface(IInterface)
     procedure SetVar(VarName: AnsiString; Value: AVSValueStruct);
     procedure SetGlobalVar(VarName: AnsiString; Value: AVSValueStruct);
-    procedure SetGlobalMemoryLimit(MaxLimit: Integer);
     function Invoke(Command: AnsiString): AVSValueStruct;
     function InvokeWithClipResult(Command: AnsiString): IAsifClip;
     procedure CharArg(Arg: PAnsiChar; ArgName: PAnsiChar = nil);
@@ -109,9 +108,7 @@ type
     procedure ClipArg(Video: IAsifClip; ArgName: PAnsiChar = nil);
     procedure CheckVersion(Version: Integer);
     function FunctionExists(Name: AnsiString): Boolean;
-    function MakeWritable(PVF: IAsifVideoFrame): Boolean;
     procedure SaveString(S: PAnsiChar; Length: Integer);
-    procedure BitBlt(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer);
   end;
 
   TAsifScriptEnvironment = class(TInterfacedObject, IAsifScriptEnvironment)
@@ -122,7 +119,6 @@ type
     destructor Destroy; override;
     procedure SetVar(VarName: AnsiString; Value: AVSValueStruct);
     procedure SetGlobalVar(VarName: AnsiString; Value: AVSValueStruct);
-    procedure SetGlobalMemoryLimit(MaxLimit: Integer);
     function Invoke(Command: AnsiString): AVSValueStruct;
     function InvokeWithClipResult(Command: AnsiString): IAsifClip;
     procedure CharArg(Arg: PAnsiChar; ArgName: PAnsiChar = nil);
@@ -132,9 +128,7 @@ type
     procedure ClipArg(Video: IAsifClip; ArgName: PAnsiChar = nil);
     procedure CheckVersion(Version: Integer);
     function FunctionExists(Name: AnsiString): Boolean;
-    function MakeWritable(PVF: IAsifVideoFrame): Boolean;
     procedure SaveString(S: PAnsiChar; Length: Integer);
-    procedure BitBlt(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer);
   end;
 
 procedure InitializeAvisynth;
@@ -150,18 +144,9 @@ function IntArg(Arg: Integer; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): 
 function BoolArg(Arg: Boolean; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
 function FloatArg(Arg: Single; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
 function ClipArg(Clip: PAsifClip; ArgName: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function SetWorkingDir(Dir: PAnsiChar; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-function SetMemoryMax(MB: Integer; Env: PAsifScriptEnvironment): Integer; cdecl; external 'asif.dll';
-procedure BitBltExp(DSTP: PByte; DSTPitch: Integer; SRCP: PByte; SRCPitch: Integer; RowSize: Integer; Height: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-procedure AddFunction(Name: PAnsiChar; Params: PAnsiChar; Apply: TApplyfunc; UserData: Pointer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-function GetCPUFlags(Env: PAsifScriptEnvironment): Cardinal; cdecl; external 'asif.dll';
 procedure SetGlobalVar(VarName: PAnsiChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 procedure CheckVersion(Version: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function FunctionExists(Name: PAnsiChar; Env: PAsifScriptEnvironment): Boolean; cdecl; external 'asif.dll';
-function MakeWritable(PVF: PAsifVideoFrame; Env: PAsifScriptEnvironment): Boolean; cdecl; external 'asif.dll';
-procedure AtExit(ShutdownFunc: TShutdownFunc; UserData: Pointer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
-function NewVideoFrame(var VI: VideoInfo; Align: Integer; Env: PAsifScriptEnvironment): PAsifVideoFrame; cdecl; external 'asif.dll';
-function Subframe(SRC: PAsifVideoFrame; RelOffset: Integer; NewPitch: Integer; NewRowSize: Integer; NewHeight: Integer; Env: PAsifScriptEnvironment): PAsifVideoFrame; cdecl; external 'asif.dll';
 procedure SaveString(S: PAnsiChar; Length: Integer; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function GetFrame(N: Integer; Clip: PAsifClip): PAsifVideoFrame; cdecl; external 'asif.dll';
 procedure SetCacheHints(CacheHints: Integer; FrameRange: Integer; Clip: PAsifClip); cdecl; external 'asif.dll';
@@ -170,8 +155,6 @@ procedure GetAudio(Buffer: Pointer; Start: Int64; Count: Int64; Clip: PAsifClip)
 function GetPitch(Plane: Integer; VF: PAsifVideoFrame): Integer; cdecl; external 'asif.dll';
 function GetHeight(Plane: Integer; VF: PAsifVideoFrame): Integer; cdecl; external 'asif.dll';
 function GetRowSize(Plane: Integer; VF: PAsifVideoFrame): Integer; cdecl; external 'asif.dll';
-function IsWritable(VF: PAsifVideoFrame): Boolean; cdecl; external 'asif.dll';
-function GetWritePtr(Plane: Integer; VF: PAsifVideoFrame): PByte; cdecl; external 'asif.dll';
 function GetReadPtr(Plane: Integer; VF: PAsifVideoFrame): PByte; cdecl; external 'asif.dll';
 procedure SetVar(VarName: PAnsiChar; VarValue: AVSValueStruct; Env: PAsifScriptEnvironment); cdecl; external 'asif.dll';
 function Invoke(Command: PAnsiChar; Env: PAsifScriptEnvironment): AVSValueStruct; cdecl; external 'asif.dll';
@@ -234,11 +217,6 @@ end;
 function TAsifScriptEnvironment.FunctionExists(Name: AnsiString): Boolean;
 begin
   Result := Asif.FunctionExists(PAnsiChar(Name), FEnv);
-end;
-
-function TAsifScriptEnvironment.MakeWritable(PVF: IAsifVideoFrame): Boolean;
-begin
-  Result := Asif.MakeWritable(PVF.GetFramePointer, FEnv);
 end;
 
 procedure TAsifScriptEnvironment.SaveString(S: PAnsiChar; Length: Integer);
@@ -323,11 +301,6 @@ begin
   Asif.DeleteAsifClip(FClip);
 end;
 
-procedure TAsifScriptEnvironment.SetGlobalMemoryLimit(MaxLimit: Integer);
-begin
-  Asif.SetMemoryMax(MaxLimit, FEnv);
-end;
-
 constructor TAsifScriptEnvironment.Create;
 begin
   FEnv := Asif.NewAsifScriptEnvironment(AsifData);
@@ -388,12 +361,6 @@ end;
 destructor TAsifScriptEnvironment.Destroy;
 begin
   Asif.DeleteAsifScriptEnvironment(FEnv);
-end;
-
-procedure TAsifScriptEnvironment.BitBlt(DSTP: PByte; DSTPitch: Integer;
-  SRCP: PByte; SRCPitch, RowSize, Height: Integer);
-begin
-  BitBltExp(DSTP, DSTPitch, SRCP, SRCPitch, RowSize, Height, FEnv);
 end;
 
 procedure InitializeAvisynth;

@@ -17,8 +17,6 @@ public:
     int GetPitch(int plane);
     int GetHeight(int plane);
     int GetRowSize(int plane);
-    bool IsWritable();
-    BYTE* GetWritePtr(int plane);
     const BYTE* GetReadPtr(int plane);
 };
 
@@ -58,30 +56,19 @@ private:
     std::vector<std::string> argnames;
     void ResetArgs();
 public:
+    CAsifScriptEnvironment(IScriptEnvironment *ienv);
+    ~CAsifScriptEnvironment();
+
     void SetVar(const char* varname, AVSValueStruct varvalue);
-    AVSValueStruct GetVar(const char* varname);
     int CharArg(const char* arg, const char* argname);
     int IntArg(const int arg, const char* argname);
     int BoolArg(const bool arg, const char* argname);
     int FloatArg(const float arg, const char* argname);
     int ClipArg(CAsifClip* clip, const char* argname);
-    CAsifScriptEnvironment(IScriptEnvironment *ienv);
-    ~CAsifScriptEnvironment();
-    int SetWorkingDir(const char* dir);
     AVSValueStruct Invoke(const char* command);
-    int SetMemoryMax(int MB);
-    void AddFunction(const char* name, const char* params, IScriptEnvironment::ApplyFunc apply, void* user_data);
-    long GetCPUFlags();
     void SetGlobalVar(const char* varname, AVSValueStruct varvalue);
     void CheckVersion(int version);
     bool FunctionExists(const char* name);
-    bool MakeWritable(CAsifVideoFrame* pvf);
-    void AtExit(IScriptEnvironment::ShutdownFunc function, void* user_data);
-    CAsifVideoFrame* NewVideoFrame(const VideoInfo & vi, int align);
-    void BitBlt(BYTE* dstp, int dstp_pitch, const BYTE* srcp, int src_pitch, int row_size, int height);
-    void PopContext();
-    void PushContext(int level);
-    CAsifVideoFrame* Subframe(CAsifVideoFrame* src, int rel_offset, int new_pitch, int new_row_size, int new_height);
     void SaveString(const char* s, int length);
 };
 

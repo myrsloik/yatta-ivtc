@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C9CCF22D-BB8E-4FC1-9B5D-7349CDB88084}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="yatta\yatta.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ymc7\ymc.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="yatta">
+        <MSBuild Projects="yatta\yatta.dproj"/>
+    </Target>
+    <Target Name="yatta:Clean">
+        <MSBuild Projects="yatta\yatta.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="yatta:Make">
+        <MSBuild Projects="yatta\yatta.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ymc">
+        <MSBuild Projects="ymc7\ymc.dproj"/>
+    </Target>
+    <Target Name="ymc:Clean">
+        <MSBuild Projects="ymc7\ymc.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ymc:Make">
+        <MSBuild Projects="ymc7\ymc.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="yatta;ymc"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="yatta:Clean;ymc:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="yatta:Make;ymc:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
