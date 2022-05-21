@@ -1,3 +1,9 @@
+8-134
+The plugin types in filterlist.txt are now Normal, Stdcall and Import
+Now built for 64 bit
+Fixed compatibility with modern Avisynth versions, recent Avisynth+ now required
+Migrated to Delphi 10.4
+
 8-133
 Added .dgi support, edit filterlist.txt if you don't want to use DGDecNV
 Removed .dga support since no one should be using it

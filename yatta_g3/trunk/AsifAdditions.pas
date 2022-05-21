@@ -6,7 +6,7 @@ uses
   Asif, Windows, Graphics, Types, Classes, SysUtils, StrUtils, GR32, YShared;
 
 type
-  TFilterType = (ft25, ft25STDCALL, ftImport, ftError);
+  TFilterType = (ftNormal, ftSTDCALL, ftImport, ftError);
 
   PAvisynthFilter = ^TAvisynthFilter;
   TAvisynthFilter = record
@@ -39,8 +39,8 @@ begin
   for Counter := 0 to Length(Plugins) - 1 do
     with Plugins[Counter] do
       case FilterType of
-        ft25: Result := Format('%sLoadPlugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
-        ft25STDCALL: Result := Format('%sload_stdcall_plugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
+        ftNormal: Result := Format('%sLoadPlugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
+        ftSTDCALL: Result := Format('%sload_stdcall_plugin("%s%s")'#13#10, [Result, PluginPath, FileName]);
       end;
 
   for Counter := 0 to Length(Plugins) - 1 do
@@ -51,10 +51,10 @@ end;
 
 function StrToFilterType(const S: string): TFilterType;
 begin
-  if SameText(S, '25') then
-    Result := ft25
-  else if SameText(S, '25STDCALL') then
-    Result := ft25STDCALL
+  if SameText(S, 'Normal') then
+    Result := ftNormal
+  else if SameText(S, 'Stdcall') then
+    Result := ftSTDCALL
   else if SameText(S, 'Import') then
     Result := ftImport
   else
@@ -196,7 +196,7 @@ begin
       begin
         if FileExists(PluginPath + FileName) then
         begin
-          if FilterType = ft25STDCALL then
+          if FilterType = ftSTDCALL then
           begin
             try
               Temp := AnsiString(PluginPath + FileName);
@@ -206,7 +206,7 @@ begin
                 raise EAsifException.Create('Couldn''t load the plugin "' + FileName + '"');
             end;
           end
-          else if FilterType = ft25 then
+          else if FilterType = ftNormal then
           begin
             try
               Temp := AnsiString(PluginPath + FileName);
