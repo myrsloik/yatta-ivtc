@@ -1,0 +1,9 @@
+FieldHint 0.12 (2011-05-25)
+Speed optimizations, will now try to request source frames in order which
+plays nicer with most upstream filter and will do less memory copies.
+
+FieldHint 0.11 (2005-04-19)
+Add option "show" for framenumbers and overrides.
+
+FieldHint 0.1 (2004-12-10)
+Initial release.
