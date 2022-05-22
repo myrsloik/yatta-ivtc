@@ -14,9 +14,8 @@
 */
 /* FieldHint 0.1-0.11 by Loren Merritt, Copyright 2004-2005 */
 /* FieldHint 0.12 modifictions by Fredrik Mellbin, Copyright 2011 */
+/* FieldHint 0.13 modifictions by Fredrik Mellbin, Copyright 2022 */
 
-#define WIN32_LEAN_AND_MEAN
-#include <objbase.h>
 #include <vector>
 #include "avisynth.h"
 #include "Utilities.h"
@@ -182,8 +181,11 @@ AVSValue __cdecl Create_FieldHint(AVSValue args, void* user_data, IScriptEnviron
 		env);
 }
 
+const AVS_Linkage *AVS_linkage = nullptr;
+
 extern "C" __declspec(dllexport) const char* __stdcall AvisynthPluginInit2(IScriptEnvironment* env)
 {
+	AVS_linkage = env->GetAVSLinkage();
 	env->AddFunction("FieldHint", "c[ovr]s[show]b", Create_FieldHint, 0);
 	return 0;
 }
