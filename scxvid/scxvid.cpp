@@ -132,7 +132,10 @@ static AVSValue __cdecl Create_SCXvid(AVSValue args, void* user_data, IScriptEnv
 	return new SCXvid(args[0].AsClip(), args[1].AsString(), env);
 }
 
+const AVS_Linkage *AVS_linkage = nullptr;
+
 extern "C" __declspec(dllexport) const char* __stdcall AvisynthPluginInit2(IScriptEnvironment* env) {
+    AVS_linkage = env->GetAVSLinkage();
     env->AddFunction("SCXvid", "c[log]s", Create_SCXvid, 0);
     return 0;
 };
