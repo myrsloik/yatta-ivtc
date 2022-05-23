@@ -12,10 +12,6 @@ type
   TWORDArray = array[0..10000] of WORD;
   PWORDArray = ^TWORDArray;
 
-  PIMAGE_EXPORT_DIRECTORY = ^IMAGE_EXPORT_DIRECTORY;
-  PIMAGE_DOS_HEADER = ^IMAGE_DOS_HEADER;
-  PIMAGE_NT_HEADERS = ^IMAGE_NT_HEADERS;
-
   TOutputDebugStringAFunc = procedure(Str: PAnsiChar); stdcall;
   TOutputDebugStringWFunc = procedure(Str: PWideChar); stdcall;
 
@@ -23,9 +19,6 @@ procedure HookDbgOut(AOutput: TStrings);
 procedure SetDbgOutput(AOutput: TStrings);
 
 implementation
-
-const
-  IMAGE_NT_OPTIONAL_HDR32_MAGIC = $10B;
 
 var
   g_origOutputDebugStringA: TOutputDebugStringAFunc = nil;
@@ -97,7 +90,7 @@ end;
 
 procedure ReplaceFunc(Name: PAnsiChar; NewFunc: Pointer; var OldFunc: Pointer;
   Base: PAnsiChar;
-  EDir: PIMAGE_EXPORT_DIRECTORY;
+  EDir: PImageExportDirectory;
   ESize: DWORD;
   var JmpTmp: PByte);
 var
@@ -130,15 +123,15 @@ procedure HookDbgOut(AOutput: TStrings);
 var
   Base: PAnsiChar;
   MemInfo: MEMORY_BASIC_INFORMATION;
-  DosHdr: PIMAGE_DOS_HEADER;
-  NTHdr: PIMAGE_NT_HEADERS;
-  EDir: PIMAGE_EXPORT_DIRECTORY;
+  DosHdr: PImageDosHeader;
+  NTHdr: PImageNtHeaders;
+  EDir: PImageExportDirectory;
   JmpTmp: PByte;
   IOHDDOffset: Cardinal;
 begin
   Output := AOutput;
 
-  IOHDDOffset := Integer(@IMAGE_OPTIONAL_HEADER(nil^).DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT+1]);
+  IOHDDOffset := Cardinal(@IMAGE_OPTIONAL_HEADER(nil^).DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT+1]);
 
   Base := PAnsiChar(GetModuleHandle('kernel32.dll'));
   if Base = nil then
@@ -147,13 +140,13 @@ begin
   if (VirtualQuery(Base, MemInfo, SizeOf(MemInfo)) < SizeOf(MemInfo)) or (MemInfo.State <> MEM_COMMIT) then
     Exit;
 
-  DosHdr := PIMAGE_DOS_HEADER(Base);
-  NTHdr := PIMAGE_NT_HEADERS(Base + DosHdr^._lfanew);
+  DosHdr := PImageDosHeader(Base);
+  NTHdr := PImageNtHeaders(Base + DosHdr^._lfanew);
   if (NTHdr^.FileHeader.SizeOfOptionalHeader < IOHDDOffset) or
-    (NTHdr^.OptionalHeader.Magic <> IMAGE_NT_OPTIONAL_HDR32_MAGIC) then // we only support 32-bit for now
+    (NTHdr^.OptionalHeader.Magic <> IMAGE_NT_OPTIONAL_HDR_MAGIC) then
     Exit;
 
-  EDir := PIMAGE_EXPORT_DIRECTORY(Base + NTHdr^.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
+  EDir := PImageExportDirectory(Base + NTHdr^.OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress);
   if EDir^.NumberOfNames = 0 then
     Exit;
 
