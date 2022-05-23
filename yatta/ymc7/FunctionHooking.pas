@@ -62,7 +62,7 @@ begin
   g_origOutputDebugStringW(Str);
 end;
 
-function FindName(Name: PAnsiChar; Base: PAnsiChar; Names: PDWORDArray; Count: Cardinal): Integer;
+function FindName(Name: PAnsiChar; Base: PByte; Names: PDWORDArray; Count: Cardinal): Integer;
 var
   I, J: Integer;
   Mid, CMP: Integer;
@@ -73,7 +73,7 @@ begin
   while (I <= J) do
   begin
     Mid := (I + J) shr 1;
-    CMP := AnsiStrings.StrComp(Name, (Base + Names[Mid]));
+    CMP := AnsiStrings.StrComp(Name, PAnsiChar(Base + Names[Mid]));
     if CMP = 0 then
     begin
       Result := Mid;
@@ -89,7 +89,7 @@ begin
 end;
 
 procedure ReplaceFunc(Name: PAnsiChar; NewFunc: Pointer; var OldFunc: Pointer;
-  Base: PAnsiChar;
+  Base: PByte;
   EDir: PImageExportDirectory;
   ESize: DWORD;
   var JmpTmp: PByte);
@@ -103,7 +103,7 @@ begin
     Exit;
 
   Ent := PDWORD(Base + DWORD(EDir^.AddressOfFunctions) +
-    SizeOf(DWORD) * PWORDArray(Base + DWORD(EDir^.AddressOfNameOrdinals))[Pos]);
+    SizeOf(DWORD) * PWORDArray(Base + EDir^.AddressOfNameOrdinals)[Pos]);
 
   if (PAnsiChar(Ent^) >= PAnsiChar(EDir)) and (PAnsiChar(Ent^) < PAnsiChar(EDir) + ESize) then
     Exit; // this is a forward to another dll, we don't support it
@@ -121,7 +121,7 @@ end;
 
 procedure HookDbgOut(AOutput: TStrings);
 var
-  Base: PAnsiChar;
+  Base: PByte;
   MemInfo: MEMORY_BASIC_INFORMATION;
   DosHdr: PImageDosHeader;
   NTHdr: PImageNtHeaders;
@@ -133,7 +133,7 @@ begin
 
   IOHDDOffset := Cardinal(@IMAGE_OPTIONAL_HEADER(nil^).DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT+1]);
 
-  Base := PAnsiChar(GetModuleHandle('kernel32.dll'));
+  Base := PByte(GetModuleHandle('kernel32.dll'));
   if Base = nil then
     Exit;
 
