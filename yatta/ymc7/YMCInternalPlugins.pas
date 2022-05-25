@@ -626,11 +626,7 @@ begin
 
       if (FN > -1) and (StrToIntDef(GetToken(Line, 2), -1) = -1) then
       begin
-        DMetrics[fn + 0] := Round(100 * StrToFloat(GetToken(Line, 2)));
-        DMetrics[fn + 1] := Round(100 * StrToFloat(GetToken(Line, 3)));
-        DMetrics[fn + 2] := Round(100 * StrToFloat(GetToken(Line, 4)));
-        DMetrics[fn + 3] := Round(100 * StrToFloat(GetToken(Line, 5)));
-        DMetrics[fn + 4] := Round(100 * StrToFloat(GetToken(Line, 6)));
+        DMetrics[fn] := Round(100 * StrToFloat(GetToken(Line, 2)));
       end;
     end;
   end;

@@ -55,6 +55,7 @@ begin
   MH_EnableHook(Target);
   MH_CreateHookApiEx('kernel32', 'OutputDebugStringW', @MyOutputDebugStringW, @g_origOutputDebugStringW, Target);
   MH_EnableHook(Target);
+  Output := AOutput;
 end;
 
 end.

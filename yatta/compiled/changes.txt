@@ -1,6 +1,7 @@
 8-134
 The plugin types in filterlist.txt are now Normal, Stdcall and Import
 Now built for 64 bit
+Now uses minhook for OutputDebugString() hooking in ymc
 Fixed compatibility with modern Avisynth versions, recent Avisynth+ now required
 Migrated to Delphi 10.4
 
