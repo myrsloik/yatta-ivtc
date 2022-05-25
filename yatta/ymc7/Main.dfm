@@ -1,7 +1,7 @@
 object MainForm: TMainForm
   Left = 353
   Top = 182
-  Caption = 'Yatta Metrics Collector 8.10'
+  Caption = 'Yatta Metrics Collector 8.11'
   ClientHeight = 450
   ClientWidth = 621
   Color = clBtnFace
