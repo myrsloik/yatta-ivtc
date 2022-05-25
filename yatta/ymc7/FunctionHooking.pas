@@ -3,7 +3,7 @@ unit FunctionHooking;
 interface
 
 uses
-  SysUtils, Windows, Types, Classes, AnsiStrings;
+  SysUtils, Windows, Types, Classes, AnsiStrings, System.SyncObjs;
 
 const
   MH_OK = 0;
@@ -25,6 +25,7 @@ implementation
 var
   g_origOutputDebugStringA: TOutputDebugStringAFunc = nil;
   g_origOutputDebugStringW: TOutputDebugStringWFunc = nil;
+  OutputDebugStringLock: TCriticalSection = nil;
   Output: TStrings = nil;
 
 procedure SetDbgOutput(AOutput: TStrings);
@@ -35,14 +36,22 @@ end;
 procedure MyOutputDebugStringA(Str: PAnsiChar); stdcall;
 begin
   if Output <> nil then
-    Output.Append(string(Str));
+  begin
+    OutputDebugStringLock.Acquire;
+    Output.Append(Str);
+    OutputDebugStringLock.Release;
+  end;
   g_origOutputDebugStringA(Str);
 end;
 
 procedure MyOutputDebugStringW(Str: PWideChar); stdcall;
 begin
   if Output <> nil then
+  begin
+    OutputDebugStringLock.Acquire;
     Output.Append(Str);
+    OutputDebugStringLock.Release;
+  end;
   g_origOutputDebugStringW(Str);
 end;
 
@@ -50,6 +59,8 @@ procedure HookDbgOut(AOutput: TStrings);
 var
   Target: Pointer;
 begin
+  if OutputDebugStringLock = nil then
+    OutputDebugStringLock := TCriticalSection.Create;
   MH_Initialize;
   MH_CreateHookApiEx('kernel32', 'OutputDebugStringA', @MyOutputDebugStringA, @g_origOutputDebugStringA, Target);
   MH_EnableHook(Target);
