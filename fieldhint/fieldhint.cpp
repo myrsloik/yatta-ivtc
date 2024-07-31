@@ -183,9 +183,9 @@ AVSValue __cdecl Create_FieldHint(AVSValue args, void* user_data, IScriptEnviron
 
 const AVS_Linkage *AVS_linkage = nullptr;
 
-extern "C" __declspec(dllexport) const char* __stdcall AvisynthPluginInit3(IScriptEnvironment* env)
+extern "C" __declspec(dllexport) const char* __stdcall AvisynthPluginInit3(IScriptEnvironment* env, const AVS_Linkage *const vectors)
 {
-	AVS_linkage = env->GetAVSLinkage();
+	AVS_linkage = vectors;
 	env->AddFunction("FieldHint", "c[ovr]s[show]b", Create_FieldHint, 0);
 	return 0;
 }
